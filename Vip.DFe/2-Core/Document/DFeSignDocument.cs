@@ -1,0 +1,57 @@
+﻿using System.Security.Cryptography.X509Certificates;
+using Vip.DFe.Attributes;
+using Vip.DFe.Cryptography;
+using Vip.DFe.Cryptography.Models;
+using Vip.DFe.Enum;
+using Vip.DFe.Extensions;
+
+namespace Vip.DFe.Document
+{
+    public abstract class DFeSignDocument<TDocument> : DFeDocument<TDocument> where TDocument : class
+    {
+        #region Properties
+
+        [DFeElement("Signature", Namespace = "http://www.w3.org/2000/09/xmldsig#", Ocorrencia = Ocorrencia.NaoObrigatoria, Ordem = int.MaxValue)]
+        public DFeSignature Signature { get; set; }
+
+        #endregion Properties
+
+        #region Methods
+
+        /// <summary>
+        ///     Assina o xml.
+        /// </summary>
+        /// <param name="certificado">Certificado digital</param>
+        /// <param name="options">Options.</param>
+        /// <param name="comments">if set to <c>true</c> [comments].</param>
+        /// <param name="digest">Digest.</param>
+        protected void AssinarDocumento(X509Certificate2 certificado, SaveOptions options, bool comments, SignDigest digest)
+        {
+            Signature = SigningManager.AssinarDocumento(this, certificado, comments, digest, options, out var xml);
+            Xml = xml;
+        }
+
+        /// <summary>
+        ///     Valida a assinatura do documento.
+        /// </summary>
+        /// <param name="gerarXml"></param>
+        /// <returns></returns>
+        protected bool ValidarAssinaturaDocumento(bool gerarXml)
+        {
+            return SigningManager.ValidarAssinatura(this, gerarXml);
+        }
+
+        /// <summary>
+        ///     Metodo que define se deve ou não serialziar a assinatura.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual bool ShouldSerializeSignature()
+        {
+            return !Signature.SignatureValue.IsNullOrEmpty() &&
+                   !Signature.SignedInfo.Reference.DigestValue.IsNullOrEmpty() &&
+                   !Signature.KeyInfo.X509Data.X509Certificate.IsNullOrEmpty();
+        }
+
+        #endregion Methods
+    }
+}

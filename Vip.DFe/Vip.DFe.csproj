@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<Authors>VIP Soluções</Authors>
+		<Description>Biblioteca responsável por gerar DFes da VIP Soluções</Description>
+		<Copyright>VIP Soluções</Copyright>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<NoWarn>1701;1702;CS0067</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Folder Include="0-Domain\SAT\CupomFiscal\Imposto\" />
+		<Folder Include="0-Domain\SAT\Eventos\" />
+		<Folder Include="0-Domain\SAT\Interfaces\" />
+		<Folder Include="1-Services\SAT\Events\" />
+		<Folder Include="1-Services\SAT\Manager\" />
+		<Folder Include="1-Services\SAT\Interfaces\" />
+		<Folder Include="1-Services\SAT\Configuration\" />
+		<Folder Include="2-Core\Control\" />
+		<Folder Include="3-Infra\Exception\" />
+		<Folder Include="3-Infra\Interops\" />
+		<Folder Include="3-Infra\Notification\" />
+		<Folder Include="3-Infra\Writer\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="ExtraConstraints.Fody" Version="1.14.0" />
+		<PackageReference Include="Fody" Version="6.2.5">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="PropertyChanged.Fody" Version="3.2.9" />
+		<PackageReference Include="System.Security.Cryptography.Xml" Version="4.7.0" />
+		<PackageReference Include="System.ServiceModel.Http" Version="4.7.0" />
+		<PackageReference Include="System.ServiceModel.Security" Version="4.7.0" />
+	</ItemGroup>
+
+</Project>
