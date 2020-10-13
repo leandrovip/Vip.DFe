@@ -13,6 +13,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="3-Infra\Notification\**" />
+	  <EmbeddedResource Remove="3-Infra\Notification\**" />
+	  <None Remove="3-Infra\Notification\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Folder Include="0-Domain\SAT\CupomFiscal\Imposto\" />
 		<Folder Include="0-Domain\SAT\Eventos\" />
 		<Folder Include="0-Domain\SAT\Interfaces\" />
@@ -23,7 +29,6 @@
 		<Folder Include="2-Core\Control\" />
 		<Folder Include="3-Infra\Exception\" />
 		<Folder Include="3-Infra\Interops\" />
-		<Folder Include="3-Infra\Notification\" />
 		<Folder Include="3-Infra\Writer\" />
 	</ItemGroup>
 

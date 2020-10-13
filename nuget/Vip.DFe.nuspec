@@ -1,0 +1,19 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Vip.DFe</id>
+    <version>1.0.0</version>
+    <authors>Leandro Ferreira</authors>
+    <owners>VIP Soluções</owners>
+    <projectUrl>https://github.com/leandrovip/Vip.DFe</projectUrl>
+    <description>Biblioteca responsável pelos DFe´s da VIP Soluções</description>
+    <copyright>Copyright 2020</copyright>
+    <tags>vip dfe nfe sat</tags>
+    <dependencies>
+      <group targetFramework=".NetStandard2.0" />
+    </dependencies>
+  </metadata>
+  <files>
+		<file src="..\src\Vip.DFe\bin\Release\netstandard2.0\Vip.DFe.dll" target="lib\netstandard2.0\Vip.DFe.dll"/>
+    </files>
+</package>
