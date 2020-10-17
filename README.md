@@ -1,5 +1,5 @@
 
-<h2 align="center"><strong>Vip.DFe</strong> - Documentos Fiscais Eltrônicos </h2> 
+<h2 align="center"><strong>Vip.DFe</strong> - Documentos Fiscais Eltrônicos (BETA 💻💡) </h2> 
 
 <p align="center">
   <a href="https://raw.githubusercontent.com/leandrovip/Vip.DFe/master/LICENSE">
@@ -15,7 +15,8 @@
   </a>
 </p>
 
-Biblioteca responsável para gerar DFe´s (SAT, NFe).etc.
+Biblioteca responsável pela emissão de DFe´s. Até o momento implementado CFe SAT e NFe.
+Obs: Em desenvolvimento
 
 ## Pré requisitos
 
