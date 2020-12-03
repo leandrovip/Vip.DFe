@@ -11,7 +11,7 @@ namespace Vip.DFe.NFe.Enum
         [DFeEnum("1")] [Description("1 - Pauta (Valor)")]
         Pauta = 1,
 
-        [DFeEnum("2 - Preço Tabelado Max. (Valor)")]
+        [DFeEnum("2")] [Description("2 - Preço Tabelado Max. (Valor)")]
         PrecoTabeladoMax = 2,
 
         [DFeEnum("3")] [Description("3 - Valor da Operação")]
