@@ -46,7 +46,7 @@ namespace Vip.DFe.SAT.Response
             };
             Status.MTTotal = RetornoLst[15];
             Status.MTUsada = RetornoLst[16];
-            Status.DhAtual = DateTime.ParseExact(RetornoLst[17], "yyyyMMddHHmmss", CultureInfo.InvariantCulture);
+            Status.DhAtual = ValidarDateTime(RetornoLst[17], "yyyyMMddHHmmss");
             Status.VerSb = RetornoLst[18];
             Status.VerLayout = RetornoLst[19];
             Status.UltimoCFe = RetornoLst[20];
@@ -60,13 +60,13 @@ namespace Vip.DFe.SAT.Response
                 i++;
             }
 
-            Status.DhCFe = DateTime.ParseExact(RetornoLst[i], "yyyyMMddHHmmss", CultureInfo.InvariantCulture);
+            Status.DhCFe = ValidarDateTime(RetornoLst[i], "yyyyMMddHHmmss");
             i++;
-            Status.DhUltima = DateTime.ParseExact(RetornoLst[i], "yyyyMMddHHmmss", CultureInfo.InvariantCulture);
+            Status.DhUltima = ValidarDateTime(RetornoLst[i], "yyyyMMddHHmmss");
             i++;
-            Status.CertEmissao = DateTime.ParseExact(RetornoLst[i], "yyyyMMdd", CultureInfo.InvariantCulture);
+            Status.CertEmissao = ValidarDateTime(RetornoLst[i], "yyyyMMdd");
             i++;
-            Status.CertVencimento = DateTime.ParseExact(RetornoLst[i], "yyyyMMdd", CultureInfo.InvariantCulture);
+            Status.CertVencimento = ValidarDateTime(RetornoLst[i], "yyyyMMdd");
             i++;
             var retStr = RetornoLst[i];
             if (retStr.IsNumeric())
@@ -83,6 +83,16 @@ namespace Vip.DFe.SAT.Response
         }
 
         #endregion Constructors
+
+        #region Métodos
+
+        public DateTime ValidarDateTime(string dateTime, string format)
+        {
+            long.TryParse(dateTime, out var value);
+            return value == 0 ? DateTime.MinValue : DateTime.ParseExact(dateTime, format, CultureInfo.InvariantCulture);
+        }
+
+        #endregion
 
         #region Propriedades
 

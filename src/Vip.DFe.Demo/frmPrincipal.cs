@@ -3,6 +3,8 @@ using System.Linq;
 using System.Windows.Forms;
 using Vip.DFe.NFe;
 using Vip.DFe.NFe.Enum;
+using Vip.DFe.SAT;
+using Vip.DFe.SAT.Enum;
 using Vip.DFe.Shared.Enum;
 
 namespace Vip.DFe.Demo
