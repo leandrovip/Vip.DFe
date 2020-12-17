@@ -2,11 +2,11 @@
 <package >
   <metadata>
     <id>Vip.DFe</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>Leandro Ferreira</authors>
     <owners>VIP Soluções</owners>
     <projectUrl>https://github.com/leandrovip/Vip.DFe</projectUrl>
-    <description>Biblioteca responsável pelos DFe´s da VIP Soluções</description>
+    <description>Biblioteca responsável pela emissão de DFe´s (NFe, CFe SAT)</description>
     <copyright>Copyright 2020</copyright>
     <tags>vip dfe nfe sat</tags>
     <dependencies>

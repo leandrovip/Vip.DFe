@@ -4,8 +4,9 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<LangVersion>latest</LangVersion>
 		<Authors>VIP Soluções</Authors>
-		<Description>Biblioteca responsável por gerar DFes da VIP Soluções</Description>
+		<Description>Biblioteca responsável pela emissão de DFe´s (NFe, CFe SAT)</Description>
 		<Copyright>VIP Soluções</Copyright>
+		<Version>1.0.1</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
