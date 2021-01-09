@@ -15,6 +15,15 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
 
         #endregion
 
+        #region Constructor
+
+        public IcmsSn101()
+        {
+            Csosn = "101";
+        }
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -27,7 +36,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
         ///     N12a - Código de Situação da Operação – Simples Nacional
         /// </summary>
         [DFeElement(TipoCampo.StrNumberFill, "CSOSN", Id = "N12a", Min = 3, Max = 3, Ocorrencia = Ocorrencia.Obrigatoria)]
-        public string Csosn => "101";
+        public string Csosn { get; private set; }
 
         /// <summary>
         ///     N29 - pCredSN - Alíquota aplicável de cálculo do crédito (Simples Nacional).

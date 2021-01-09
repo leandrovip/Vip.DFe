@@ -16,6 +16,15 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
 
         #endregion
 
+        #region Constructor
+
+        public IcmsSn900()
+        {
+            Csosn = "900";
+        }
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -28,7 +37,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
         ///     N12a - Código de Situação da Operação – Simples Nacional
         /// </summary>
         [DFeElement(TipoCampo.StrNumberFill, "CSOSN", Id = "N12a", Min = 3, Max = 3, Ocorrencia = Ocorrencia.Obrigatoria)]
-        public string Csosn => "900";
+        public string Csosn { get; private set; }
 
         /// <summary>
         ///     N13 - Modalidade de determinação da BC do ICMS
@@ -133,15 +142,9 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
 
         #region Methods
 
-        private bool ShouldSerializeModBc()
-        {
-            return ModBc.HasValue;
-        }
+        private bool ShouldSerializeModBc() => ModBc.HasValue;
 
-        private bool ShouldSerializeModBcSt()
-        {
-            return ModBcSt.HasValue;
-        }
+        private bool ShouldSerializeModBcSt() => ModBcSt.HasValue;
 
         #endregion
     }

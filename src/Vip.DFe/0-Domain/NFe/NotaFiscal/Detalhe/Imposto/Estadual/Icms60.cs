@@ -15,6 +15,15 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
 
         #endregion
 
+        #region Constructor
+
+        public Icms60()
+        {
+            Cst = "60";
+        }
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -27,7 +36,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
         ///     N12- Situação Tributária
         /// </summary>
         [DFeElement(TipoCampo.Str, "CST", Id = "N12", Min = 2, Max = 2, Ocorrencia = Ocorrencia.Obrigatoria)]
-        public string Cst => "60";
+        public string Cst { get; private set; }
 
         /// <summary>
         ///     N26 - Valor da BC do ICMS ST retido

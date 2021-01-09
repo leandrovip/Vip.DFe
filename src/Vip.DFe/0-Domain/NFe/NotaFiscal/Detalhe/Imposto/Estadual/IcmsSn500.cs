@@ -15,6 +15,15 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
 
         #endregion
 
+        #region Construtor
+
+        public IcmsSn500()
+        {
+            Csosn = "500";
+        }
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -27,7 +36,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
         ///     N12a - Código de Situação da Operação – Simples Nacional
         /// </summary>
         [DFeElement(TipoCampo.StrNumberFill, "CSOSN", Id = "N12a", Min = 3, Max = 3, Ocorrencia = Ocorrencia.Obrigatoria)]
-        public string Csosn => "500";
+        public string Csosn { get; private set; }
 
         /// <summary>
         ///     N26 - Valor da BC do ICMS ST retido

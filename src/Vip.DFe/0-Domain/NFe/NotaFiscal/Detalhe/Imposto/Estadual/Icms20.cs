@@ -17,6 +17,15 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
 
         #endregion
 
+        #region Constructor
+
+        public Icms20()
+        {
+            Cst = "20";
+        }
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -29,7 +38,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
         ///     N12- Situação Tributária
         /// </summary>
         [DFeElement(TipoCampo.Str, "CST", Id = "N12", Min = 2, Max = 2, Ocorrencia = Ocorrencia.Obrigatoria)]
-        public string Cst => "20";
+        public string Cst { get; private set; }
 
         /// <summary>
         ///     N13 - Modalidade de determinação da BC do ICMS
@@ -99,10 +108,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
 
         #region Methods
 
-        private bool ShouldSerializeMotDesIcms()
-        {
-            return VIcmsDeson > 0;
-        }
+        private bool ShouldSerializeMotDesIcms() => VIcmsDeson > 0;
 
         #endregion
     }

@@ -96,24 +96,26 @@ namespace Vip.DFe.Demo
 
         public NFeEmit GetEmitente()
         {
-            var emit = new NFeEmit();
-            emit.XNome = "EMPRESA TESTE LTDA";
-            emit.XFant = "EMPRESA TESTE";
-            emit.CNPJ = "12332134000199";
-            emit.CRT = RegimeTributario.SimplesNacional;
-            emit.IE = "715025640119";
-            emit.Endereco = new NFeEmitEndereco
+            var emit = new NFeEmit
             {
-                Logradouro = "AV SAO JOAO",
-                Numero = "10",
-                Bairro = "BAIRRO",
-                CodigoIBGE = 3556800,
-                Municipio = "VIRADOURO",
-                UF = CodigoUF.SP.GetDescription(),
-                CEP = "14740000",
-                CodigoPais = 1058,
-                Pais = "BRASIL",
-                Fone = "0000000000"
+                XNome = "EMPRESA TESTE LTDA",
+                XFant = "EMPRESA TESTE",
+                CNPJ = "12332134000199",
+                CRT = RegimeTributario.SimplesNacional,
+                IE = "715025640119",
+                Endereco = new NFeEmitEndereco
+                {
+                    Logradouro = "AV SAO JOAO",
+                    Numero = "10",
+                    Bairro = "BAIRRO",
+                    CodigoIBGE = 3556800,
+                    Municipio = "VIRADOURO",
+                    UF = CodigoUF.SP.GetDescription(),
+                    CEP = "14740000",
+                    CodigoPais = 1058,
+                    Pais = "BRASIL",
+                    Fone = "0000000000"
+                }
             };
 
             return emit;
@@ -144,13 +146,10 @@ namespace Vip.DFe.Demo
             return cobr;
         }
 
-        internal NFeInformacaoAdicional GetInformacoesComplementares()
+        internal NFeInformacaoAdicional GetInformacoesComplementares() => new NFeInformacaoAdicional
         {
-            return new NFeInformacaoAdicional
-            {
-                InformacaoComplementar = "PRAZO PARA TROCA DE ATÉ 7 DIAS. OBRIGADO PELA PREFERENCIA."
-            };
-        }
+            InformacaoComplementar = "PRAZO PARA TROCA DE ATÉ 7 DIAS. OBRIGADO PELA PREFERENCIA."
+        };
 
         public NFeTotal GetTotal(List<NFeDetalhe> produtos)
         {

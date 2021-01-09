@@ -16,6 +16,15 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
 
         #endregion
 
+        #region Constructor
+
+        public IcmsSn201()
+        {
+            Csosn = "201";
+        }
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -28,7 +37,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
         ///     N12a - Código de Situação da Operação – Simples Nacional
         /// </summary>
         [DFeElement(TipoCampo.StrNumberFill, "CSOSN", Id = "N12a", Min = 3, Max = 3, Ocorrencia = Ocorrencia.Obrigatoria)]
-        public string Csosn => "201";
+        public string Csosn { get; private set; }
 
         /// <summary>
         ///     N18 - Modalidade de determinação da BC do ICMS ST

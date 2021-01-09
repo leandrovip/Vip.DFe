@@ -17,13 +17,22 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Federal
 
         #endregion
 
+        #region Constructor
+
+        public CofinsQtde()
+        {
+            Cst = "03";
+        }
+
+        #endregion
+
         #region Properties
 
         /// <summary>
         ///     S06 - Código de Situação Tributária da COFINS
         /// </summary>
         [DFeElement(TipoCampo.StrNumberFill, "CST", Id = "S06", Min = 2, Max = 2, Ocorrencia = Ocorrencia.Obrigatoria)]
-        public string Cst => "03";
+        public string Cst { get; private set; }
 
         /// <summary>
         ///     S09 - Quantidade Vendida

@@ -329,6 +329,8 @@ namespace Vip.DFe.Extensions
         public static bool IsGtin(this string value)
         {
             var code = value.OnlyNumbers();
+            var validCodes = new[] { 8, 12, 13, 14 };
+            if (!validCodes.Contains(code.Length)) return false;
             if (code.IsNullOrEmpty()) return false;
 
             code = code.ZeroFill(14);

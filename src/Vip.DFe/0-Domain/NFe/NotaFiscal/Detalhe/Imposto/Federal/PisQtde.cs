@@ -17,13 +17,22 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Federal
 
         #endregion
 
+        #region Constructor
+
+        public PisQtde()
+        {
+            Cst = "03";
+        }
+
+        #endregion
+
         #region Properties
 
         /// <summary>
         ///     Q06 - Código de Situação Tributária do PIS
         /// </summary>
         [DFeElement(TipoCampo.StrNumberFill, "CST", Id = "Q06", Min = 2, Max = 2, Ocorrencia = Ocorrencia.Obrigatoria)]
-        public string Cst => "03";
+        public string Cst { get; private set; }
 
         /// <summary>
         ///     Q10 - Quantidade Vendida
