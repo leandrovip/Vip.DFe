@@ -114,10 +114,7 @@ namespace Vip.DFe.Serializer
         ///     Creates the serializer.
         /// </summary>
         /// <param name="tipo">The tipo.</param>
-        public static DFeSerializer CreateSerializer(Type tipo)
-        {
-            return new DFeSerializer(tipo);
-        }
+        public static DFeSerializer CreateSerializer(Type tipo) => new DFeSerializer(tipo);
 
         #endregion Create
 
