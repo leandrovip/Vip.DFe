@@ -8,6 +8,7 @@
 		<Copyright>VIP Soluções</Copyright>
 		<Version>1.0.3</Version>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<UserSecretsId>120e1b83-c002-41ff-9c4e-9d70ec88e632</UserSecretsId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -21,6 +22,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="0-Domain\Danfe\Blocos\" />
+		<Folder Include="0-Domain\Danfe\Elementos\" />
+		<Folder Include="0-Domain\Danfe\Enum\" />
 		<Folder Include="0-Domain\SAT\CupomFiscal\Imposto\" />
 		<Folder Include="0-Domain\SAT\Eventos\" />
 		<Folder Include="0-Domain\SAT\Interfaces\" />
@@ -31,6 +35,7 @@
 		<Folder Include="2-Core\Control\" />
 		<Folder Include="3-Infra\Exception\" />
 		<Folder Include="3-Infra\Interops\" />
+		<Folder Include="3-Infra\Graphics\" />
 		<Folder Include="3-Infra\Writer\" />
 	</ItemGroup>
 
@@ -44,6 +49,7 @@
 		<PackageReference Include="System.Security.Cryptography.Xml" Version="4.7.0" />
 		<PackageReference Include="System.ServiceModel.Http" Version="4.7.0" />
 		<PackageReference Include="System.ServiceModel.Security" Version="4.7.0" />
+		<PackageReference Include="Vip.Pdf" Version="1.0.2" />
 	</ItemGroup>
 
 </Project>

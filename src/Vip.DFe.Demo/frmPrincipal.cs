@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using Vip.DFe.Danfe;
+using Vip.DFe.Danfe.Modelo;
 using Vip.DFe.NFe;
 using Vip.DFe.NFe.Enum;
 using Vip.DFe.SAT;
@@ -170,6 +172,23 @@ namespace Vip.DFe.Demo
             var service = ObterService();
             var resultado = service.CartaoCorrecao("12332134000199", "35201012332134000199550010000010051614415132", 1, "CARTA DE CORRECAO DE TESTE PARA DESENVOLVIMENTO");
             txtDados.Text = resultado.XmlRetorno + "\r\n\r\n" + resultado.Resultado.RetEvento.FirstOrDefault()?.InfEvento.xMotivo;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            const string arquivo = @"D:\35210112332134000199550010000010111903363115-procNFe.xml";
+
+            var modelo = DanfeViewModel.CriarDeArquivoXml(arquivo);
+            modelo.DefinirTextoCreditos("Emitido pelo software VipERP - www.vipsolucoes.com");
+
+            using (var danfe = new DanfeService(modelo))
+            {
+                danfe.AdicionarLogoImagem(@"D:\vip.jpg");
+                danfe.Gerar();
+                danfe.Salvar(@"D:\danfeOk.pdf");
+            }
+
+            MessageBox.Show("Danfe Gerada");
         }
     }
 }
