@@ -200,7 +200,7 @@ namespace Vip.DFe.Demo
 
         public NFeDest GetDestinatario()
         {
-            bool pessoaFisica = true;
+            bool pessoaFisica = false;
             bool clienteTemEmail = false;
 
             var dest = new NFeDest();
@@ -211,7 +211,7 @@ namespace Vip.DFe.Demo
             else
             {
                 dest.CNPJ = "12332134000199";
-                dest.IE = "715025640119";
+                dest.IE = "715.025.640.119";
             }
 
             dest.Nome = "LEANDRO FERREIRA";
@@ -222,15 +222,15 @@ namespace Vip.DFe.Demo
             dest.Endereco = new NFeDestEndereco
             {
                 Logradouro = "RUA DE EXEMPLO",
-                Numero = "10",
-                Bairro = "JARDIM PRIMAVERA",
+                Numero = "",
+                Bairro = "",
                 CodigoIBGE = 3556800,
                 Municipio = "VIRADOURO",
                 UF = "SP",
                 CEP = "14740000",
                 CodigoPais = 1058,
                 Pais = "BRASIL",
-                Fone = "0000000000"
+                Fone = ""
             };
 
             dest.IndIEDest = NFeIndIeDest.NaoContribuinte;

@@ -84,7 +84,7 @@ namespace Vip.DFe.NFe
         /// <summary>
         ///     Método para enviar a(s) NFe(s) carregada(s) na coleção - AutorizacaoLote
         /// </summary>
-        public NFeAutorizacaoResposta AutorizacaoLote(string loteId)
+        public NFeAutorizacaoResposta AutorizacaoLote(string loteId = "")
         {
             Configuracoes.Validar();
 

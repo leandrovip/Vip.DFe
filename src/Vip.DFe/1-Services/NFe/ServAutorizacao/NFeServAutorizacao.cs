@@ -27,7 +27,7 @@ namespace Vip.DFe.NFe.ServAutorizacao
 
         #region Methods
 
-        public NFeAutorizacaoResposta AutorizacaoLote(NotaFiscal.NFe[] nfes, string loteId = "")
+        public NFeAutorizacaoResposta AutorizacaoLote(NotaFiscal.NFe[] nfes, string loteId)
         {
             loteId = ValidarNumeroLote(loteId);
 
