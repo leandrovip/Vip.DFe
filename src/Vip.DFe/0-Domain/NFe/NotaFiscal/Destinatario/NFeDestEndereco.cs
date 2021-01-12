@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
+using Vip.DFe.Extensions;
 using Vip.DFe.Serializer;
 
 namespace Vip.DFe.NFe.NotaFiscal.Destinatario
@@ -13,6 +14,13 @@ namespace Vip.DFe.NFe.NotaFiscal.Destinatario
         #region Events
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Fields
+
+        private string _bairro;
+        private string _numero;
 
         #endregion
 
@@ -37,8 +45,12 @@ namespace Vip.DFe.NFe.NotaFiscal.Destinatario
         /// <summary>
         ///     E07 - Número
         /// </summary>
-        [DFeElement(TipoCampo.Str, "nro", Id = "E07", Min = 1, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
-        public string Numero { get; set; }
+        [DFeElement(TipoCampo.Custom, "nro", Id = "E07", Min = 1, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
+        public string Numero
+        {
+            get => _numero;
+            set => _numero = value.IsNullOrEmpty() ? "SN" : value;
+        }
 
         /// <summary>
         ///     E08 - Complemento
@@ -49,8 +61,12 @@ namespace Vip.DFe.NFe.NotaFiscal.Destinatario
         /// <summary>
         ///     E09 - Bairro
         /// </summary>
-        [DFeElement(TipoCampo.Str, "xBairro", Id = "E09", Min = 2, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
-        public string Bairro { get; set; }
+        [DFeElement(TipoCampo.Custom, "xBairro", Id = "E09", Min = 2, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
+        public string Bairro
+        {
+            get => _bairro;
+            set => _bairro = value.IsNullOrEmpty() ? "SN" : value;
+        }
 
         /// <summary>
         ///     E10 - Código do município
@@ -101,6 +117,18 @@ namespace Vip.DFe.NFe.NotaFiscal.Destinatario
         /// </summary>
         [DFeElement(TipoCampo.StrNumber, "fone", Id = "E16", Min = 6, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string Fone { get; set; }
+
+        #endregion
+
+        #region Methods
+
+        private string SerializeNumero() => Numero.IsNotNullOrEmpty() ? Numero : "SN";
+
+        private object DeserializeNumero(string value) => value;
+
+        private string SerializeBairro() => Bairro.IsNotNullOrEmpty() ? Bairro : "SN";
+
+        private object DeserializeBairro(string value) => value;
 
         #endregion
     }

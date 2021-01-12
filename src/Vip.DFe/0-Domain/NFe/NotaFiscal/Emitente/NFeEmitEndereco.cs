@@ -23,6 +23,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Emitente
         {
             CodigoPais = 1058;
             Pais = "BRASIL";
+            Bairro = "SN";
         }
 
         #endregion
@@ -38,7 +39,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Emitente
         /// <summary>
         ///     C07 - Número
         /// </summary>
-        [DFeElement(TipoCampo.Str, "nro", Id = "C07", Min = 1, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.Custom, "nro", Id = "C07", Min = 1, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string Numero { get; set; }
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Emitente
         /// <summary>
         ///     C09 - Bairro
         /// </summary>
-        [DFeElement(TipoCampo.Str, "xBairro", Id = "C09", Min = 2, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.Custom, "xBairro", Id = "C09", Min = 2, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string Bairro { get; set; }
 
         /// <summary>
@@ -108,15 +109,12 @@ namespace Vip.DFe.NFe.NotaFiscal.Emitente
 
         #region Methods
 
-        private bool ShouldSerializeXCpl()
-        {
-            return Complemento.IsNotNullOrEmpty();
-        }
-
-        private bool ShouldSerializeCPais()
-        {
-            return CodigoPais.HasValue;
-        }
+        private bool ShouldSerializeXCpl() => Complemento.IsNotNullOrEmpty();
+        private bool ShouldSerializeCPais() => CodigoPais.HasValue;
+        private string SerializeNumero() => Numero.IsNotNullOrEmpty() ? Numero : "SN";
+        private object DeserializeNumero(string value) => value;
+        private string SerializeBairro() => Bairro.IsNotNullOrEmpty() ? Bairro : "SN";
+        private object DeserializeBairro(string value) => value;
 
         #endregion
     }

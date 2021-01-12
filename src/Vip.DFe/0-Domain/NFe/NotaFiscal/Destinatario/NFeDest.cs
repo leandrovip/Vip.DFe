@@ -81,7 +81,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Destinatario
         ///         cadastro de contribuintes do ICMS e estejam emitindo NF-e avulsa;
         ///     </para>
         /// </summary>
-        [DFeElement(TipoCampo.Str, "IE", Id = "E17", Min = 2, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.Custom, "IE", Id = "E17", Min = 2, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string IE { get; set; }
 
         /// <summary>
