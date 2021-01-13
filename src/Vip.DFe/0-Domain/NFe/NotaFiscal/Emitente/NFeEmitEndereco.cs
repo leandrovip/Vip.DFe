@@ -17,6 +17,12 @@ namespace Vip.DFe.NFe.NotaFiscal.Emitente
 
         #endregion
 
+        #region Fields
+
+        private string _fone;
+
+        #endregion
+
         #region Constructor
 
         public NFeEmitEndereco()
@@ -39,7 +45,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Emitente
         /// <summary>
         ///     C07 - Número
         /// </summary>
-        [DFeElement(TipoCampo.Custom, "nro", Id = "C07", Min = 1, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.Str, "nro", Id = "C07", Min = 1, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string Numero { get; set; }
 
         /// <summary>
@@ -51,7 +57,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Emitente
         /// <summary>
         ///     C09 - Bairro
         /// </summary>
-        [DFeElement(TipoCampo.Custom, "xBairro", Id = "C09", Min = 2, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.Str, "xBairro", Id = "C09", Min = 2, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string Bairro { get; set; }
 
         /// <summary>
@@ -103,7 +109,11 @@ namespace Vip.DFe.NFe.NotaFiscal.Emitente
         ///     </para>
         /// </summary>
         [DFeElement(TipoCampo.StrNumber, "fone", Id = "C16", Min = 6, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
-        public string Fone { get; set; }
+        public string Fone
+        {
+            get => _fone;
+            set => _fone = value.IsNullOrEmpty() || value.Equals("0") ? "" : value;
+        }
 
         #endregion
 
@@ -111,10 +121,6 @@ namespace Vip.DFe.NFe.NotaFiscal.Emitente
 
         private bool ShouldSerializeXCpl() => Complemento.IsNotNullOrEmpty();
         private bool ShouldSerializeCPais() => CodigoPais.HasValue;
-        private string SerializeNumero() => Numero.IsNotNullOrEmpty() ? Numero : "SN";
-        private object DeserializeNumero(string value) => value;
-        private string SerializeBairro() => Bairro.IsNotNullOrEmpty() ? Bairro : "SN";
-        private object DeserializeBairro(string value) => value;
 
         #endregion
     }
