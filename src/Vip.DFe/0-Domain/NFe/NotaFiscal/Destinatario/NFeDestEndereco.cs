@@ -21,6 +21,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Destinatario
 
         private string _bairro;
         private string _numero;
+        private string _fone;
 
         #endregion
 
@@ -45,7 +46,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Destinatario
         /// <summary>
         ///     E07 - Número
         /// </summary>
-        [DFeElement(TipoCampo.Custom, "nro", Id = "E07", Min = 1, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.Str, "nro", Id = "E07", Min = 1, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string Numero
         {
             get => _numero;
@@ -61,7 +62,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Destinatario
         /// <summary>
         ///     E09 - Bairro
         /// </summary>
-        [DFeElement(TipoCampo.Custom, "xBairro", Id = "E09", Min = 2, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.Str, "xBairro", Id = "E09", Min = 2, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string Bairro
         {
             get => _bairro;
@@ -116,19 +117,11 @@ namespace Vip.DFe.NFe.NotaFiscal.Destinatario
         ///     </para>
         /// </summary>
         [DFeElement(TipoCampo.StrNumber, "fone", Id = "E16", Min = 6, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
-        public string Fone { get; set; }
-
-        #endregion
-
-        #region Methods
-
-        private string SerializeNumero() => Numero.IsNotNullOrEmpty() ? Numero : "SN";
-
-        private object DeserializeNumero(string value) => value;
-
-        private string SerializeBairro() => Bairro.IsNotNullOrEmpty() ? Bairro : "SN";
-
-        private object DeserializeBairro(string value) => value;
+        public string Fone
+        {
+            get => _fone;
+            set => _fone = value.IsNullOrEmpty() || value.Equals("0") ? "" : value;
+        }
 
         #endregion
     }
