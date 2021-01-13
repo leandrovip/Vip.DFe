@@ -29,6 +29,7 @@ namespace Vip.DFe.NFe.Configuration
         internal NFeConfig Parent { get; }
         public bool Salvar { get; set; }
         public string DiretorioSchemas { get; set; }
+        public string DiretorioAutorizadasBackup { get; set; }
         public string Diretorio { get; set; }
         public Dictionary<NFeSchema, string> SchemasCache { get; }
 
@@ -39,62 +40,47 @@ namespace Vip.DFe.NFe.Configuration
         /// <summary>
         ///     Retorna o caminho onde será salvo os arquivos Autorizados
         /// </summary>
-        public string ObterCaminhoAutorizado(DateTime data)
-        {
+        public string ObterCaminhoAutorizado(DateTime data, string diretorioBackup = "") =>
             // TODO: Futuramente gerar modelo NFe ou NFce
-            return ObterCaminho("Autorizado", data);
-        }
+            ObterCaminho("Autorizado", data, diretorioBackup: diretorioBackup);
 
         /// <summary>
         ///     Retornar o caminho onde será salvo os arquivos Assinados
         /// </summary>
         /// <returns></returns>
-        public string ObterCaminhoAssinado()
-        {
-            return ObterCaminho("Assinado");
-        }
+        public string ObterCaminhoAssinado() => ObterCaminho("Assinado");
 
         /// <summary>
         ///     Retorna o caminho onde será salvo os arquivos Enviados
         /// </summary>
-        public string ObterCaminhoEnviado()
-        {
-            return ObterCaminho("Enviado");
-        }
+        public string ObterCaminhoEnviado() => ObterCaminho("Enviado");
 
         /// <summary>
         ///     Retorna o caminho onde será salvo os arquivos de Retorno
         /// </summary>
-        public string ObterCaminhoRetorno()
-        {
-            return ObterCaminho("Retorno");
-        }
+        public string ObterCaminhoRetorno() => ObterCaminho("Retorno");
 
         /// <summary>
         ///     Retorna o caminho onde será salvos os arquivos de Inutilização
         /// </summary>
         /// <returns></returns>
-        public string ObterCaminhoInutilizado()
-        {
-            return ObterCaminho("Inutilizado");
-        }
-
-        /// <summary>
-        ///     Retorna o caminho onde será salvo o arquivo de Evento.
-        /// </summary>
-        //public string GetPathEvento(NFeTipoEvento tipo, string cnpj = "", DateTime? data = null)
-        //{
-        //    return GetPath(DiretorioEvento, cnpj, data, tipo.GetDescription());
-        //}
+        public string ObterCaminhoInutilizado(string diretorioBackup = "") => ObterCaminho("Inutilizado", diretorioBackup: diretorioBackup);
 
         /// <summary>
         ///     Gera um caminho para salvar o arquivo desejado
         /// </summary>
-        private string ObterCaminho(string caminho, DateTime? data = null, string modeloDescricao = "")
+        private string ObterCaminho(string caminho, DateTime? data = null, string modeloDescricao = "", string diretorioBackup = "")
         {
             // Diretório - NFe/
-            var pathDefault = $@"{Assembly.GetExecutingAssembly().GetPath()}\NFe";
-            var diretorio = Diretorio.IsNullOrEmpty() ? pathDefault : Diretorio;
+            var pathDefault = $@"{AppDomain.CurrentDomain.BaseDirectory}\NFe";
+
+            string diretorio;
+            if (diretorioBackup.IsNotNullOrEmpty())
+                diretorio = diretorioBackup;
+            else if (Diretorio.IsNotNullOrEmpty())
+                diretorio = Diretorio;
+            else
+                diretorio = pathDefault;
 
             // NFe/00000000000000
             var cnpj = Parent.CNPJ;
@@ -118,10 +104,10 @@ namespace Vip.DFe.NFe.Configuration
         {
             if (SchemasCache.ContainsKey(schema)) return SchemasCache[schema];
 
-            var schemaPath = "";
             var diretorioSchema = DiretorioSchemas;
             var versao = Parent.Versao;
 
+            string schemaPath;
             switch (schema)
             {
                 case NFeSchema.NFe:

@@ -51,6 +51,16 @@ namespace Vip.DFe.NFe.ServBase
             conteudoArquivo = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" + conteudoArquivo.RemoverDeclaracaoXml();
             nomeArquivo = Path.Combine(Configuracoes.Arquivos.ObterCaminhoInutilizado(), nomeArquivo);
             File.WriteAllText(nomeArquivo, conteudoArquivo, Encoding.UTF8);
+
+            #region Backup
+
+            if (Configuracoes.Arquivos.DiretorioAutorizadasBackup.IsNotNullOrEmpty())
+            {
+                var nomeArquivoBackup = Path.Combine(Configuracoes.Arquivos.ObterCaminhoInutilizado(Configuracoes.Arquivos.DiretorioAutorizadasBackup), nomeArquivo);
+                File.WriteAllText(nomeArquivoBackup, conteudoArquivo, Encoding.UTF8);
+            }
+
+            #endregion
         }
 
         //protected void GravarEvento(string conteudoArquivo, string nomeArquivo, NFeTipoEvento evento, DateTime data, string cnpj)
