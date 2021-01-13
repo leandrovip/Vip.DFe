@@ -53,9 +53,20 @@ namespace Vip.DFe.NFe.NotaFiscal
             if (!configuracoes.Arquivos.Salvar) return;
 
             var nomeArquivo = $"{ProtNFe.InfProt.ChNFe}";
-            var caminho = configuracoes.Arquivos.ObterCaminhoAutorizado(NFe.InfNFe.Ide.DhEmi.DateTime);
             nomeArquivo += ProtNFe.InfProt.CStat.IsIn(DFeConstantes.NFeAutorizada) ? "-procNFe.xml" : "-den.xml";
+
+            var caminho = configuracoes.Arquivos.ObterCaminhoAutorizado(NFe.InfNFe.Ide.DhEmi.DateTime);
             Save(Path.Combine(caminho, nomeArquivo));
+
+            #region Backup
+
+            if (configuracoes.Arquivos.DiretorioAutorizadasBackup.IsNotNullOrEmpty())
+            {
+                var caminhoBackup = configuracoes.Arquivos.ObterCaminhoAutorizado(NFe.InfNFe.Ide.DhEmi.DateTime, configuracoes.Arquivos.DiretorioAutorizadasBackup);
+                Save(Path.Combine(caminhoBackup, nomeArquivo));
+            }
+
+            #endregion
         }
 
         #endregion

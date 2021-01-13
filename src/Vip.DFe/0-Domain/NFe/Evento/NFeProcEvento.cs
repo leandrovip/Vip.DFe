@@ -60,9 +60,19 @@ namespace Vip.DFe.NFe.Evento
         {
             if (!configuracoes.Arquivos.Salvar) return;
 
-            var caminho = configuracoes.Arquivos.ObterCaminhoAutorizado(RetEvento.InfEvento.DhRegEvento.DateTime);
             var nomeArquivo = $"{RetEvento.InfEvento.Chave}_{RetEvento.InfEvento.TpEvento.GetValueOrDefault().GetDFeValue()}_{RetEvento.InfEvento.NSeqEvento:00}-procEventoNFe.xml";
+            var caminho = configuracoes.Arquivos.ObterCaminhoAutorizado(RetEvento.InfEvento.DhRegEvento.DateTime);
             Save(Path.Combine(caminho, nomeArquivo));
+
+            #region Backup
+
+            if (configuracoes.Arquivos.DiretorioAutorizadasBackup.IsNotNullOrEmpty())
+            {
+                var caminhoBackup = configuracoes.Arquivos.ObterCaminhoAutorizado(RetEvento.InfEvento.DhRegEvento.DateTime, configuracoes.Arquivos.DiretorioAutorizadasBackup);
+                Save(Path.Combine(caminhoBackup, nomeArquivo));
+            }
+
+            #endregion
         }
 
         #endregion
