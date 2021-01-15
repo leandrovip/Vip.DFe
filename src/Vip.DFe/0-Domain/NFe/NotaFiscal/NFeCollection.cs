@@ -94,10 +94,7 @@ namespace Vip.DFe.NFe.NotaFiscal
         ///     <see langword="true" /> se <paramref name="item" /> for encontrado no
         ///     <see cref="T:System.Collections.Generic.List`1" />; caso contrário, <see langword="false" />.
         /// </returns>
-        public bool Contains(NFe item)
-        {
-            return _nfes.Contains(item);
-        }
+        public bool Contains(NFe item) => _nfes.Contains(item);
 
         /// <summary>
         ///     Pesquisa o objeto especificado e retorna o índice baseado em zero da primeira ocorrência dentro de todo o
@@ -111,10 +108,7 @@ namespace Vip.DFe.NFe.NotaFiscal
         ///     O índice baseado em zero da primeira ocorrência de <paramref name="item" /> em todo o
         ///     <see cref="T:System.Collections.Generic.List`1" />, se encontrado; caso contrário, -1.
         /// </returns>
-        public int IndexOf(NFe item)
-        {
-            return _nfes.IndexOf(item);
-        }
+        public int IndexOf(NFe item) => _nfes.IndexOf(item);
 
         /// <summary>
         ///     Insere um elemento no <see cref="T:System.Collections.Generic.List`1" />, no índice especificado.
@@ -149,10 +143,7 @@ namespace Vip.DFe.NFe.NotaFiscal
         ///     Esse método também retornará <see langword="false" /> se <paramref name="item" /> não tiver sido encontrado no
         ///     <see cref="T:System.Collections.Generic.List`1" />.
         /// </returns>
-        public bool Remove(NFe item)
-        {
-            return _nfes.Remove(item);
-        }
+        public bool Remove(NFe item) => _nfes.Remove(item);
 
         /// <summary>
         ///     Remove o elemento no índice especificado do <see cref="T:System.Collections.Generic.List`1" />.
@@ -258,7 +249,7 @@ namespace Vip.DFe.NFe.NotaFiscal
                 listaErros.AddRange(erros);
             }
 
-            Guard.Against<VipException>(listaErros.Any(), $"Erros na validação do arquivo xml (NF-e). {(Parent.Configuracoes.ExibeErrosSchema ? "\r\n\r\n" + listaErros.AsString() : "")}");
+            Guard.Against<VipException>(listaErros.Any(), $"{(Parent.Configuracoes.ExibeErrosSchema ? listaErros.AsString() : "Erros na validação do arquivo xml (Schema NF-e)")}");
         }
 
         #endregion Methods
