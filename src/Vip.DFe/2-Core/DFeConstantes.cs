@@ -4,11 +4,11 @@
     {
         #region Códigos de Retorno
 
-        public static readonly int[] NFeProcessada = {100, 110, 150, 301, 303};
+        public static readonly int[] NFeProcessada = {100, 110, 150, 301, 302, 303};
 
         public static readonly int[] NFeAutorizada = {100, 150};
 
-        public static readonly int[] NFeDenegada = {110, 301, 303};
+        public static readonly int[] NFeDenegada = {110, 301, 302, 303};
 
         public static readonly int[] EventoProcessado = {128, 135, 136, 151, 155};
 
