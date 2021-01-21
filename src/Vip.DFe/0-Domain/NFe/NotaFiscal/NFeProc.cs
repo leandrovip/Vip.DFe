@@ -60,7 +60,7 @@ namespace Vip.DFe.NFe.NotaFiscal
 
             #region Backup
 
-            if (configuracoes.Arquivos.DiretorioAutorizadasBackup.IsNotNullOrEmpty())
+            if (configuracoes.Arquivos.DiretorioAutorizadasBackup.IsNotNullOrEmpty() && Directory.Exists(configuracoes.Arquivos.DiretorioAutorizadasBackup))
             {
                 var caminhoBackup = configuracoes.Arquivos.ObterCaminhoAutorizado(NFe.InfNFe.Ide.DhEmi.DateTime, configuracoes.Arquivos.DiretorioAutorizadasBackup);
                 Save(Path.Combine(caminhoBackup, nomeArquivo));
