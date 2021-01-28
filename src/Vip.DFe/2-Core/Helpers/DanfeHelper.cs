@@ -18,6 +18,7 @@ namespace Vip.DFe.Helpers
         }
 
         public const string FormatoNumeroNF = @"000\.000\.000";
+        public const string FormatoNumeroNFRegex = @"^(\d{3})\.?(\d{3})\.?(\d{3})$";
 
         public const string CEP = @"^(\d{5})\-?(\d{3})$";
         public const string CNPJ = @"^(\d{2})\.?(\d{3})\.?(\d{3})\/?(\d{4})\-?(\d{2})$";
@@ -141,6 +142,8 @@ namespace Vip.DFe.Helpers
         public static string FormatarTelefone(string telefone) => InternalRegexReplace(telefone, Telefone, "($1) $2-$3");
 
         public static string FormatarChaveAcesso(string chaveAcesso) => Regex.Replace(chaveAcesso, ".{4}", "$0 ").TrimEnd();
+
+        public static string FormatarNumeroNF(string numero) => InternalRegexReplace(numero, FormatoNumeroNFRegex, "$1.$2.$3");
 
         public static string Formatar(this double number, string formato = FormatoMoeda) => number.ToString(formato, Cultura);
 

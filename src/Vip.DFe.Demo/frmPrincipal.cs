@@ -183,9 +183,25 @@ namespace Vip.DFe.Demo
 
             using (var danfe = new DanfeService(modelo))
             {
-                danfe.AdicionarLogoImagem(@"D:\vip.jpg");
                 danfe.Gerar();
                 danfe.Salvar(@"D:\danfeOk.pdf");
+            }
+
+            MessageBox.Show("Danfe Gerada");
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            const string arquivo = @"D:\35210138707682000140550010000010331196283904_110111_01-procEventoNFe.xml";
+            //const string arquivo = @"D:\35150413358435000154550010000000331365222750_01-procEventoNFe.xml";
+
+            var modelo = DanfeEventoViewModel.CriarDeArquivoXml(arquivo);
+            modelo.DefinirTextoCreditos("Emitido pelo software VipERP - www.vipsolucoes.com");
+
+            using (var danfe = new DanfeEventoService(modelo))
+            {
+                danfe.Gerar();
+                danfe.Salvar(@"D:\danfeEventoOk.pdf");
             }
 
             MessageBox.Show("Danfe Gerada");

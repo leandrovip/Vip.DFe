@@ -17,11 +17,11 @@ namespace Vip.DFe.Danfe.Elementos
 
         #region Constructors
 
-        public CampoMultilinha(string cabecalho, string conteudo, Estilo estilo, AlinhamentoHorizontal alinhamentoHorizontalConteudo = AlinhamentoHorizontal.Esquerda)
+        public CampoMultilinha(string cabecalho, string conteudo, Estilo estilo, AlinhamentoHorizontal alinhamentoHorizontalConteudo = AlinhamentoHorizontal.Esquerda, bool isBold = false)
             : base(cabecalho, conteudo, estilo, alinhamentoHorizontalConteudo)
         {
-            _tbConteudo = new TextBlock(conteudo, estilo.FonteCampoConteudo);
-            IsConteudoNegrito = false;
+            _tbConteudo = new TextBlock(conteudo, isBold ? estilo.FonteCampoConteudoNegrito : estilo.FonteCampoConteudo);
+            IsConteudoNegrito = isBold;
         }
 
         #endregion
@@ -32,12 +32,6 @@ namespace Vip.DFe.Danfe.Elementos
         {
             get => Math.Max(_tbConteudo.Height + Estilo.FonteCampoCabecalho.AlturaLinha + Estilo.PaddingSuperior + 2 * Estilo.PaddingInferior, base.Height);
             set => base.Height = value;
-        }
-
-        public override string Conteudo
-        {
-            get => base.Conteudo;
-            set => base.Conteudo = value;
         }
 
         public override float Width

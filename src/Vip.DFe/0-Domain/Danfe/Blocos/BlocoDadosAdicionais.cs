@@ -1,7 +1,6 @@
 ﻿using Vip.DFe.Danfe.Elementos;
 using Vip.DFe.Danfe.Enum;
 using Vip.DFe.Danfe.Modelo;
-using Vip.DFe.Graphics;
 
 namespace Vip.DFe.Danfe.Blocos
 {
@@ -56,15 +55,6 @@ namespace Vip.DFe.Danfe.Blocos
 
         public override PosicaoBloco Posicao => PosicaoBloco.Base;
         public override string Cabecalho => "Dados adicionais";
-
-        #endregion
-
-        #region Methods
-
-        public override void Draw(Gfx gfx)
-        {
-            base.Draw(gfx);
-        }
 
         #endregion
     }

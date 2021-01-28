@@ -10,7 +10,7 @@
 
         public static readonly int[] NFeDenegada = {110, 301, 302, 303};
 
-        public static readonly int[] EventoProcessado = {128, 135, 136, 151, 155};
+        public static readonly int[] EventoProcessado = {135, 136, 101, 151, 155};
 
         #endregion
 

@@ -44,7 +44,7 @@ namespace Vip.DFe.Danfe.Elementos
         public Fonte FonteCampoCabecalho { get; private set; }
         public Fonte FonteCampoConteudo { get; private set; }
         public Fonte FonteCampoConteudoNegrito { get; private set; }
-        public Fonte FonteBlocoCabecalho { get; private set; }
+        public Fonte FonteBlocoCabecalho { get; set; }
         public Fonte FonteNumeroFolhas { get; private set; }
 
         #endregion
