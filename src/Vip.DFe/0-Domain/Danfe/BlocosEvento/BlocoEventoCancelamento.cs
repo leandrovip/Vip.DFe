@@ -22,7 +22,7 @@ namespace Vip.DFe.Danfe.BlocosEvento
 
         #region Properties
 
-        public const float AlturaCampo = DanfeConstantes.A4Altura - 102;
+        public const float AlturaCampo = DanfeConstantes.A4Altura - 99;
         public override string Cabecalho => "JUSTIFICATIVA";
         public override PosicaoBloco Posicao => PosicaoBloco.Topo;
 

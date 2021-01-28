@@ -192,7 +192,7 @@ namespace Vip.DFe.Demo
 
         private void button4_Click(object sender, EventArgs e)
         {
-            const string arquivo = @"D:\35210138707682000140550010000010331196283904_110111_01-procEventoNFe.xml";
+            const string arquivo = @"D:\35210138707682000140550010000010371442332758_110111_01-procEventoNFe.xml";
             //const string arquivo = @"D:\35150413358435000154550010000000331365222750_01-procEventoNFe.xml";
 
             var modelo = DanfeEventoViewModel.CriarDeArquivoXml(arquivo);
