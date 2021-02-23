@@ -38,6 +38,18 @@ namespace Vip.DFe.Shared.Enum
         [DFeEnum("15")] [Description("15 - Boleto Bancário")]
         BoletoBancario = 15,
 
+        [DFeEnum("16")] [Description("16 - Depósito Bancário")]
+        DepositoBancario = 16,
+
+        [DFeEnum("17")] [Description("17 - Pagamento Instantâneo (PIX)")]
+        PagamentoInstantaneo = 17,
+
+        [DFeEnum("18")] [Description("18 - Transferência Bancária")]
+        TransferenciaBancaria = 18,
+
+        [DFeEnum("19")] [Description("19 - Programa de Fidelidade")]
+        ProgramaFidelidade = 19,
+
         [DFeEnum("90")] [Description("90 - Sem Pagamento")]
         SemPagamento = 90,
 
