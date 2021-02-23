@@ -23,7 +23,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Pagamento
         public NFeTipoIntegracaoPagamento TpIntegra { get; set; }
 
         /// <summary>
-        ///     YA05 - CNPJ da Credenciadora de cartão de crédito e/ou débito
+        ///     YA05 - CNPJ da instituição de pagamento, adquirente ou subadquirente. Caso o pagamento seja processado pelo intermediador da transação, informar o CNPJ deste
         /// </summary>
         [DFeElement(TipoCampo.StrNumberFill, "CNPJ", Id = "YA05", Min = 14, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string Cnpj { get; set; }

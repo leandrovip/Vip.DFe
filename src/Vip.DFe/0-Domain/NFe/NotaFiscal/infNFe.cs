@@ -52,6 +52,7 @@ namespace Vip.DFe.NFe.NotaFiscal
             Transporte = new NFeTransporte();
             Cobranca = new NFeCobranca();
             Pagamento = new NFePagamento();
+            Intermediador = new NFeIntermediador();
             InformacaoAdicional = new NFeInformacaoAdicional();
             Exporta = new NFeExporta();
             Compra = new NFeCompra();
@@ -188,6 +189,12 @@ namespace Vip.DFe.NFe.NotaFiscal
         public NFePagamento Pagamento { get; set; }
 
         /// <summary>
+        ///     YB01 - Grupo de Informações do Intermediador da Transação
+        /// </summary>
+        [DFeElement("infIntermed", Id = "YB01", Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public NFeIntermediador Intermediador { get; set; }
+
+        /// <summary>
         ///     Z01 - Grupo de Informações Adicionais
         /// </summary>
         [DFeElement("infAdic", Id = "Z01", Ocorrencia = Ocorrencia.NaoObrigatoria)]
@@ -263,6 +270,11 @@ namespace Vip.DFe.NFe.NotaFiscal
         private bool ShouldSerializeCana()
         {
             return Cana.FornecedimentoDiario.Any() || Cana.Safra.IsNotNullOrEmpty() || Cana.MesAnoRerefencia.IsNotNullOrEmpty();
+        }
+
+        private bool ShouldSerializeIntermediador()
+        {
+            return Intermediador.Cnpj.IsNotNullOrEmpty() || Intermediador.IdCadIntTran.IsNotNullOrEmpty();
         }
 
         private bool ShouldSerializeResponsavelTecnico()
