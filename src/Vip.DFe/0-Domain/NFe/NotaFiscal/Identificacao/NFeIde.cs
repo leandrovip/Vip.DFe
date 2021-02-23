@@ -146,6 +146,12 @@ namespace Vip.DFe.NFe.NotaFiscal.Identificacao
         public NFePresencaComprador IndPres { get; set; }
 
         /// <summary>
+        ///     B25c - Indicador de intermediador/marketplace
+        /// </summary>
+        [DFeElement(TipoCampo.Enum, "indIntermed", Id = "B25c", Min = 1, Max = 1, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public NFeIndIntermed IndIntermed { get; set; }
+
+        /// <summary>
         ///     B26 - Processo de emissão utilizado com a seguinte codificação:
         /// </summary>
         [DFeElement(TipoCampo.Enum, "procEmi", Id = "B26", Min = 1, Max = 1, Ocorrencia = Ocorrencia.Obrigatoria)]
@@ -184,30 +190,17 @@ namespace Vip.DFe.NFe.NotaFiscal.Identificacao
 
         #region Methods
 
-        public bool ShouldSerializeDhSaiEnt()
-        {
-            return DhSaiEnt.HasValue;
-        }
+        public bool ShouldSerializeDhSaiEnt() => DhSaiEnt.HasValue;
 
-        public bool ShouldSerializeDhCont()
-        {
-            return TipoEmissao != TipoEmissao.Normal;
-        }
+        public bool ShouldSerializeDhCont() => TipoEmissao != TipoEmissao.Normal;
 
-        public bool ShouldSerializeXJust()
-        {
-            return TipoEmissao != TipoEmissao.Normal;
-        }
+        public bool ShouldSerializeXJust() => TipoEmissao != TipoEmissao.Normal;
 
-        private string SerializeVerProc()
-        {
-            return VerProc.IsNullOrEmpty() ? "4.00" : VerProc;
-        }
+        private bool ShouldSerializeIndIntermed() => IndPres == NFePresencaComprador.Internet || IndPres == NFePresencaComprador.Teleatendimento || IndPres == NFePresencaComprador.NFCeEntregaDomicilio || IndPres == NFePresencaComprador.Outros;
 
-        private object DeserializeVerProc(string value)
-        {
-            return value;
-        }
+        private string SerializeVerProc() => VerProc.IsNullOrEmpty() ? "4.00" : VerProc;
+
+        private object DeserializeVerProc(string value) => value;
 
         #endregion
     }
