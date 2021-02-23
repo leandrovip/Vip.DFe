@@ -44,13 +44,15 @@
             this.btnCartaoDeCorrecao = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.txtNumeroRecibo = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 81);
+            this.button1.Location = new System.Drawing.Point(16, 100);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(216, 23);
+            this.button1.Size = new System.Drawing.Size(288, 28);
             this.button1.TabIndex = 0;
             this.button1.Text = "Autorização";
             this.button1.UseVisualStyleBackColor = true;
@@ -58,34 +60,38 @@
             // 
             // txtDados
             // 
-            this.txtDados.Location = new System.Drawing.Point(12, 170);
+            this.txtDados.Location = new System.Drawing.Point(16, 209);
+            this.txtDados.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtDados.Multiline = true;
             this.txtDados.Name = "txtDados";
-            this.txtDados.Size = new System.Drawing.Size(776, 268);
+            this.txtDados.Size = new System.Drawing.Size(1033, 329);
             this.txtDados.TabIndex = 1;
             // 
             // txtCertificado
             // 
-            this.txtCertificado.Location = new System.Drawing.Point(12, 26);
+            this.txtCertificado.Location = new System.Drawing.Point(16, 32);
+            this.txtCertificado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtCertificado.Name = "txtCertificado";
-            this.txtCertificado.Size = new System.Drawing.Size(216, 20);
+            this.txtCertificado.Size = new System.Drawing.Size(287, 22);
             this.txtCertificado.TabIndex = 2;
             this.txtCertificado.Text = "121A1809255AA983";
             // 
             // lblCertificado
             // 
             this.lblCertificado.AutoSize = true;
-            this.lblCertificado.Location = new System.Drawing.Point(12, 10);
+            this.lblCertificado.Location = new System.Drawing.Point(16, 12);
+            this.lblCertificado.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCertificado.Name = "lblCertificado";
-            this.lblCertificado.Size = new System.Drawing.Size(89, 13);
+            this.lblCertificado.Size = new System.Drawing.Size(113, 16);
             this.lblCertificado.TabIndex = 3;
             this.lblCertificado.Text = "Certificado Digital";
             // 
             // btnCertificado
             // 
-            this.btnCertificado.Location = new System.Drawing.Point(234, 24);
+            this.btnCertificado.Location = new System.Drawing.Point(312, 30);
+            this.btnCertificado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCertificado.Name = "btnCertificado";
-            this.btnCertificado.Size = new System.Drawing.Size(129, 23);
+            this.btnCertificado.Size = new System.Drawing.Size(172, 28);
             this.btnCertificado.TabIndex = 0;
             this.btnCertificado.Text = "Selecionar Certificado";
             this.btnCertificado.UseVisualStyleBackColor = true;
@@ -93,27 +99,30 @@
             // 
             // txtSenhaCertificado
             // 
-            this.txtSenhaCertificado.Location = new System.Drawing.Point(369, 27);
+            this.txtSenhaCertificado.Location = new System.Drawing.Point(492, 33);
+            this.txtSenhaCertificado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtSenhaCertificado.Name = "txtSenhaCertificado";
             this.txtSenhaCertificado.PasswordChar = '*';
-            this.txtSenhaCertificado.Size = new System.Drawing.Size(81, 20);
+            this.txtSenhaCertificado.Size = new System.Drawing.Size(107, 22);
             this.txtSenhaCertificado.TabIndex = 2;
             // 
             // lblSenhaCertificado
             // 
             this.lblSenhaCertificado.AutoSize = true;
-            this.lblSenhaCertificado.Location = new System.Drawing.Point(366, 11);
+            this.lblSenhaCertificado.Location = new System.Drawing.Point(488, 14);
+            this.lblSenhaCertificado.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSenhaCertificado.Name = "lblSenhaCertificado";
-            this.lblSenhaCertificado.Size = new System.Drawing.Size(91, 13);
+            this.lblSenhaCertificado.Size = new System.Drawing.Size(114, 16);
             this.lblSenhaCertificado.TabIndex = 3;
             this.lblSenhaCertificado.Text = "Senha Certificado";
             this.lblSenhaCertificado.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(234, 81);
+            this.button2.Location = new System.Drawing.Point(312, 100);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(216, 23);
+            this.button2.Size = new System.Drawing.Size(288, 28);
             this.button2.TabIndex = 0;
             this.button2.Text = "Consulta Autorização";
             this.button2.UseVisualStyleBackColor = true;
@@ -121,9 +130,10 @@
             // 
             // btnCarregarNFeConsultar
             // 
-            this.btnCarregarNFeConsultar.Location = new System.Drawing.Point(637, 27);
+            this.btnCarregarNFeConsultar.Location = new System.Drawing.Point(849, 33);
+            this.btnCarregarNFeConsultar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCarregarNFeConsultar.Name = "btnCarregarNFeConsultar";
-            this.btnCarregarNFeConsultar.Size = new System.Drawing.Size(151, 23);
+            this.btnCarregarNFeConsultar.Size = new System.Drawing.Size(201, 28);
             this.btnCarregarNFeConsultar.TabIndex = 4;
             this.btnCarregarNFeConsultar.Text = "Carregar NFe e Consultar";
             this.btnCarregarNFeConsultar.UseVisualStyleBackColor = true;
@@ -131,9 +141,10 @@
             // 
             // btnConsultarStatusServico
             // 
-            this.btnConsultarStatusServico.Location = new System.Drawing.Point(12, 110);
+            this.btnConsultarStatusServico.Location = new System.Drawing.Point(16, 135);
+            this.btnConsultarStatusServico.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnConsultarStatusServico.Name = "btnConsultarStatusServico";
-            this.btnConsultarStatusServico.Size = new System.Drawing.Size(216, 23);
+            this.btnConsultarStatusServico.Size = new System.Drawing.Size(288, 28);
             this.btnConsultarStatusServico.TabIndex = 4;
             this.btnConsultarStatusServico.Text = "Consultar Status Serviço";
             this.btnConsultarStatusServico.UseVisualStyleBackColor = true;
@@ -141,9 +152,10 @@
             // 
             // btnConsultarChaveNFe
             // 
-            this.btnConsultarChaveNFe.Location = new System.Drawing.Point(234, 110);
+            this.btnConsultarChaveNFe.Location = new System.Drawing.Point(312, 135);
+            this.btnConsultarChaveNFe.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnConsultarChaveNFe.Name = "btnConsultarChaveNFe";
-            this.btnConsultarChaveNFe.Size = new System.Drawing.Size(216, 23);
+            this.btnConsultarChaveNFe.Size = new System.Drawing.Size(288, 28);
             this.btnConsultarChaveNFe.TabIndex = 4;
             this.btnConsultarChaveNFe.Text = "Consultar por Chave NFe";
             this.btnConsultarChaveNFe.UseVisualStyleBackColor = true;
@@ -151,9 +163,10 @@
             // 
             // btnInutilizacao
             // 
-            this.btnInutilizacao.Location = new System.Drawing.Point(637, 56);
+            this.btnInutilizacao.Location = new System.Drawing.Point(849, 69);
+            this.btnInutilizacao.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnInutilizacao.Name = "btnInutilizacao";
-            this.btnInutilizacao.Size = new System.Drawing.Size(151, 23);
+            this.btnInutilizacao.Size = new System.Drawing.Size(201, 28);
             this.btnInutilizacao.TabIndex = 4;
             this.btnInutilizacao.Text = "Inutilizar NFe";
             this.btnInutilizacao.UseVisualStyleBackColor = true;
@@ -161,9 +174,10 @@
             // 
             // btnCancelarNFe
             // 
-            this.btnCancelarNFe.Location = new System.Drawing.Point(637, 85);
+            this.btnCancelarNFe.Location = new System.Drawing.Point(849, 105);
+            this.btnCancelarNFe.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCancelarNFe.Name = "btnCancelarNFe";
-            this.btnCancelarNFe.Size = new System.Drawing.Size(151, 23);
+            this.btnCancelarNFe.Size = new System.Drawing.Size(201, 28);
             this.btnCancelarNFe.TabIndex = 4;
             this.btnCancelarNFe.Text = "Cancelar NFe";
             this.btnCancelarNFe.UseVisualStyleBackColor = true;
@@ -171,9 +185,10 @@
             // 
             // btnCartaoDeCorrecao
             // 
-            this.btnCartaoDeCorrecao.Location = new System.Drawing.Point(637, 114);
+            this.btnCartaoDeCorrecao.Location = new System.Drawing.Point(849, 140);
+            this.btnCartaoDeCorrecao.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCartaoDeCorrecao.Name = "btnCartaoDeCorrecao";
-            this.btnCartaoDeCorrecao.Size = new System.Drawing.Size(151, 23);
+            this.btnCartaoDeCorrecao.Size = new System.Drawing.Size(201, 28);
             this.btnCartaoDeCorrecao.TabIndex = 4;
             this.btnCartaoDeCorrecao.Text = "Carta de Correção";
             this.btnCartaoDeCorrecao.UseVisualStyleBackColor = true;
@@ -181,9 +196,10 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(637, 141);
+            this.button3.Location = new System.Drawing.Point(849, 174);
+            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(151, 23);
+            this.button3.Size = new System.Drawing.Size(201, 28);
             this.button3.TabIndex = 4;
             this.button3.Text = "Gerar DANFE";
             this.button3.UseVisualStyleBackColor = true;
@@ -191,19 +207,30 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(480, 141);
+            this.button4.Location = new System.Drawing.Point(640, 174);
+            this.button4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(151, 23);
+            this.button4.Size = new System.Drawing.Size(201, 28);
             this.button4.TabIndex = 4;
             this.button4.Text = "Gerar DANFE Evento";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
+            // txtNumeroRecibo
+            // 
+            this.txtNumeroRecibo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNumeroRecibo.Location = new System.Drawing.Point(608, 108);
+            this.txtNumeroRecibo.Margin = new System.Windows.Forms.Padding(4);
+            this.txtNumeroRecibo.Name = "txtNumeroRecibo";
+            this.txtNumeroRecibo.Size = new System.Drawing.Size(152, 20);
+            this.txtNumeroRecibo.TabIndex = 5;
+            // 
             // frmPrincipal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.Controls.Add(this.txtNumeroRecibo);
             this.Controls.Add(this.btnCartaoDeCorrecao);
             this.Controls.Add(this.btnCancelarNFe);
             this.Controls.Add(this.btnInutilizacao);
@@ -220,6 +247,7 @@
             this.Controls.Add(this.btnCertificado);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmPrincipal";
             this.Text = "frmPrincipal";
             this.ResumeLayout(false);
@@ -245,5 +273,6 @@
         private System.Windows.Forms.Button btnCartaoDeCorrecao;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.TextBox txtNumeroRecibo;
     }
 }

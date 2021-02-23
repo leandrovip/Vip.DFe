@@ -22,7 +22,7 @@ namespace Vip.DFe.Demo
         {
             var nfeService = ObterService();
 
-            var nfe = GerarNFe(1005);
+            var nfe = GerarNFe(1039);
 
             nfeService.Documentos.Add(nfe);
 
@@ -95,9 +95,7 @@ namespace Vip.DFe.Demo
         private void button2_Click(object sender, EventArgs e)
         {
             var service = ObterService();
-            var teste = service.ConsultaAutorizacao("351000147330528");
-
-            // 351000146291718
+            var teste = service.ConsultaAutorizacao(txtNumeroRecibo.Text);
 
             txtDados.Text = "";
             txtDados.Text = teste.XmlRetorno;

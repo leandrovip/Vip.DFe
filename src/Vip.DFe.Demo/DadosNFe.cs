@@ -87,7 +87,8 @@ namespace Vip.DFe.Demo
             //else
             //{
             ide.TipoImpressao = TipoImpressao.NormalRetrato;
-            ide.IndPres = NFePresencaComprador.Nao;
+            ide.IndPres = NFePresencaComprador.Presencial;
+            ide.IndIntermed = NFeIndIntermed.SemIntermediador;
             ide.DhSaiEnt = DateTime.Now;
             //}
 
