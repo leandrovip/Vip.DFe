@@ -67,7 +67,8 @@ namespace Vip.DFe.Extensions
         public static StringBuilder AppendChaveValor(this StringBuilder sb, string chave, string valor)
         {
             if (sb.Length > 0) sb.Append(' ');
-            return sb.Append(chave).Append(": ").Append(valor);
+            if (chave.IsNotNullOrEmpty()) sb.Append(chave).Append(": ");
+            return sb.Append(valor);
         }
 
         public static XAlignmentEnum ToPdfClownAlignment(this AlinhamentoHorizontal ah)

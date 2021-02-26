@@ -71,12 +71,17 @@ namespace Vip.DFe.Danfe.Elementos
             }
 
             var emitente = ViewModel.Emitente;
+            var nome = emitente.RazaoSocial;
+            var nome2 = emitente.NomeFantasia.TrimVip();
 
-            string nome = emitente.RazaoSocial;
-
-            if (ViewModel.PreferirEmitenteNomeFantasia) nome = !string.IsNullOrWhiteSpace(emitente.NomeFantasia) ? emitente.NomeFantasia : emitente.RazaoSocial;
+            if (ViewModel.PreferirEmitenteNomeFantasia)
+            {
+                nome = emitente.NomeFantasia.IsNotNullOrEmpty() ? emitente.NomeFantasia : emitente.RazaoSocial;
+                nome2 = emitente.RazaoSocial;
+            }
             var ts = new TextStack(rp) {LineHeightScale = 1}
                 .AddLine(nome, f2)
+                .AddLine(nome2, f3)
                 .AddLine(emitente.EnderecoLinha1.Trim(), f3)
                 .AddLine(emitente.EnderecoLinha2.Trim(), f3)
                 .AddLine(emitente.EnderecoLinha3.Trim(), f3);

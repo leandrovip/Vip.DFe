@@ -5,8 +5,6 @@ using Vip.DFe.Danfe;
 using Vip.DFe.Danfe.Modelo;
 using Vip.DFe.NFe;
 using Vip.DFe.NFe.Enum;
-using Vip.DFe.SAT;
-using Vip.DFe.SAT.Enum;
 using Vip.DFe.Shared.Enum;
 
 namespace Vip.DFe.Demo
@@ -26,7 +24,7 @@ namespace Vip.DFe.Demo
 
             nfeService.Documentos.Add(nfe);
 
-            var teste = nfeService.AutorizacaoLote("");
+            var teste = nfeService.AutorizacaoLote();
             txtDados.Text = teste.XmlRetorno;
         }
 
@@ -174,13 +172,15 @@ namespace Vip.DFe.Demo
 
         private void button3_Click(object sender, EventArgs e)
         {
-            const string arquivo = @"D:\35210112332134000199550010000010111903363115-procNFe.xml";
+            const string arquivo = @"D:\35210238707682000140550010000010411660728153-procNFe.xml";
 
             var modelo = DanfeViewModel.CriarDeArquivoXml(arquivo);
             modelo.DefinirTextoCreditos("Emitido pelo software VipERP - www.vipsolucoes.com");
+            modelo.PreferirEmitenteNomeFantasia = true;
 
             using (var danfe = new DanfeService(modelo))
             {
+                danfe.AdicionarLogoImagem(@"D:\vip.jpg");
                 danfe.Gerar();
                 danfe.Salvar(@"D:\danfeOk.pdf");
             }
