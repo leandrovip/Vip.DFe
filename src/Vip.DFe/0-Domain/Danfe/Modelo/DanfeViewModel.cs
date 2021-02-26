@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Vip.DFe.Danfe.Enum;
@@ -199,8 +198,6 @@ namespace Vip.DFe.Danfe.Modelo
         /// </summary>
         public List<string> NotasFiscaisReferenciadas { get; set; }
 
-        public bool MostrarCalculoIssqn { get; set; }
-
         #region Local Retirada e Entrega
 
         public LocalEntregaRetiradaViewModel LocalRetirada { get; set; }
@@ -255,6 +252,8 @@ namespace Vip.DFe.Danfe.Modelo
         /// </summary>
         public bool PreferirEmitenteNomeFantasia { get; set; } = true;
 
+        //public bool MostrarCalculoIssqn { get; set; }
+
         #endregion
 
         #region Contingencia
@@ -280,21 +279,16 @@ namespace Vip.DFe.Danfe.Modelo
         public virtual string TextoAdicionalFisco()
         {
             var sb = new StringBuilder();
+            if (InformacoesAdicionaisFisco.IsNotNullOrEmpty()) sb.AppendChaveValor("Dados Fisco", InformacoesAdicionaisFisco);
 
             if (TipoEmissao == TipoEmissao.SVCAN || TipoEmissao == TipoEmissao.SVCRS)
             {
+                if (sb.Length > 0) sb.Append("\r\n");
                 sb.Append("Contingência ");
-
-                if (TipoEmissao == TipoEmissao.SVCAN)
-                    sb.Append("SVC-AN");
-
-                if (TipoEmissao == TipoEmissao.SVCRS)
-                    sb.Append("SVC-RS");
-
+                if (TipoEmissao == TipoEmissao.SVCAN) sb.Append("SVC-AN");
+                if (TipoEmissao == TipoEmissao.SVCRS) sb.Append("SVC-RS");
                 if (ContingenciaDataHora.HasValue) sb.Append($" - {ContingenciaDataHora.FormatarDataHora()}");
-
                 if (!string.IsNullOrWhiteSpace(ContingenciaJustificativa)) sb.Append($" - {ContingenciaJustificativa}");
-
                 sb.Append(".");
             }
 
@@ -304,45 +298,36 @@ namespace Vip.DFe.Danfe.Modelo
         public virtual string TextoAdicional()
         {
             var sb = new StringBuilder();
+            if (InformacoesComplementares.IsNotNullOrEmpty()) sb.AppendChaveValor("", BreakLines(InformacoesComplementares));
 
-            if (!string.IsNullOrEmpty(InformacoesComplementares))
-                sb.AppendChaveValor("Inf. Contribuinte", InformacoesComplementares).Replace(";", "\r\n");
-
-            if (!string.IsNullOrEmpty(Destinatario.Email))
+            if (Destinatario.Email.IsNotNullOrEmpty())
             {
                 // Adiciona um espaço após a virgula caso necessário, isso facilita a quebra de linha.
                 var destEmail = Regex.Replace(Destinatario.Email, @"(?<=\S)([,;])(?=\S)", "$1 ").Trim(' ', ',', ';');
                 sb.AppendChaveValor("Email do Destinatário", destEmail);
             }
 
-            if (!string.IsNullOrEmpty(InformacoesAdicionaisFisco))
-                sb.AppendChaveValor("Inf. fisco", InformacoesAdicionaisFisco);
+            if (Pedido.IsNotNullOrEmpty() && !DanfeHelper.StringContemChaveValor(InformacoesComplementares, "Pedido", Pedido)) sb.AppendChaveValor("Pedido", Pedido);
+            if (Contrato.IsNotNullOrEmpty() && !DanfeHelper.StringContemChaveValor(InformacoesComplementares, "Contrato", Contrato)) sb.AppendChaveValor("Contrato", Contrato);
+            if (NotaEmpenho.IsNotNullOrEmpty()) sb.AppendChaveValor("Nota de Empenho", NotaEmpenho);
 
-            if (!string.IsNullOrEmpty(Pedido) && !DanfeHelper.StringContemChaveValor(InformacoesComplementares, "Pedido", Pedido))
-                sb.AppendChaveValor("Pedido", Pedido);
-
-            if (!string.IsNullOrEmpty(Contrato) && !DanfeHelper.StringContemChaveValor(InformacoesComplementares, "Contrato", Contrato))
-                sb.AppendChaveValor("Contrato", Contrato);
-
-            if (!string.IsNullOrEmpty(NotaEmpenho))
-                sb.AppendChaveValor("Nota de Empenho", NotaEmpenho);
-
-            foreach (var nfref in NotasFiscaisReferenciadas.Take(5))
-            {
-                if (sb.Length > 0) sb.Append(" ");
-                sb.Append(nfref);
-            }
+            //foreach (var nfref in NotasFiscaisReferenciadas.Take(5))
+            //{
+            //    if (sb.Length > 0) sb.Append(" ");
+            //    sb.Append(nfref);
+            //}
 
             #region NT 2013.003 Lei da Transparência
 
-            if (CalculoImposto.ValorAproximadoTributos.HasValue && (string.IsNullOrEmpty(InformacoesComplementares) ||
+            if (CalculoImposto.ValorAproximadoTributos.HasValue && (InformacoesComplementares.IsNullOrEmpty() ||
                                                                     !Regex.IsMatch(InformacoesComplementares, @"((valor|vlr?\.?)\s+(aprox\.?|aproximado)\s+(dos\s+)?(trib\.?|tributos))|((trib\.?|tributos)\s+(aprox\.?|aproximado))",
                                                                         RegexOptions.IgnoreCase)))
-            {
-                if (sb.Length > 0) sb.Append("\r\n");
-                sb.Append("Valor Aproximado dos Tributos: ");
-                sb.Append(CalculoImposto.ValorAproximadoTributos.FormatarMoeda());
-            }
+                if (CalculoImposto.ValorAproximadoTributos > 0)
+                {
+                    if (sb.Length > 0) sb.Append("\r\n");
+                    sb.Append("Valor Aproximado dos Tributos: ");
+                    sb.Append(CalculoImposto.ValorAproximadoTributos.FormatarMoeda());
+                }
 
             #endregion
 

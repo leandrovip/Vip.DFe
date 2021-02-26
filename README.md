@@ -17,7 +17,7 @@
 
 Biblioteca responsável pela emissão de DFe´s. Até o momento implementado CFe SAT e NFe.
 
-Em desenvolvimento!
+Em desenvolvimento, use por sua conta e risco!
 
 ## Pré requisitos
 
