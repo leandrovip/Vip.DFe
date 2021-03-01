@@ -32,7 +32,7 @@ namespace Vip.DFe.NFe.NotaFiscal.InformacaoAdicional
         /// <summary>
         ///     Z02 - Informações Adicionais de Interesse do Fisco
         /// </summary>
-        [DFeElement(TipoCampo.Str, "infAdFisco", Id = "Z02", Min = 1, Max = 2000, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.Custom, "infAdFisco", Id = "Z02", Min = 1, Max = 2000, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string InformacaoFisco { get; set; }
 
         /// <summary>
