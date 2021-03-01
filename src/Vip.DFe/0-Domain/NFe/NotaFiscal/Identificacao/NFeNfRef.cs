@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
+using Vip.DFe.Extensions;
 using Vip.DFe.Serializer;
 
 namespace Vip.DFe.NFe.NotaFiscal.Identificacao
@@ -44,6 +45,20 @@ namespace Vip.DFe.NFe.NotaFiscal.Identificacao
         /// </summary>
         [DFeElement("refECF", Ocorrencia = Ocorrencia.Obrigatoria)]
         public NFeRefEcf RefECF { get; set; }
+
+        #endregion
+
+        #region Methods
+
+        private bool ShouldSerializeRefNFe() => RefNFe.IsNotNullOrEmpty();
+
+        private bool ShouldSerializeRefNF() => RefNF != null;
+
+        private bool ShouldSerializeRefNFP() => RefNFP != null;
+
+        private bool ShouldSerializeRefCTe() => RefCTe != null;
+
+        private bool ShouldSerializeRefECF() => RefECF != null;
 
         #endregion
     }

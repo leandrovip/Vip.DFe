@@ -300,17 +300,11 @@ namespace Vip.DFe.Demo
 
         public List<NFeNfRef> GetNotasReferenciadas()
         {
-            var notasRefs = new List<NFeNfRef>();
-
-            //notasRefs.Add(new NFeNfRef
-            //{
-            //    RefNFe = "chave de acesso da NF referenciada para devolução"
-            //});
-
-            //notasRefs.Add(new NFeNfRef
-            //{
-            //    RefNFe = "outra chave de acesso de uma outra NF referenciada para devolução"
-            //});
+            var notasRefs = new List<NFeNfRef>
+            {
+                new NFeNfRef {RefNFe = "35210338707682000140550010000010521975982021"},
+                new NFeNfRef {RefNFe = "35210338707682000140550010000010521975982020"}
+            };
 
             return notasRefs;
         }
