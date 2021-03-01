@@ -279,7 +279,7 @@ namespace Vip.DFe.Danfe.Modelo
         public virtual string TextoAdicionalFisco()
         {
             var sb = new StringBuilder();
-            if (InformacoesAdicionaisFisco.IsNotNullOrEmpty()) sb.AppendChaveValor("Dados Fisco", BreakLines(InformacoesAdicionaisFisco));
+            if (InformacoesAdicionaisFisco.IsNotNullOrEmpty()) sb.AppendChaveValor("", BreakLines(InformacoesAdicionaisFisco));
 
             if (TipoEmissao == TipoEmissao.SVCAN || TipoEmissao == TipoEmissao.SVCRS)
             {
