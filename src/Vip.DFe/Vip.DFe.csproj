@@ -6,7 +6,7 @@
 		<Authors>VIP Soluções</Authors>
 		<Description>Biblioteca responsável pela emissão de DFe´s (NFe, CFe SAT)</Description>
 		<Copyright>VIP Soluções</Copyright>
-		<Version>1.0.13</Version>
+		<Version>1.0.14</Version>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<UserSecretsId>120e1b83-c002-41ff-9c4e-9d70ec88e632</UserSecretsId>
 	</PropertyGroup>
