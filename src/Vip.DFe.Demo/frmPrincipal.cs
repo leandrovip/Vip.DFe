@@ -78,6 +78,8 @@ namespace Vip.DFe.Demo
             //    if (infNFe.ide.finNFe == FinalidadeNFe.fnDevolucao)
             //        infNFe.ide.NFref = informacoes.GetNotasReferenciadas();
 
+            nfe.InfNFe.Ide.NFref.AddRange(informacoes.GetNotasReferenciadas());
+
             nfe.InfNFe.Detalhe.AddRange(informacoes.GetDetalhesProdutosNF()); //itens da NF
             nfe.InfNFe.Pagamento = informacoes.GetPagamentos(); //informações de pagamento da NF
             nfe.InfNFe.Total = informacoes.GetTotal(nfe.InfNFe.Detalhe);
