@@ -279,7 +279,7 @@ namespace Vip.DFe.Danfe.Modelo
         public virtual string TextoAdicionalFisco()
         {
             var sb = new StringBuilder();
-            if (InformacoesAdicionaisFisco.IsNotNullOrEmpty()) sb.AppendChaveValor("Dados Fisco", InformacoesAdicionaisFisco);
+            if (InformacoesAdicionaisFisco.IsNotNullOrEmpty()) sb.AppendChaveValor("Dados Fisco", BreakLines(InformacoesAdicionaisFisco));
 
             if (TipoEmissao == TipoEmissao.SVCAN || TipoEmissao == TipoEmissao.SVCRS)
             {
@@ -304,12 +304,12 @@ namespace Vip.DFe.Danfe.Modelo
             {
                 // Adiciona um espaço após a virgula caso necessário, isso facilita a quebra de linha.
                 var destEmail = Regex.Replace(Destinatario.Email, @"(?<=\S)([,;])(?=\S)", "$1 ").Trim(' ', ',', ';');
-                sb.AppendChaveValor("Email do Destinatário", destEmail);
+                sb.AppendChaveValor("\nEmail do Destinatário", destEmail);
             }
 
-            if (Pedido.IsNotNullOrEmpty() && !DanfeHelper.StringContemChaveValor(InformacoesComplementares, "Pedido", Pedido)) sb.AppendChaveValor("Pedido", Pedido);
-            if (Contrato.IsNotNullOrEmpty() && !DanfeHelper.StringContemChaveValor(InformacoesComplementares, "Contrato", Contrato)) sb.AppendChaveValor("Contrato", Contrato);
-            if (NotaEmpenho.IsNotNullOrEmpty()) sb.AppendChaveValor("Nota de Empenho", NotaEmpenho);
+            if (Pedido.IsNotNullOrEmpty() && !DanfeHelper.StringContemChaveValor(InformacoesComplementares, "\nPedido", Pedido)) sb.AppendChaveValor("Pedido", Pedido);
+            if (Contrato.IsNotNullOrEmpty() && !DanfeHelper.StringContemChaveValor(InformacoesComplementares, "\nContrato", Contrato)) sb.AppendChaveValor("Contrato", Contrato);
+            if (NotaEmpenho.IsNotNullOrEmpty()) sb.AppendChaveValor("\nNota de Empenho", NotaEmpenho);
 
             //foreach (var nfref in NotasFiscaisReferenciadas.Take(5))
             //{

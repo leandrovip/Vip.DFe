@@ -174,7 +174,7 @@ namespace Vip.DFe.Demo
 
         private void button3_Click(object sender, EventArgs e)
         {
-            const string arquivo = @"D:\35210238707682000140550010000010411660728153-procNFe.xml";
+            const string arquivo = @"D:\35210338707682000140550010000010551318870102-procNFe.xml";
 
             var modelo = DanfeViewModel.CriarDeArquivoXml(arquivo);
             modelo.DefinirTextoCreditos("Emitido pelo software VipERP - www.vipsolucoes.com");
