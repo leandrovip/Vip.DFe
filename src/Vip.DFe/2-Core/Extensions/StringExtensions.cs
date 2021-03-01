@@ -173,6 +173,11 @@ namespace Vip.DFe.Extensions
             return texto;
         }
 
+        public static string RemoveBreakline(this string text)
+        {
+            return text.Replace('\r', ';').Replace('\n', ';');
+        }
+
         /// <summary>
         ///     Reverse content.
         /// </summary>

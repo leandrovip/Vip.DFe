@@ -3,6 +3,7 @@ using System.Linq;
 using Vip.DFe.Attributes;
 using Vip.DFe.Document;
 using Vip.DFe.Enum;
+using Vip.DFe.Extensions;
 using Vip.DFe.Serializer;
 
 namespace Vip.DFe.NFe.NotaFiscal.InformacaoAdicional
@@ -37,7 +38,7 @@ namespace Vip.DFe.NFe.NotaFiscal.InformacaoAdicional
         /// <summary>
         ///     Z03 - Informações Complementares de interesse do Contribuinte
         /// </summary>
-        [DFeElement(TipoCampo.Str, "infCpl", Id = "Z03", Min = 1, Max = 5000, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.Custom, "infCpl", Id = "Z03", Min = 1, Max = 5000, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string InformacaoComplementar { get; set; }
 
         /// <summary>
@@ -65,20 +66,19 @@ namespace Vip.DFe.NFe.NotaFiscal.InformacaoAdicional
 
         #region Methods
 
-        private bool ShouldSerializeObsCont()
-        {
-            return ObsCont.Any();
-        }
+        private bool ShouldSerializeObsCont() => ObsCont.Any();
 
-        private bool ShouldSerializeObsFisco()
-        {
-            return ObsFisco.Any();
-        }
+        private bool ShouldSerializeObsFisco() => ObsFisco.Any();
 
-        private bool ShouldSerializeProcRef()
-        {
-            return ProcRef.Any();
-        }
+        private bool ShouldSerializeProcRef() => ProcRef.Any();
+
+        private string SerializeInformacaoComplementar() => InformacaoComplementar.RemoveBreakline();
+
+        private object DeserializeInformacaoComplementar(string value) => value;
+
+        private string SerializeInformacaoFisco() => InformacaoFisco.RemoveBreakline();
+
+        private object DeserializeInformacaoFisco(string value) => value;
 
         #endregion
     }

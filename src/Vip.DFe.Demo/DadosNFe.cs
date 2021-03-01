@@ -149,7 +149,7 @@ namespace Vip.DFe.Demo
 
         internal NFeInformacaoAdicional GetInformacoesComplementares() => new NFeInformacaoAdicional
         {
-            InformacaoComplementar = "PRAZO PARA TROCA DE ATÉ 7 DIAS. OBRIGADO PELA PREFERENCIA."
+            InformacaoComplementar = "PRAZO < > & PARA TROCA DE ATÉ 7 DIAS. OBRIGADO PELA PREFERENCIA.\r\nTESTE"
         };
 
         public NFeTotal GetTotal(List<NFeDetalhe> produtos)
