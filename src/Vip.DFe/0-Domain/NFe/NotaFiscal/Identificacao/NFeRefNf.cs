@@ -20,6 +20,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Identificacao
         public NFeRefNf()
         {
             Mod = NFeRefNfMod.Modelo1;
+            CodigoUF = CodigoUF.SP;
             Serie = 0;
         }
 
