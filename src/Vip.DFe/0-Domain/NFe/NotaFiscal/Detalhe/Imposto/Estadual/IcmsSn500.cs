@@ -41,25 +41,25 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
         /// <summary>
         ///     N26 - Valor da BC do ICMS ST retido
         /// </summary>
-        [DFeElement(TipoCampo.De2, "vBCSTRet", Id = "N26", Min = 3, Max = 15, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.De2, "vBCSTRet", Id = "N26", Min = 1, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal VBcStRet { get; set; }
 
         /// <summary>
         ///     N26a  - Alíquota suportada pelo Consumidor Final
         /// </summary>
-        [DFeElement(TipoCampo.De4, "pST", Id = "N26a", Min = 5, Max = 7, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.De4, "pST", Id = "N26a", Min = 1, Max = 7, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal PSt { get; set; }
 
         /// <summary>
         ///     N26b - Valor ICMS próprio do substituto cobrado em operação anterior
         /// </summary>
-        [DFeElement(TipoCampo.De2, "vICMSSubstituto", Id = "N26b", Min = 3, Max = 15, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.De2, "vICMSSubstituto", Id = "N26b", Min = 1, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal VIcmsSubstituto { get; set; }
 
         /// <summary>
         ///     N27 - Valor do ICMS ST retido
         /// </summary>
-        [DFeElement(TipoCampo.De2, "vICMSSTRet", Id = "N27", Min = 3, Max = 15, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.De2, "vICMSSTRet", Id = "N27", Min = 1, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal VIcmsStRet { get; set; }
 
         /// <summary>
