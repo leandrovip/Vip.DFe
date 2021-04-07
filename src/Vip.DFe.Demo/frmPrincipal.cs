@@ -48,8 +48,7 @@ namespace Vip.DFe.Demo
 
         private NFe.NotaFiscal.NFe GerarNFe(int numero)
         {
-            var informacoes = new DadosNFe(TipoAmbiente.Producao, NFeModelo.NFe, NFeFinalidade.Normal, 1, numero);
-
+            var informacoes = new DadosNFe(TipoAmbiente.Homologacao, NFeModelo.NFe, NFeFinalidade.Normal, 1, numero);
             var nfe = new NFe.NotaFiscal.NFe
             {
                 InfNFe =
