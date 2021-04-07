@@ -91,10 +91,9 @@ namespace Vip.DFe.NFe
             var oldProtocol = ServicePointManager.SecurityProtocol;
             ServicePointManager.SecurityProtocol = _securityProtocol;
             _certificado = Configuracoes.Certificado.ObterCertificado();
-            var saveOptions = Configuracoes.ObterOptions();
 
-            Documentos.Assinar(_certificado, saveOptions);
-            Documentos.Validar();
+            Assinar(_certificado);
+            Validar();
 
             NFeAutorizacaoResposta autorizacao;
 
@@ -316,6 +315,25 @@ namespace Vip.DFe.NFe
             };
 
             return RecepcaoEvento(evento);
+        }
+
+        /// <summary>
+        ///     Assina os documentos adicionados na biblioteca
+        /// </summary>
+        /// <returns>VipException - Caso haja validações</returns>
+        public void Assinar(X509Certificate2 certificado = null)
+        {
+            if (certificado.IsNull()) certificado = Configuracoes.Certificado.ObterCertificado();
+            Documentos.Assinar(certificado, Configuracoes.ObterOptions());
+        }
+
+        /// <summary>
+        ///     Valida os documentos adicionados através do Schema.
+        /// </summary>
+        /// <returns>VipException - Caso haja validações</returns>
+        public void Validar()
+        {
+            Documentos.Validar();
         }
 
         /// <summary>

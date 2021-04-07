@@ -3,12 +3,16 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<LangVersion>latest</LangVersion>
-		<Authors>VIP Soluções</Authors>
+		<Authors>Leandro Ferreira</Authors>
 		<Description>Biblioteca responsável pela emissão de DFe´s (NFe, CFe SAT)</Description>
 		<Copyright>VIP Soluções</Copyright>
 		<Version>1.0.21</Version>
-		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<UserSecretsId>120e1b83-c002-41ff-9c4e-9d70ec88e632</UserSecretsId>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/leandrovip/Vip.DFe</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/leandrovip/Vip.DFe</RepositoryUrl>
+		<PackageTags>vip;dfe;nfe;sat</PackageTags>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -40,14 +44,14 @@
 
 	<ItemGroup>
 		<PackageReference Include="ExtraConstraints.Fody" Version="1.14.0" />
-		<PackageReference Include="Fody" Version="6.2.5">
+		<PackageReference Include="Fody" Version="6.5.1">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="PropertyChanged.Fody" Version="3.2.9" />
-		<PackageReference Include="System.Security.Cryptography.Xml" Version="4.7.0" />
-		<PackageReference Include="System.ServiceModel.Http" Version="4.7.0" />
-		<PackageReference Include="System.ServiceModel.Security" Version="4.7.0" />
+		<PackageReference Include="PropertyChanged.Fody" Version="3.3.3" />
+		<PackageReference Include="System.Security.Cryptography.Xml" Version="5.0.0" />
+		<PackageReference Include="System.ServiceModel.Http" Version="4.8.1" />
+		<PackageReference Include="System.ServiceModel.Security" Version="4.8.1" />
 		<PackageReference Include="Vip.Pdf" Version="1.0.2" />
 	</ItemGroup>
 
