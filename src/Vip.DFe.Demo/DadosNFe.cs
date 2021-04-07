@@ -62,7 +62,7 @@ namespace Vip.DFe.Demo
                 CMunFG = 3556800,        // Viradouro
                 TipoEmissao = TipoEmissao.Normal,
                 CNf = GerarCNF(),
-                TpAmb = TipoAmbiente.Homologacao,
+                TpAmb = ambiente,
                 FinNFe = NFeFinalidade.Normal,
                 VerProc = "4.000",
                 DhEmi = DateTime.Now, //data da EMISSAO da NF
@@ -178,7 +178,7 @@ namespace Vip.DFe.Demo
                 VBc = 0,
                 VIcms = 0,
                 VProd = 100,
-                VNf = totalItens - totalDesconto + ValorFCPST + ValorIcmsST + ValorIPI + ValorFrete + ValorOutro + ValorSeguro,
+                VNf = totalItens - totalDesconto + ValorFCPST + ValorIcmsST + ValorIPI + ValorFrete + totalOutros + ValorSeguro,
                 VDesc = totalDesconto,
                 VTotTrib = totalTrib,
                 VPis = ValorPIS,
