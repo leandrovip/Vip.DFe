@@ -38,6 +38,9 @@ jobs:
         with:
           dotnet-version: "5.0.x"
           
+      - name: Clean
+        run: dotnet clean .\src\Vip.DFe.sln && dotnet nuget locals all --clear
+          
       - name: Restore dependencies
         run: dotnet restore .\src\Vip.DFe.sln --force
 
