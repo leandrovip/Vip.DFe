@@ -31,7 +31,7 @@ namespace Vip.DFe.Demo
         {
             var service = new NFeService();
             service.Configuracoes.Versao = NFeVersao.v400;
-            service.Configuracoes.Ambiente = TipoAmbiente.Producao;
+            service.Configuracoes.Ambiente = TipoAmbiente.Homologacao;
 
             service.Configuracoes.Certificado.Certificado = txtCertificado.Text;
             service.Configuracoes.Certificado.Senha = txtSenhaCertificado.Text;
@@ -70,7 +70,7 @@ namespace Vip.DFe.Demo
             //    if (infNFe.ide.finNFe == FinalidadeNFe.fnDevolucao)
             //        infNFe.ide.NFref = informacoes.GetNotasReferenciadas();
 
-            nfe.InfNFe.Ide.NFref.AddRange(informacoes.GetNotasReferenciadas());
+            //nfe.InfNFe.Ide.NFref.AddRange(informacoes.GetNotasReferenciadas());
 
             nfe.InfNFe.Detalhe.AddRange(informacoes.GetDetalhesProdutosNF()); //itens da NF
             nfe.InfNFe.Pagamento = informacoes.GetPagamentos();               //informações de pagamento da NF
@@ -99,7 +99,7 @@ namespace Vip.DFe.Demo
         {
             var nfeService = ObterService();
 
-            var nfe = GerarNFe(41); //1039
+            var nfe = GerarNFe(1039); 
             nfeService.Documentos.Add(nfe);
 
             var teste = nfeService.AutorizacaoLote();
