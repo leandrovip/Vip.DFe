@@ -59,7 +59,7 @@ namespace Vip.DFe.Demo
                 Serie = serie,
                 NumeroNFe = numeroNF,
                 TipoNFe = NFeTipo.Saida, // Entrada / Saida
-                CMunFG = 3556800, // Viradouro
+                CMunFG = 3556800,        // Viradouro
                 TipoEmissao = TipoEmissao.Normal,
                 CNf = GerarCNF(),
                 TpAmb = TipoAmbiente.Homologacao,
@@ -87,8 +87,8 @@ namespace Vip.DFe.Demo
             //else
             //{
             ide.TipoImpressao = TipoImpressao.NormalRetrato;
-            ide.IndPres = NFePresencaComprador.Presencial;
-            ide.IndIntermed = NFeIndIntermed.SemIntermediador;
+            ide.IndPres = NFePresencaComprador.Outros;
+            //ide.IndIntermed = NFeIndIntermed.SemIntermediador;
             ide.DhSaiEnt = DateTime.Now;
             //}
 
@@ -329,7 +329,7 @@ namespace Vip.DFe.Demo
 
             if (modeloDoc == NFeModelo.NFCe)
             {
-                decimal federal = 15; //deverá buscar da tabela IBPT, com base no NCM do item
+                decimal federal = 15;  //deverá buscar da tabela IBPT, com base no NCM do item
                 decimal estadual = 17; //deverá buscar da tabela IBPT, com base no NCM do item
                 decimal municipal = 0; //deverá buscar da tabela IBPT, com base no NCM do item
 
