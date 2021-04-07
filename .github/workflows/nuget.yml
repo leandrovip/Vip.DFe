@@ -16,7 +16,7 @@ env:
 
 jobs:
   deploy-package:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: "Checkout branch"
@@ -39,13 +39,13 @@ jobs:
           dotnet-version: "5.0.x"
 
       - name: Build Project
-        run: dotnet build ./src/Vip.DFe.sln --configuration Release -p:Version=$VERSION_PROJECT
+        run: dotnet build .\src\Vip.DFe.sln --configuration Release -p:Version=$VERSION_PROJECT
 
       - name: Test Project
-        run: dotnet test ./src/Vip.DFe.sln
+        run: dotnet test .\src\Vip.DFe.sln
 
       - name: Create Package
-        run: dotnet pack ./src/Vip.DFe/Vip.DFe.csproj --configuration Release -p:Version=$VERSION_PACKAGE
+        run: dotnet pack .\src\Vip.DFe\Vip.DFe.csproj --configuration Release -p:Version=$VERSION_PACKAGE
 
       - name: Publish Package
-        run: dotnet nuget push ./src/Vip.DFe/bin/Release/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_TOKEN }}
+        run: dotnet nuget push .\src\Vip.DFe\bin/Release\*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_TOKEN }}
