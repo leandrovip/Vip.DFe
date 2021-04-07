@@ -22,16 +22,16 @@ jobs:
       - name: "Checkout branch"
         uses: actions/checkout@main
 
-      - name: "Set Project Version"
-        run: echo ::set-env name=VERSION_PROJECT::1.1.${GITHUB_RUN_NUMBER}
-
-      - name: "Set Package Version"
-        run: echo ::set-env name=VERSION_PACKAGE::${VERSION_PROJECT}${{ github.event.inputs.typeBuild }}
+      - name: "Set Variables"
+        id: envs
+        run: |
+          echo "::set-output name=VERSION_PROJECT::1.1.${Env:GITHUB_RUN_NUMBER}"
+          echo "::set-output name=VERSION_PACKAGE::1.1.${Env:GITHUB_RUN_NUMBER}${{ github.event.inputs.typeBuild }}"
 
       - name: "Variables Test"
         run: |
-          echo Version: $VERSION_PROJECT
-          echo Version2: $VERSION_PACKAGE
+          echo Version: ${{ steps.envs.outputs.VERSION_PROJECT }}
+          echo Version2: ${{ steps.envs.outputs.VERSION_PACKAGE }}
 
       - name: "Force url nuget"
         uses: fabriciomurta/ensure-nuget-source@v1
@@ -51,13 +51,13 @@ jobs:
         run: dotnet restore .\src\Vip.DFe.sln --force
 
       - name: Build Project
-        run: dotnet build .\src\Vip.DFe.sln --configuration Release -p:Version=$VERSION_PROJECT
+        run: dotnet build .\src\Vip.DFe.sln --configuration Release -p:Version=${{ steps.envs.outputs.VERSION_PROJECT }}
 
       - name: Test Project
         run: dotnet test .\src\Vip.DFe.sln
 
       - name: Create Package
-        run: dotnet pack .\src\Vip.DFe\Vip.DFe.csproj --configuration Release -p:Version=$VERSION_PACKAGE
-
+        run: dotnet pack .\src\Vip.DFe\Vip.DFe.csproj --configuration Release -p:Version=${{ steps.envs.outputs.VERSION_PACKAGE }}
+      
       - name: Publish Package
         run: dotnet nuget push .\src\Vip.DFe\bin/Release\*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_TOKEN }}
