@@ -60,4 +60,4 @@ jobs:
         run: dotnet pack .\src\Vip.DFe\Vip.DFe.csproj --configuration Release -p:Version=${{ steps.envs.outputs.VERSION_PACKAGE }}
       
       - name: Publish Package
-        run: dotnet nuget push .\src\Vip.DFe\bin/Release\*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_TOKEN }}
+        run: dotnet nuget push .\src\Vip.DFe\bin\Release\*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_TOKEN }}
