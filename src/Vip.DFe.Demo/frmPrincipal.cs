@@ -11,21 +11,21 @@ namespace Vip.DFe.Demo
 {
     public partial class frmPrincipal : Form
     {
-        public frmPrincipal()
-        {
-            InitializeComponent();
-        }
+        #region Propriedades
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var nfeService = ObterService();
+        #endregion
 
-            var nfe = GerarNFe(41); //1039
-            nfeService.Documentos.Add(nfe);
+        #region Construtores
 
-            var teste = nfeService.AutorizacaoLote();
-            txtDados.Text = teste.XmlRetorno;
-        }
+        #endregion
+
+        #region Eventos
+
+        #endregion
+
+        #region Métodos
+
+        #endregion
 
         private NFeService ObterService()
         {
@@ -38,12 +38,6 @@ namespace Vip.DFe.Demo
             service.Configuracoes.Certificado.ManterEmCache = true;
 
             return service;
-        }
-
-        private void btnCertificado_Click(object sender, EventArgs e)
-        {
-            var certificado = CertificadoHelper.Obter();
-            txtCertificado.Text = certificado.NumeroSerie;
         }
 
         private NFe.NotaFiscal.NFe GerarNFe(int numero)
@@ -79,7 +73,7 @@ namespace Vip.DFe.Demo
             nfe.InfNFe.Ide.NFref.AddRange(informacoes.GetNotasReferenciadas());
 
             nfe.InfNFe.Detalhe.AddRange(informacoes.GetDetalhesProdutosNF()); //itens da NF
-            nfe.InfNFe.Pagamento = informacoes.GetPagamentos(); //informações de pagamento da NF
+            nfe.InfNFe.Pagamento = informacoes.GetPagamentos();               //informações de pagamento da NF
             nfe.InfNFe.Total = informacoes.GetTotal(nfe.InfNFe.Detalhe);
 
             if (nfe.InfNFe.Pagamento.DetPag[0].TPag == MeioPagamento.CreditoLoja)
@@ -90,13 +84,49 @@ namespace Vip.DFe.Demo
             return nfe;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        public frmPrincipal()
+        {
+            InitializeComponent();
+        }
+
+        private void btnCertificado_Click(object sender, EventArgs e)
+        {
+            var certificado = CertificadoHelper.Obter();
+            txtCertificado.Text = certificado.NumeroSerie;
+        }
+
+        private void btnAutorizacao_Click(object sender, EventArgs e)
+        {
+            var nfeService = ObterService();
+
+            var nfe = GerarNFe(41); //1039
+            nfeService.Documentos.Add(nfe);
+
+            var teste = nfeService.AutorizacaoLote();
+            txtRetorno.Text = teste.XmlRetorno;
+        }
+
+        private void btnConsultarServico_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var service = ObterService();
+                var resultado = service.ConsultaSituacaoServico();
+                txtRetorno.Text = resultado.XmlRetorno + "\r\n\r\n" + resultado.Resultado.Motivo;
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnConsultarAutorizacao_Click(object sender, EventArgs e)
         {
             var service = ObterService();
             var teste = service.ConsultaAutorizacao(txtNumeroRecibo.Text);
 
-            txtDados.Text = "";
-            txtDados.Text = teste.XmlRetorno;
+            txtRetorno.Text = "";
+            txtRetorno.Text = teste.XmlRetorno;
         }
 
         private void btnCarregarNFeConsultar_Click(object sender, EventArgs e)
@@ -115,33 +145,19 @@ namespace Vip.DFe.Demo
 
             var teste = service.ConsultaAutorizacao("351000147333676");
 
-            txtDados.Text = "";
-            txtDados.Text = teste.XmlRetorno;
+            txtRetorno.Text = "";
+            txtRetorno.Text = teste.XmlRetorno;
 
             service.Dispose();
         }
 
-        private void btnConsultarStatusServico_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var service = ObterService();
-                var resultado = service.ConsultaSituacaoServico();
-                txtDados.Text = resultado.XmlRetorno + "\r\n\r\n" + resultado.Resultado.Motivo;
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void btnConsultarChaveNFe_Click(object sender, EventArgs e)
+        private void btnConsultarChave_Click(object sender, EventArgs e)
         {
             try
             {
                 var service = ObterService();
                 var resultado = service.Consultar("35200912332134000199550010000010001144736691");
-                txtDados.Text = resultado.XmlRetorno + "\r\n\r\n" + resultado.Resultado.Motivo;
+                txtRetorno.Text = resultado.XmlRetorno + "\r\n\r\n" + resultado.Resultado.Motivo;
             }
             catch (System.Exception ex)
             {
@@ -149,28 +165,28 @@ namespace Vip.DFe.Demo
             }
         }
 
-        private void btnInutilizacao_Click(object sender, EventArgs e)
+        private void btnInutilizar_Click(object sender, EventArgs e)
         {
             var service = ObterService();
             var resultado = service.Inutilizar("12332134000199", "NOTA FISCAL ELETRONICA INUTILIZADA DE TESTE", NFeModelo.NFe, 1, 1002, 1002);
-            txtDados.Text = resultado.XmlRetorno + "\r\n\r\n" + resultado.Resultado.InfInut.XMotivo;
+            txtRetorno.Text = resultado.XmlRetorno + "\r\n\r\n" + resultado.Resultado.InfInut.XMotivo;
         }
 
-        private void btnCancelarNFe_Click(object sender, EventArgs e)
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
             var service = ObterService();
             var resultado = service.Cancelar("12332134000199", "35201012332134000199550010000010041163999898", "135200008492987", 1, "NOTA FISCAL ELETRONICA CANCELADA");
-            txtDados.Text = resultado.XmlRetorno + "\r\n\r\n" + resultado.Resultado.RetEvento.FirstOrDefault()?.InfEvento.xMotivo;
+            txtRetorno.Text = resultado.XmlRetorno + "\r\n\r\n" + resultado.Resultado.RetEvento.FirstOrDefault()?.InfEvento.xMotivo;
         }
 
-        private void btnCartaoDeCorrecao_Click(object sender, EventArgs e)
+        private void btnCartaCorrecao_Click(object sender, EventArgs e)
         {
             var service = ObterService();
             var resultado = service.CartaoCorrecao("12332134000199", "35201012332134000199550010000010051614415132", 1, "CARTA DE CORRECAO DE TESTE PARA DESENVOLVIMENTO");
-            txtDados.Text = resultado.XmlRetorno + "\r\n\r\n" + resultado.Resultado.RetEvento.FirstOrDefault()?.InfEvento.xMotivo;
+            txtRetorno.Text = resultado.XmlRetorno + "\r\n\r\n" + resultado.Resultado.RetEvento.FirstOrDefault()?.InfEvento.xMotivo;
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void btnGerarDanfe_Click(object sender, EventArgs e)
         {
             const string arquivo = @"D:\35210338707682000140550010000010551318870102-procNFe.xml";
 
@@ -188,7 +204,7 @@ namespace Vip.DFe.Demo
             MessageBox.Show("Danfe Gerada");
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void btnGerarDanfeEvento_Click(object sender, EventArgs e)
         {
             const string arquivo = @"D:\35210138707682000140550010000010371442332758_110111_01-procEventoNFe.xml";
             //const string arquivo = @"D:\35150413358435000154550010000000331365222750_01-procEventoNFe.xml";

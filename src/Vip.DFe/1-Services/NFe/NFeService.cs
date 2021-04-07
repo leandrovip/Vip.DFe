@@ -435,7 +435,7 @@ namespace Vip.DFe.NFe
         protected override void OnInitialize()
         {
             Status = NFeStatus.EmEspera;
-            _securityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            _securityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             Configuracoes = new NFeConfig(this);
             Documentos = new NFeCollection(this);
         }

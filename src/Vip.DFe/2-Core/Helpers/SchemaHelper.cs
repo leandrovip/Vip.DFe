@@ -20,17 +20,9 @@ namespace Vip.DFe.Helpers
             var errorList = new List<string>();
             var avisosList = new List<string>();
 
-            if (arquivoXml.IsNullOrEmpty())
+            if (arquivoXml.IsNullOrEmpty() || !File.Exists(schema))
             {
-                errorList.Add("Arquivo Xml não encontrado.");
-                erros = errorList.ToArray();
-                avisos = avisosList.ToArray();
-                return false;
-            }
-
-            if (!File.Exists(schema))
-            {
-                errorList.Add("Arquivo de Schema não encontrado.");
+                errorList.Add("Arquivo Xml inválido ou Schema não encontrado.");
                 erros = errorList.ToArray();
                 avisos = avisosList.ToArray();
                 return false;
@@ -53,11 +45,10 @@ namespace Vip.DFe.Helpers
 
                     // Erro na validação do schema XSD
                     if (args.Exception != null)
-                        errorList.Add("\nErro: " + args.Exception.Message + "\nLinha " + args.Exception.LinePosition + " - Coluna "
-                                      + args.Exception.LineNumber + "\nSource: " + args.Exception.SourceUri);
+                        errorList.Add("\nErro: " + args.Exception.Message + "\nLinha " + args.Exception.LinePosition + " - Coluna " + args.Exception.LineNumber + "\nSource: " + args.Exception.SourceUri);
                 });
 
-                var settings = new XmlReaderSettings {ValidationType = ValidationType.Schema};
+                var settings = new XmlReaderSettings {ValidationType = ValidationType.Schema, Schemas = {XmlResolver = new XmlUrlResolver()}};
                 settings.Schemas.Add(xmlSchema);
 
                 using var xmlReader = XmlReader.Create(new StringReader(arquivoXml), settings);
