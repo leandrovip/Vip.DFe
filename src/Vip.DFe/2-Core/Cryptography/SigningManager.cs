@@ -28,17 +28,19 @@ namespace Vip.DFe.Cryptography
         /// <param name="infoElement">O elemento a ser assinado.</param>
         /// <param name="certificado">O certificado.</param>
         /// <param name="comments">Se for <c>true</c> vai inserir a tag #withcomments no transform.</param>
+        /// <param name="identado">Se for <c>true</c> irá retornar o xml identado.</param>
+        /// <param name="showDeclaration">Se for <c>true</c> irá incluir a declaração no xml</param>
         /// <param name="digest">Algoritmo usando para gerar o hash por padrão SHA1.</param>
         /// <returns>System.String.</returns>
         /// <exception cref="VipException">Erro ao efetuar assinatura digital.</exception>
-        public static string AssinarXml(string xml, string docElement, string infoElement, X509Certificate2 certificado, bool comments = false, SignDigest digest = SignDigest.SHA1)
+        public static string AssinarXml(string xml, string docElement, string infoElement, X509Certificate2 certificado, bool comments = false, bool identado = false, bool showDeclaration = true, SignDigest digest = SignDigest.SHA1)
         {
             try
             {
                 var xmlDoc = new XmlDocument {PreserveWhitespace = true};
                 xmlDoc.LoadXml(xml);
-                AssinarDocumento(xmlDoc, docElement, infoElement, "Id", certificado, comments);
-                return xmlDoc.AsString();
+                AssinarDocumento(xmlDoc, docElement, infoElement, "Id", certificado, comments, digest);
+                return xmlDoc.AsString(identado, showDeclaration);
             }
             catch (System.Exception ex)
             {
@@ -54,10 +56,12 @@ namespace Vip.DFe.Cryptography
         /// <param name="infoElement">O elemento a ser assinado.</param>
         /// <param name="certificado">O certificado utilizado.</param>
         /// <param name="comments">Se for <c>true</c> vai inserir a tag #withcomments no transform.</param>
+        /// <param name="identado">Se for <c>true</c> irá retornar o xml identado.</param>
+        /// <param name="showDeclaration">Se for <c>true</c> irá incluir a declaração no xml</param>
         /// <param name="digest">Algoritmo usando para gerar o hash por padrão SHA1.</param>
         /// <returns>System.String.</returns>
         /// <exception cref="VipException">Erro ao efetuar assinatura digital.</exception>
-        public static string AssinarXmlTodos(string xml, string docElement, string infoElement, X509Certificate2 certificado, bool comments = false, SignDigest digest = SignDigest.SHA1)
+        public static string AssinarXmlTodos(string xml, string docElement, string infoElement, X509Certificate2 certificado, bool comments = false, bool identado = false, bool showDeclaration = false, SignDigest digest = SignDigest.SHA1)
         {
             try
             {
@@ -71,13 +75,13 @@ namespace Vip.DFe.Cryptography
                 {
                     var xmlDoc = new XmlDocument {PreserveWhitespace = true};
                     xmlDoc.LoadXml(element.OuterXml);
-                    AssinarDocumento(xmlDoc, docElement, infoElement, "Id", certificado, comments);
+                    AssinarDocumento(xmlDoc, docElement, infoElement, "Id", certificado, comments, digest);
 
                     var signedElement = doc.ImportNode(xmlDoc.DocumentElement, true);
                     element.ParentNode?.ReplaceChild(signedElement, element);
                 }
 
-                return doc.AsString();
+                return doc.AsString(identado, showDeclaration);
             }
             catch (System.Exception ex)
             {
@@ -114,7 +118,7 @@ namespace Vip.DFe.Cryptography
         /// <summary>
         ///     Gera a assinatura do xml e retorna uma instancia da classe <see cref="DFeSignature" />.
         /// </summary>
-        public static DFeSignature AssinarDocumento<TDocument>(DFeSignDocument<TDocument> document, X509Certificate2 certificado, bool comments, SignDigest digest, SaveOptions options, out string signedXml) where TDocument : class
+        public static DFeSignature AssinarDocumento<TDocument>(this DFeSignDocument<TDocument> document, X509Certificate2 certificado, bool comments, SignDigest digest, SaveOptions options, out string signedXml) where TDocument : class
         {
             Guard.Against<ArgumentException>(!typeof(TDocument).HasAttribute<DFeSignInfoElement>(), "Atributo [DFeSignInfoElement] não encontrado.");
 
@@ -127,8 +131,8 @@ namespace Vip.DFe.Cryptography
 
             // Adiciona a assinatura no documento e retorna o xml assinado no parametro signedXml
             var element = xmlDoc.ImportNode(xmlSignature, true);
-            xmlDoc.DocumentElement.AppendChild(element);
-            signedXml = xmlDoc.AsString();
+            xmlDoc.DocumentElement?.AppendChild(element);
+            signedXml = xmlDoc.AsString(!options.HasFlag(SaveOptions.DisableFormatting), !options.HasFlag(SaveOptions.OmitDeclaration));
 
             return DFeSignature.Load(xmlSignature.OuterXml);
         }
@@ -141,7 +145,7 @@ namespace Vip.DFe.Cryptography
             return ValidarAssinatura(xmlDoc);
         }
 
-        private static XmlElement GerarAssinatura(XmlDocument doc, string infoElement, string signAtribute, X509Certificate2 certificado, bool comments = false, SignDigest digest = SignDigest.SHA1)
+        private static XmlElement GerarAssinatura(XmlDocument doc, string infoElement, string signAtribute, X509Certificate2 certificado, bool comments, SignDigest digest)
         {
             Guard.Against<ArgumentException>(!infoElement.IsNullOrEmpty() && doc.GetElementsByTagName(infoElement).Count != 1, "Referencia invalida ou não é unica.");
 

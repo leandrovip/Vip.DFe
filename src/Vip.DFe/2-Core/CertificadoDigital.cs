@@ -22,7 +22,7 @@ namespace Vip.DFe
         {
             Guard.Against<ArgumentNullException>(certificado.IsNull(), "Certificado não informado");
 
-            var key = (RSACryptoServiceProvider) certificado.PrivateKey;
+            var key = (RSACryptoServiceProvider)certificado.PrivateKey;
 
             var providerHandle = IntPtr.Zero;
             var pinBuffer = Encoding.ASCII.GetBytes(pin);
