@@ -51,13 +51,15 @@ namespace Vip.DFe.Demo
             this.txtRetorno = new System.Windows.Forms.TextBox();
             this.lblRetornos = new System.Windows.Forms.Label();
             this.btnSair = new System.Windows.Forms.Button();
+            this.txtProtocolo = new System.Windows.Forms.TextBox();
+            this.lblProtocolo = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnCertificado
             // 
             this.btnCertificado.Location = new System.Drawing.Point(348, 27);
             this.btnCertificado.Name = "btnCertificado";
-            this.btnCertificado.Size = new System.Drawing.Size(135, 23);
+            this.btnCertificado.Size = new System.Drawing.Size(135, 31);
             this.btnCertificado.TabIndex = 0;
             this.btnCertificado.Text = "Selecionar Certificado";
             this.btnCertificado.UseVisualStyleBackColor = true;
@@ -65,9 +67,9 @@ namespace Vip.DFe.Demo
             // 
             // txtCertificado
             // 
-            this.txtCertificado.Location = new System.Drawing.Point(12, 27);
+            this.txtCertificado.Location = new System.Drawing.Point(8, 31);
             this.txtCertificado.Name = "txtCertificado";
-            this.txtCertificado.Size = new System.Drawing.Size(330, 23);
+            this.txtCertificado.Size = new System.Drawing.Size(330, 27);
             this.txtCertificado.TabIndex = 1;
             this.txtCertificado.Text = "121A1809255AA983";
             this.txtCertificado.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -75,17 +77,17 @@ namespace Vip.DFe.Demo
             // lblCertificado
             // 
             this.lblCertificado.AutoSize = true;
-            this.lblCertificado.Location = new System.Drawing.Point(12, 9);
+            this.lblCertificado.Location = new System.Drawing.Point(8, 11);
             this.lblCertificado.Name = "lblCertificado";
-            this.lblCertificado.Size = new System.Drawing.Size(102, 15);
+            this.lblCertificado.Size = new System.Drawing.Size(131, 20);
             this.lblCertificado.TabIndex = 2;
             this.lblCertificado.Text = "Certificado Digital";
             // 
             // txtSenhaCertificado
             // 
-            this.txtSenhaCertificado.Location = new System.Drawing.Point(489, 27);
+            this.txtSenhaCertificado.Location = new System.Drawing.Point(489, 31);
             this.txtSenhaCertificado.Name = "txtSenhaCertificado";
-            this.txtSenhaCertificado.Size = new System.Drawing.Size(102, 23);
+            this.txtSenhaCertificado.Size = new System.Drawing.Size(126, 27);
             this.txtSenhaCertificado.TabIndex = 1;
             this.txtSenhaCertificado.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -94,15 +96,15 @@ namespace Vip.DFe.Demo
             this.lblSenhaCertificado.AutoSize = true;
             this.lblSenhaCertificado.Location = new System.Drawing.Point(489, 9);
             this.lblSenhaCertificado.Name = "lblSenhaCertificado";
-            this.lblSenhaCertificado.Size = new System.Drawing.Size(100, 15);
+            this.lblSenhaCertificado.Size = new System.Drawing.Size(126, 20);
             this.lblSenhaCertificado.TabIndex = 2;
             this.lblSenhaCertificado.Text = "Senha Certificado";
             // 
             // btnAutorizacao
             // 
-            this.btnAutorizacao.Location = new System.Drawing.Point(12, 104);
+            this.btnAutorizacao.Location = new System.Drawing.Point(12, 95);
             this.btnAutorizacao.Name = "btnAutorizacao";
-            this.btnAutorizacao.Size = new System.Drawing.Size(151, 23);
+            this.btnAutorizacao.Size = new System.Drawing.Size(326, 39);
             this.btnAutorizacao.TabIndex = 0;
             this.btnAutorizacao.Text = "1 - Autorização";
             this.btnAutorizacao.UseVisualStyleBackColor = true;
@@ -110,9 +112,9 @@ namespace Vip.DFe.Demo
             // 
             // btnConsultarAutorizacao
             // 
-            this.btnConsultarAutorizacao.Location = new System.Drawing.Point(12, 133);
+            this.btnConsultarAutorizacao.Location = new System.Drawing.Point(12, 140);
             this.btnConsultarAutorizacao.Name = "btnConsultarAutorizacao";
-            this.btnConsultarAutorizacao.Size = new System.Drawing.Size(151, 23);
+            this.btnConsultarAutorizacao.Size = new System.Drawing.Size(326, 39);
             this.btnConsultarAutorizacao.TabIndex = 0;
             this.btnConsultarAutorizacao.Text = "2 - Consultar Autorização";
             this.btnConsultarAutorizacao.UseVisualStyleBackColor = true;
@@ -120,26 +122,26 @@ namespace Vip.DFe.Demo
             // 
             // txtNumeroRecibo
             // 
-            this.txtNumeroRecibo.Location = new System.Drawing.Point(235, 133);
+            this.txtNumeroRecibo.Location = new System.Drawing.Point(436, 97);
             this.txtNumeroRecibo.Name = "txtNumeroRecibo";
-            this.txtNumeroRecibo.Size = new System.Drawing.Size(356, 23);
+            this.txtNumeroRecibo.Size = new System.Drawing.Size(275, 27);
             this.txtNumeroRecibo.TabIndex = 1;
             this.txtNumeroRecibo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblNumeroRecibo
             // 
             this.lblNumeroRecibo.AutoSize = true;
-            this.lblNumeroRecibo.Location = new System.Drawing.Point(169, 141);
+            this.lblNumeroRecibo.Location = new System.Drawing.Point(351, 104);
             this.lblNumeroRecibo.Name = "lblNumeroRecibo";
-            this.lblNumeroRecibo.Size = new System.Drawing.Size(63, 15);
+            this.lblNumeroRecibo.Size = new System.Drawing.Size(79, 20);
             this.lblNumeroRecibo.TabIndex = 2;
             this.lblNumeroRecibo.Text = "Nº Recibo:";
             // 
             // btnConsultarChave
             // 
-            this.btnConsultarChave.Location = new System.Drawing.Point(12, 162);
+            this.btnConsultarChave.Location = new System.Drawing.Point(12, 185);
             this.btnConsultarChave.Name = "btnConsultarChave";
-            this.btnConsultarChave.Size = new System.Drawing.Size(151, 23);
+            this.btnConsultarChave.Size = new System.Drawing.Size(326, 39);
             this.btnConsultarChave.TabIndex = 0;
             this.btnConsultarChave.Text = "3 - Consultar por chave de acesso";
             this.btnConsultarChave.UseVisualStyleBackColor = true;
@@ -147,26 +149,26 @@ namespace Vip.DFe.Demo
             // 
             // txtChaveAcesso
             // 
-            this.txtChaveAcesso.Location = new System.Drawing.Point(235, 163);
+            this.txtChaveAcesso.Location = new System.Drawing.Point(436, 142);
             this.txtChaveAcesso.Name = "txtChaveAcesso";
-            this.txtChaveAcesso.Size = new System.Drawing.Size(356, 23);
+            this.txtChaveAcesso.Size = new System.Drawing.Size(699, 27);
             this.txtChaveAcesso.TabIndex = 1;
             this.txtChaveAcesso.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblChaveAcesso
             // 
             this.lblChaveAcesso.AutoSize = true;
-            this.lblChaveAcesso.Location = new System.Drawing.Point(164, 170);
+            this.lblChaveAcesso.Location = new System.Drawing.Point(348, 149);
             this.lblChaveAcesso.Name = "lblChaveAcesso";
-            this.lblChaveAcesso.Size = new System.Drawing.Size(68, 15);
+            this.lblChaveAcesso.Size = new System.Drawing.Size(82, 20);
             this.lblChaveAcesso.TabIndex = 2;
             this.lblChaveAcesso.Text = "Ch. Acesso:";
             // 
             // btnConsultarServico
             // 
-            this.btnConsultarServico.Location = new System.Drawing.Point(12, 191);
+            this.btnConsultarServico.Location = new System.Drawing.Point(12, 230);
             this.btnConsultarServico.Name = "btnConsultarServico";
-            this.btnConsultarServico.Size = new System.Drawing.Size(151, 23);
+            this.btnConsultarServico.Size = new System.Drawing.Size(326, 39);
             this.btnConsultarServico.TabIndex = 0;
             this.btnConsultarServico.Text = "4 - Consultar  Serviço";
             this.btnConsultarServico.UseVisualStyleBackColor = true;
@@ -174,9 +176,9 @@ namespace Vip.DFe.Demo
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(12, 220);
+            this.btnCancelar.Location = new System.Drawing.Point(12, 275);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(151, 23);
+            this.btnCancelar.Size = new System.Drawing.Size(326, 39);
             this.btnCancelar.TabIndex = 0;
             this.btnCancelar.Text = "5 - Cancelar NFe";
             this.btnCancelar.UseVisualStyleBackColor = true;
@@ -184,9 +186,9 @@ namespace Vip.DFe.Demo
             // 
             // btnInutilizar
             // 
-            this.btnInutilizar.Location = new System.Drawing.Point(12, 249);
+            this.btnInutilizar.Location = new System.Drawing.Point(12, 320);
             this.btnInutilizar.Name = "btnInutilizar";
-            this.btnInutilizar.Size = new System.Drawing.Size(151, 23);
+            this.btnInutilizar.Size = new System.Drawing.Size(326, 39);
             this.btnInutilizar.TabIndex = 0;
             this.btnInutilizar.Text = "6 - Inutilizar NFe";
             this.btnInutilizar.UseVisualStyleBackColor = true;
@@ -194,9 +196,9 @@ namespace Vip.DFe.Demo
             // 
             // btnCartaCorrecao
             // 
-            this.btnCartaCorrecao.Location = new System.Drawing.Point(12, 278);
+            this.btnCartaCorrecao.Location = new System.Drawing.Point(12, 365);
             this.btnCartaCorrecao.Name = "btnCartaCorrecao";
-            this.btnCartaCorrecao.Size = new System.Drawing.Size(151, 23);
+            this.btnCartaCorrecao.Size = new System.Drawing.Size(326, 39);
             this.btnCartaCorrecao.TabIndex = 0;
             this.btnCartaCorrecao.Text = "7 - Carta de Correção";
             this.btnCartaCorrecao.UseVisualStyleBackColor = true;
@@ -204,9 +206,9 @@ namespace Vip.DFe.Demo
             // 
             // btnCarregarNFeConsultar
             // 
-            this.btnCarregarNFeConsultar.Location = new System.Drawing.Point(12, 307);
+            this.btnCarregarNFeConsultar.Location = new System.Drawing.Point(12, 410);
             this.btnCarregarNFeConsultar.Name = "btnCarregarNFeConsultar";
-            this.btnCarregarNFeConsultar.Size = new System.Drawing.Size(151, 23);
+            this.btnCarregarNFeConsultar.Size = new System.Drawing.Size(326, 39);
             this.btnCarregarNFeConsultar.TabIndex = 3;
             this.btnCarregarNFeConsultar.Text = "Carregar NFe e Consultar";
             this.btnCarregarNFeConsultar.UseVisualStyleBackColor = true;
@@ -214,9 +216,9 @@ namespace Vip.DFe.Demo
             // 
             // btnGerarDanfe
             // 
-            this.btnGerarDanfe.Location = new System.Drawing.Point(12, 336);
+            this.btnGerarDanfe.Location = new System.Drawing.Point(12, 455);
             this.btnGerarDanfe.Name = "btnGerarDanfe";
-            this.btnGerarDanfe.Size = new System.Drawing.Size(151, 23);
+            this.btnGerarDanfe.Size = new System.Drawing.Size(326, 39);
             this.btnGerarDanfe.TabIndex = 3;
             this.btnGerarDanfe.Text = "Gerar DANFE";
             this.btnGerarDanfe.UseVisualStyleBackColor = true;
@@ -224,9 +226,9 @@ namespace Vip.DFe.Demo
             // 
             // btnGerarDanfeEvento
             // 
-            this.btnGerarDanfeEvento.Location = new System.Drawing.Point(12, 365);
+            this.btnGerarDanfeEvento.Location = new System.Drawing.Point(12, 500);
             this.btnGerarDanfeEvento.Name = "btnGerarDanfeEvento";
-            this.btnGerarDanfeEvento.Size = new System.Drawing.Size(151, 23);
+            this.btnGerarDanfeEvento.Size = new System.Drawing.Size(326, 39);
             this.btnGerarDanfeEvento.TabIndex = 3;
             this.btnGerarDanfeEvento.Text = "Gerar DANFE Evento";
             this.btnGerarDanfeEvento.UseVisualStyleBackColor = true;
@@ -234,49 +236,66 @@ namespace Vip.DFe.Demo
             // 
             // txtRetorno
             // 
-            this.txtRetorno.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtRetorno.Location = new System.Drawing.Point(235, 192);
+            this.txtRetorno.Location = new System.Drawing.Point(348, 215);
             this.txtRetorno.Multiline = true;
             this.txtRetorno.Name = "txtRetorno";
             this.txtRetorno.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtRetorno.Size = new System.Drawing.Size(575, 265);
+            this.txtRetorno.Size = new System.Drawing.Size(787, 369);
             this.txtRetorno.TabIndex = 1;
             // 
             // lblRetornos
             // 
             this.lblRetornos.AutoSize = true;
-            this.lblRetornos.Location = new System.Drawing.Point(172, 278);
+            this.lblRetornos.Location = new System.Drawing.Point(348, 185);
             this.lblRetornos.Name = "lblRetornos";
-            this.lblRetornos.Size = new System.Drawing.Size(57, 15);
+            this.lblRetornos.Size = new System.Drawing.Size(71, 20);
             this.lblRetornos.TabIndex = 2;
             this.lblRetornos.Text = "Retornos:";
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(12, 434);
+            this.btnSair.Location = new System.Drawing.Point(12, 545);
             this.btnSair.Name = "btnSair";
-            this.btnSair.Size = new System.Drawing.Size(151, 23);
+            this.btnSair.Size = new System.Drawing.Size(326, 39);
             this.btnSair.TabIndex = 0;
             this.btnSair.Text = "SAIR";
             this.btnSair.UseVisualStyleBackColor = true;
+            this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
+            // 
+            // txtProtocolo
+            // 
+            this.txtProtocolo.Location = new System.Drawing.Point(832, 97);
+            this.txtProtocolo.Name = "txtProtocolo";
+            this.txtProtocolo.Size = new System.Drawing.Size(302, 27);
+            this.txtProtocolo.TabIndex = 1;
+            this.txtProtocolo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblProtocolo
+            // 
+            this.lblProtocolo.AutoSize = true;
+            this.lblProtocolo.Location = new System.Drawing.Point(728, 104);
+            this.lblProtocolo.Name = "lblProtocolo";
+            this.lblProtocolo.Size = new System.Drawing.Size(98, 20);
+            this.lblProtocolo.TabIndex = 2;
+            this.lblProtocolo.Text = "Nº Protocolo:";
             // 
             // frmPrincipal
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(822, 465);
+            this.ClientSize = new System.Drawing.Size(1147, 594);
             this.Controls.Add(this.btnGerarDanfeEvento);
             this.Controls.Add(this.btnGerarDanfe);
             this.Controls.Add(this.btnCarregarNFeConsultar);
             this.Controls.Add(this.lblRetornos);
             this.Controls.Add(this.lblChaveAcesso);
+            this.Controls.Add(this.lblProtocolo);
             this.Controls.Add(this.lblNumeroRecibo);
             this.Controls.Add(this.lblSenhaCertificado);
             this.Controls.Add(this.lblCertificado);
             this.Controls.Add(this.txtSenhaCertificado);
             this.Controls.Add(this.txtRetorno);
             this.Controls.Add(this.txtChaveAcesso);
+            this.Controls.Add(this.txtProtocolo);
             this.Controls.Add(this.txtNumeroRecibo);
             this.Controls.Add(this.txtCertificado);
             this.Controls.Add(this.btnCartaCorrecao);
@@ -320,6 +339,8 @@ namespace Vip.DFe.Demo
         private System.Windows.Forms.TextBox txtRetorno;
         private System.Windows.Forms.Label lblRetornos;
         private System.Windows.Forms.Button btnSair;
+        private System.Windows.Forms.TextBox txtProtocolo;
+        private System.Windows.Forms.Label lblProtocolo;
     }
 }
 
