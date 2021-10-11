@@ -123,7 +123,7 @@ namespace Vip.DFe.Demo
 
         private void btnGerarDanfe_Click(object sender, EventArgs e)
         {
-            const string arquivo = @"D:\35210338707682000140550010000010551318870102-procNFe.xml";
+            const string arquivo = @"D:\Users\Leandro\Desktop\nfe-para-teste\NFE FORTLEV 35210110921911000881550010002816351420969229.xml";
 
             var modelo = DanfeViewModel.CriarDeArquivoXml(arquivo);
             modelo.DefinirTextoCreditos("Emitido pelo software VipERP - www.vipsolucoes.com");

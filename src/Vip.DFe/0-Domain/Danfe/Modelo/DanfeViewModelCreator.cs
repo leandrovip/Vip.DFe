@@ -174,8 +174,7 @@ namespace Vip.DFe.Danfe.Modelo
                         produto.OCst = modelIcms.OrigemMercadoria.GetDFeValue() + modelIcms.Cst + modelIcms.Csosn;
                     }
 
-                    var ipi = (IpiTrib) imposto.Ipi?.Imposto;
-                    if (ipi != null)
+                    if (imposto.Ipi.Imposto is IpiTrib ipi)
                     {
                         produto.ValorIpi = (double?) ipi.VIpi;
                         produto.AliquotaIpi = (double?) ipi.PIpi;
