@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
+using Vip.DFe.Extensions;
 using Vip.DFe.Serializer;
 using Vip.DFe.Shared.Enum;
 
@@ -94,6 +95,11 @@ namespace Vip.DFe.NFe.NotaFiscal.Total
         #endregion
 
         #region Methods
+
+        private bool ShouldSerializeDCompet()
+        {
+            return DCompet.IsNotNullOrEmpty();
+        }
 
         private bool ShouldSerializeCRegTrib()
         {
