@@ -69,7 +69,7 @@ namespace Vip.DFe.Demo
             // 
             this.txtCertificado.Location = new System.Drawing.Point(8, 31);
             this.txtCertificado.Name = "txtCertificado";
-            this.txtCertificado.Size = new System.Drawing.Size(330, 27);
+            this.txtCertificado.Size = new System.Drawing.Size(330, 23);
             this.txtCertificado.TabIndex = 1;
             this.txtCertificado.Text = "121A1809255AA983";
             this.txtCertificado.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -79,7 +79,7 @@ namespace Vip.DFe.Demo
             this.lblCertificado.AutoSize = true;
             this.lblCertificado.Location = new System.Drawing.Point(8, 11);
             this.lblCertificado.Name = "lblCertificado";
-            this.lblCertificado.Size = new System.Drawing.Size(131, 20);
+            this.lblCertificado.Size = new System.Drawing.Size(102, 15);
             this.lblCertificado.TabIndex = 2;
             this.lblCertificado.Text = "Certificado Digital";
             // 
@@ -87,7 +87,7 @@ namespace Vip.DFe.Demo
             // 
             this.txtSenhaCertificado.Location = new System.Drawing.Point(489, 31);
             this.txtSenhaCertificado.Name = "txtSenhaCertificado";
-            this.txtSenhaCertificado.Size = new System.Drawing.Size(126, 27);
+            this.txtSenhaCertificado.Size = new System.Drawing.Size(126, 23);
             this.txtSenhaCertificado.TabIndex = 1;
             this.txtSenhaCertificado.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -96,7 +96,7 @@ namespace Vip.DFe.Demo
             this.lblSenhaCertificado.AutoSize = true;
             this.lblSenhaCertificado.Location = new System.Drawing.Point(489, 9);
             this.lblSenhaCertificado.Name = "lblSenhaCertificado";
-            this.lblSenhaCertificado.Size = new System.Drawing.Size(126, 20);
+            this.lblSenhaCertificado.Size = new System.Drawing.Size(100, 15);
             this.lblSenhaCertificado.TabIndex = 2;
             this.lblSenhaCertificado.Text = "Senha Certificado";
             // 
@@ -124,7 +124,7 @@ namespace Vip.DFe.Demo
             // 
             this.txtNumeroRecibo.Location = new System.Drawing.Point(436, 97);
             this.txtNumeroRecibo.Name = "txtNumeroRecibo";
-            this.txtNumeroRecibo.Size = new System.Drawing.Size(275, 27);
+            this.txtNumeroRecibo.Size = new System.Drawing.Size(275, 23);
             this.txtNumeroRecibo.TabIndex = 1;
             this.txtNumeroRecibo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -133,7 +133,7 @@ namespace Vip.DFe.Demo
             this.lblNumeroRecibo.AutoSize = true;
             this.lblNumeroRecibo.Location = new System.Drawing.Point(351, 104);
             this.lblNumeroRecibo.Name = "lblNumeroRecibo";
-            this.lblNumeroRecibo.Size = new System.Drawing.Size(79, 20);
+            this.lblNumeroRecibo.Size = new System.Drawing.Size(63, 15);
             this.lblNumeroRecibo.TabIndex = 2;
             this.lblNumeroRecibo.Text = "Nº Recibo:";
             // 
@@ -151,7 +151,7 @@ namespace Vip.DFe.Demo
             // 
             this.txtChaveAcesso.Location = new System.Drawing.Point(436, 142);
             this.txtChaveAcesso.Name = "txtChaveAcesso";
-            this.txtChaveAcesso.Size = new System.Drawing.Size(699, 27);
+            this.txtChaveAcesso.Size = new System.Drawing.Size(699, 23);
             this.txtChaveAcesso.TabIndex = 1;
             this.txtChaveAcesso.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -160,7 +160,7 @@ namespace Vip.DFe.Demo
             this.lblChaveAcesso.AutoSize = true;
             this.lblChaveAcesso.Location = new System.Drawing.Point(348, 149);
             this.lblChaveAcesso.Name = "lblChaveAcesso";
-            this.lblChaveAcesso.Size = new System.Drawing.Size(82, 20);
+            this.lblChaveAcesso.Size = new System.Drawing.Size(68, 15);
             this.lblChaveAcesso.TabIndex = 2;
             this.lblChaveAcesso.Text = "Ch. Acesso:";
             // 
@@ -248,7 +248,7 @@ namespace Vip.DFe.Demo
             this.lblRetornos.AutoSize = true;
             this.lblRetornos.Location = new System.Drawing.Point(348, 185);
             this.lblRetornos.Name = "lblRetornos";
-            this.lblRetornos.Size = new System.Drawing.Size(71, 20);
+            this.lblRetornos.Size = new System.Drawing.Size(57, 15);
             this.lblRetornos.TabIndex = 2;
             this.lblRetornos.Text = "Retornos:";
             // 
@@ -266,7 +266,7 @@ namespace Vip.DFe.Demo
             // 
             this.txtProtocolo.Location = new System.Drawing.Point(832, 97);
             this.txtProtocolo.Name = "txtProtocolo";
-            this.txtProtocolo.Size = new System.Drawing.Size(302, 27);
+            this.txtProtocolo.Size = new System.Drawing.Size(302, 23);
             this.txtProtocolo.TabIndex = 1;
             this.txtProtocolo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -275,7 +275,7 @@ namespace Vip.DFe.Demo
             this.lblProtocolo.AutoSize = true;
             this.lblProtocolo.Location = new System.Drawing.Point(728, 104);
             this.lblProtocolo.Name = "lblProtocolo";
-            this.lblProtocolo.Size = new System.Drawing.Size(98, 20);
+            this.lblProtocolo.Size = new System.Drawing.Size(79, 15);
             this.lblProtocolo.TabIndex = 2;
             this.lblProtocolo.Text = "Nº Protocolo:";
             // 
@@ -309,7 +309,7 @@ namespace Vip.DFe.Demo
             this.Controls.Add(this.btnCertificado);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "frmPrincipal";
-            this.Text = "Vip.DFe - Demo - .Net 5.0";
+            this.Text = "Vip.DFe - Demo - .Net 6.0";
             this.ResumeLayout(false);
             this.PerformLayout();
 

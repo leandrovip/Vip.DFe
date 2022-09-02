@@ -79,7 +79,7 @@ namespace Vip.DFe.Danfe.Elementos
                 nome = emitente.NomeFantasia.IsNotNullOrEmpty() ? emitente.NomeFantasia : emitente.RazaoSocial;
                 nome2 = emitente.RazaoSocial;
             }
-            var ts = new TextStack(rp) {LineHeightScale = 1}
+            var ts = new TextStack(rp) {LineHeightScale = 1.7f}
                 .AddLine(nome, f2)
                 .AddLine(nome2, f3)
                 .AddLine(emitente.EnderecoLinha1.Trim(), f3)
