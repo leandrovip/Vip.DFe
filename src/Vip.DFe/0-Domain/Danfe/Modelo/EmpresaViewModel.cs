@@ -112,7 +112,6 @@ namespace Vip.DFe.Danfe.Modelo
                 var sb = new StringBuilder();
                 sb.Append(EnderecoLogadrouro);
                 if (!string.IsNullOrWhiteSpace(EnderecoNumero)) sb.Append(", ").Append(EnderecoNumero);
-                if (!string.IsNullOrWhiteSpace(EnderecoComplemento)) sb.Append(" - ").Append(EnderecoComplemento);
                 return sb.ToString();
             }
         }

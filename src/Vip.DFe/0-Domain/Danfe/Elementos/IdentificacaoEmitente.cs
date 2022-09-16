@@ -38,10 +38,12 @@ namespace Vip.DFe.Danfe.Elementos
             // município, CEP, fone / fax deverão ter tamanho mínimo de oito(8) pontos, ou 17 CPP.
 
             var rp = BoundingBox.InflatedRetangle(0.75F);
-            float alturaMaximaLogoHorizontal = 14F;
+            const float alturaMaximaLogoHorizontal = 9F; // old is 14
+            var alturaLinhaTexto = 1.9f;
+            var logotipoHorizontal = false;
 
-            Fonte f2 = Estilo.CriarFonteNegrito(12);
-            Fonte f3 = Estilo.CriarFonteRegular(8);
+            var f2 = Estilo.CriarFonteNegrito(12);
+            var f3 = Estilo.CriarFonteRegular(8);
 
             if (Logo == null)
             {
@@ -53,16 +55,16 @@ namespace Vip.DFe.Danfe.Elementos
             {
                 RectangleF rLogo;
 
-                //Logo Horizontal
-                if (Logo.Size.Width > Logo.Size.Height)
+                if (Logo.Size.Width > Logo.Size.Height) //Logo Horizontal
                 {
+                    logotipoHorizontal = true;
+                    alturaLinhaTexto = 1.6f;
                     rLogo = new RectangleF(rp.X, rp.Y, rp.Width, alturaMaximaLogoHorizontal);
                     rp = rp.CutTop(alturaMaximaLogoHorizontal);
                 }
-                //Logo Vertical/Quadrado
-                else
+                else //Logo Vertical/Quadrado
                 {
-                    float lw = rp.Height * Logo.Size.Width / Logo.Size.Height;
+                    var lw = rp.Height * Logo.Size.Width / Logo.Size.Height;
                     rLogo = new RectangleF(rp.X, rp.Y, lw, rp.Height);
                     rp = rp.CutLeft(lw);
                 }
@@ -79,12 +81,22 @@ namespace Vip.DFe.Danfe.Elementos
                 nome = emitente.NomeFantasia.IsNotNullOrEmpty() ? emitente.NomeFantasia : emitente.RazaoSocial;
                 nome2 = emitente.RazaoSocial;
             }
-            var ts = new TextStack(rp) {LineHeightScale = 1.7f}
+
+            var ts = new TextStack(rp) {LineHeightScale = alturaLinhaTexto}
                 .AddLine(nome, f2)
-                .AddLine(nome2, f3)
-                .AddLine(emitente.EnderecoLinha1.Trim(), f3)
-                .AddLine(emitente.EnderecoLinha2.Trim(), f3)
-                .AddLine(emitente.EnderecoLinha3.Trim(), f3);
+                .AddLine(nome2, f3);
+
+            if (logotipoHorizontal)
+            {
+                ts.AddLine(emitente.EnderecoLinha1.Trim() + " " + emitente.EnderecoLinha2.Trim(), f3);
+            }
+            else
+            {
+                ts.AddLine(emitente.EnderecoLinha1.Trim(), f3);
+                ts.AddLine(emitente.EnderecoLinha2.Trim(), f3);
+            }
+
+            ts.AddLine(emitente.EnderecoLinha3.Trim(), f3);
 
             ts.AlinhamentoHorizontal = AlinhamentoHorizontal.Centro;
             ts.AlinhamentoVertical = AlinhamentoVertical.Centro;

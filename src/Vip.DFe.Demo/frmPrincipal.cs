@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using Vip.DFe.Danfe;
@@ -123,20 +124,24 @@ namespace Vip.DFe.Demo
 
         private void btnGerarDanfe_Click(object sender, EventArgs e)
         {
-            const string arquivo = @"D:\Users\Leandro\Desktop\35220812332134000199550010000002011411406829.xml";
+            const string arquivoXml = @"D:\35220812332134000199550010000002011411406829-procNFe.xml";
+            const string caminhoArquivoPdf = @"D:\danfeOk.pdf";
 
-            var modelo = DanfeViewModel.CriarDeArquivoXml(arquivo);
+            var modelo = DanfeViewModel.CriarDeArquivoXml(arquivoXml);
             modelo.DefinirTextoCreditos("Emitido pelo software VipERP - www.vipsolucoes.com");
             modelo.PreferirEmitenteNomeFantasia = true;
+            modelo.ExibirBlocoLocalEntrega = false;
+            modelo.ExibirBlocoLocalRetirada = false;
 
             using (var danfe = new DanfeService(modelo))
             {
-                danfe.AdicionarLogoImagem(@"D:\vip.jpg");
+                //danfe.AdicionarLogoImagem(@"D:\vip.jpg");
                 danfe.Gerar();
-                danfe.Salvar(@"D:\danfeOk.pdf");
+                danfe.Salvar(caminhoArquivoPdf);
             }
 
-            MessageBox.Show("Danfe Gerada");
+            Process.Start(new ProcessStartInfo{FileName = caminhoArquivoPdf, UseShellExecute = true, WorkingDirectory = "D:\\"});
+            MessageBox.Show("Danfe Gerada", "Vip.DFe", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnGerarDanfeEvento_Click(object sender, EventArgs e)
