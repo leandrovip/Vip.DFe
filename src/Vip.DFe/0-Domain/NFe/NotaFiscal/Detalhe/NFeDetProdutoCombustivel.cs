@@ -45,28 +45,28 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         ///     LA03a - Percentual do GLP derivado do petróleo no produto GLP (cProdANP=210203001)
         ///     Versão 4.00
         /// </summary>
-        [DFeElement(TipoCampo.De4, "pGLP", Id = "LA03a", Min = 5, Max = 5, Ocorrencia = Ocorrencia.MaiorQueZero)]
+        [DFeElement(TipoCampo.De4, "pGLP", Id = "LA03a", Min = 5, Max = 5, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal PGLP { get; set; }
 
         /// <summary>
         ///     LA03b - Percentual de Gás Natural Nacional – GLGNn para o produto GLP (cProdANP= 210203001)
         ///     Versão 4.00
         /// </summary>
-        [DFeElement(TipoCampo.De4, "pGNn", Id = "LA03b", Min = 5, Max = 5, Ocorrencia = Ocorrencia.MaiorQueZero)]
+        [DFeElement(TipoCampo.De4, "pGNn", Id = "LA03b", Min = 5, Max = 5, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal PGNn { get; set; }
 
         /// <summary>
         ///     LA03c - Percentual de Gás Natural Importado – GLGNi para o produto GLP (cProdANP= 210203001)
         ///     Versão 4.00
         /// </summary>
-        [DFeElement(TipoCampo.De4, "pGNi", Id = "LA03c", Min = 5, Max = 5, Ocorrencia = Ocorrencia.MaiorQueZero)]
+        [DFeElement(TipoCampo.De4, "pGNi", Id = "LA03c", Min = 5, Max = 5, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal PGNi { get; set; }
 
         /// <summary>
         ///     LA03d - Valor de partida (cProdANP=210203001)
         ///     Versão 4.00
         /// </summary>
-        [DFeElement(TipoCampo.De2, "vPart", Id = "LA03d", Min = 3, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
+        [DFeElement(TipoCampo.De2, "vPart", Id = "LA03d", Min = 3, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal VPart { get; set; }
 
         /// <summary>
@@ -106,6 +106,31 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         private bool ShouldSerializeEncerrante()
         {
             return Encerrante.NBico != 0;
+        }
+
+        private bool ShouldSerializeCIDE()
+        {
+            return CIDE.vCIDE != 0;
+        }
+
+        private bool ShouldSerializePGLP()
+        {
+            return CProdANP == "210203001";
+        }
+
+        private bool ShouldSerializePGNn()
+        {
+            return CProdANP == "210203001";
+        }
+
+        private bool ShouldSerializePGNi()
+        {
+            return CProdANP == "210203001";
+        }
+
+        private bool ShouldSerializeVPart()
+        {
+            return CProdANP == "210203001";
         }
 
         #endregion

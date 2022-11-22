@@ -327,6 +327,18 @@ namespace Vip.DFe.Demo
                 Imposto = produto.GetImposto()
             };
 
+            //var glp = new NFeDetProdutoCombustivel()
+            //{
+            //    CProdANP = "210203002",
+            //    DescANP = "GLP GAS",
+            //    UFCons = "SP",
+            //    PGLP = 0,
+            //    PGNi = 0,
+            //    PGNn = 0,
+            //    VPart = 0
+            //};
+            //itemDetalhe.Produto.ProdutoEspecifico = glp;
+
             if (modeloDoc == NFeModelo.NFCe)
             {
                 decimal federal = 15;  //deverá buscar da tabela IBPT, com base no NCM do item
