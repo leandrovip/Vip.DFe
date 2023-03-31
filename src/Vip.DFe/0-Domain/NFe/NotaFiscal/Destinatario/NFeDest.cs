@@ -134,7 +134,8 @@ namespace Vip.DFe.NFe.NotaFiscal.Destinatario
 
         private string SerializeNome()
         {
-            return Parent?.Ide.TpAmb == TipoAmbiente.Homologacao ? DFeConstantes.NFeHomologacao : Nome;
+            var nome = Parent?.Ide.TpAmb == TipoAmbiente.Homologacao ? DFeConstantes.NFeHomologacao : Nome;
+            return nome.TrimVip().Truncate(60);
         }
 
         private object DeserializeNome(string value)

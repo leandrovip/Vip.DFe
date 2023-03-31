@@ -59,7 +59,7 @@ namespace Vip.DFe.Extensions
         public static bool IsEmail(this string value)
         {
             if (value.IsNullOrEmpty()) return false;
-            
+
             try
             {
                 const string regex = @"^(([^<>()[\]\\.,;áàãâäéèêëíìîïóòõôöúùûüç:\s@\""]+"
@@ -334,7 +334,7 @@ namespace Vip.DFe.Extensions
         public static bool IsGtin(this string value)
         {
             var code = value.OnlyNumbers();
-            var validCodes = new[] { 8, 12, 13, 14 };
+            var validCodes = new[] {8, 12, 13, 14};
             if (!validCodes.Contains(code.Length)) return false;
             if (code.IsNullOrEmpty()) return false;
 
@@ -364,6 +364,11 @@ namespace Vip.DFe.Extensions
 
             var posFinal = xml.IndexOf("?>", StringComparison.Ordinal);
             return posFinal < 0 ? xml : xml.Remove(posIni, posFinal + 2 - posIni);
+        }
+
+        public static string Truncate(this string value, int maxLength)
+        {
+            return value?.Substring(0, Math.Min(value.Length, maxLength));
         }
     }
 }

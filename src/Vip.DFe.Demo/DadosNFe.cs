@@ -201,24 +201,21 @@ namespace Vip.DFe.Demo
 
         public NFeDest GetDestinatario()
         {
-            bool pessoaFisica = false;
-            bool clienteTemEmail = false;
+            const bool pessoaFisica = false;
+            const bool clienteTemEmail = false;
 
             var dest = new NFeDest();
             if (pessoaFisica)
             {
-                dest.CPF = "33974986863";
-            }
-            else
-            {
-                dest.CNPJ = "12332134000199";
-                dest.IE = "715.025.640.119";
+                dest.CPF = "00000000000";
             }
 
-            dest.Nome = "LEANDRO FERREIRA";
-            //dest.Nome = ambiente == TipoAmbiente.Homologacao
-            //    ? "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"
-            //    : "Nome do cliente";
+            dest.CNPJ = "12332134000199";
+            dest.IE = "715.025.640.119";
+
+            dest.Nome = ambiente == TipoAmbiente.Homologacao
+                ? "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL TESTEDECARACTERESMAXIMO"
+                : "Nome do cliente";
 
             dest.Endereco = new NFeDestEndereco
             {
