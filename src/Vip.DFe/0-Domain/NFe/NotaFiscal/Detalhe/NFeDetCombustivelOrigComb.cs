@@ -3,6 +3,7 @@ using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.NFe.Enum;
 using Vip.DFe.Serializer;
+using Vip.DFe.Shared.Enum;
 
 namespace Vip.DFe.NFe.NotaFiscal.Detalhe;
 
@@ -26,7 +27,7 @@ public class NFeDetCombustivelOrigComb : GenericClone<NFeDetCombustivelOrigComb>
     ///     LA20 - Código da Uf
     /// </summary>
     [DFeElement(TipoCampo.Enum, "cUFOrig", Id = "LA20", Min = 2, Max = 2, Ocorrencia = Ocorrencia.Obrigatoria)]
-    public int UfOrigem { get; set; }
+    public CodigoUF UfOrigem { get; set; }
 
     /// <summary>
     ///     LA21 - Percentual originário para a UF
