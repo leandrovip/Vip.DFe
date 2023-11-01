@@ -6,7 +6,7 @@ using Vip.DFe.Exception;
 
 namespace Vip.DFe.Extensions
 {
-    public static class X509Certificate2Extensions
+    internal static class X509Certificate2Extensions
     {
         /// <summary>
         ///     Retorna o CNPJ do certificado se o mesmo possuir

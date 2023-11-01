@@ -2,7 +2,7 @@
 
 namespace Vip.DFe.Extensions
 {
-    public static class ArrayExtensions
+    internal static class ArrayExtensions
     {
         public static bool IsNullOrEmpty(this Array array)
         {

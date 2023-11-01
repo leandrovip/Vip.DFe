@@ -111,7 +111,7 @@ namespace Vip.DFe.Demo
                     Bairro = "BAIRRO",
                     CodigoIBGE = 3556800,
                     Municipio = "VIRADOURO",
-                    UF = CodigoUF.SP.GetDescription(),
+                    UF = "SP",
                     CEP = "14740000",
                     CodigoPais = 1058,
                     Pais = "BRASIL",

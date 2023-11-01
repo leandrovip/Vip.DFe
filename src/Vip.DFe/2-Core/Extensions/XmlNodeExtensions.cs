@@ -7,7 +7,7 @@ using Vip.DFe.Writer;
 
 namespace Vip.DFe.Extensions
 {
-    public static class XmlNodeExtensions
+    internal static class XmlNodeExtensions
     {
         /// <summary>
         ///     Retorna a XML como string

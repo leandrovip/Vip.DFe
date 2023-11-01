@@ -6,7 +6,7 @@ using Vip.DFe.Attributes;
 
 namespace Vip.DFe.Extensions
 {
-    public static class EnumExtensions
+    internal static class EnumExtensions
     {
         /// <summary>
         ///     Retorna o valor do Enum definido pelo DFeEnumAttribute.

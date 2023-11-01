@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Vip.DFe.Extensions
 {
-    public static class EnumerableExtensions
+    internal static class EnumerableExtensions
     {
         /// <summary>
         ///     Transforma uma lista em uma BindingList.

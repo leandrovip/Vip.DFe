@@ -2,7 +2,7 @@
 
 namespace Vip.DFe.Extensions
 {
-    public static class DecimalExtensions
+    internal static class DecimalExtensions
     {
         /// <summary>
         ///     Truncate value

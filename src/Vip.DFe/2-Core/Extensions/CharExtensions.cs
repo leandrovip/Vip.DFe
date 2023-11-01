@@ -2,7 +2,7 @@
 
 namespace Vip.DFe.Extensions
 {
-    public static class CharExtensions
+    internal static class CharExtensions
     {
         /// <summary>
         ///     Convert to Int32
