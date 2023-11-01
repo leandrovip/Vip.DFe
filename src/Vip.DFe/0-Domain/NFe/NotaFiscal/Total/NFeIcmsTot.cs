@@ -85,6 +85,42 @@ namespace Vip.DFe.NFe.NotaFiscal.Total
         public decimal VFcpStRet { get; set; }
 
         /// <summary>
+        ///     W06b.1 - Quantidade tributada do ICMS monofásico próprio
+        /// </summary>
+        [DFeElement(TipoCampo.De4, "qBCMono", Id = "W06b.1", Min = 5, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
+        public decimal QtdeBCMono { get; set; }
+
+        /// <summary>
+        ///     W06c - Valor do ICMS monofásico próprio
+        /// </summary>
+        [DFeElement(TipoCampo.De2, "vICMSMono", Id = "W06c", Min = 3, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
+        public decimal VICMSMono { get; set; }
+
+        /// <summary>
+        ///     W06c.1 - Quantidade tributada do ICMS monofásico sujeito a retenção
+        /// </summary>
+        [DFeElement(TipoCampo.De4, "qBCMonoReten", Id = "W06b.1", Min = 5, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
+        public decimal QtdeBCMonoReten { get; set; }
+
+        /// <summary>
+        ///     W06d - Valor do ICMS monofásico próprio sujeito a retenção
+        /// </summary>
+        [DFeElement(TipoCampo.De2, "vICMSMonoReten", Id = "W06d", Min = 3, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
+        public decimal VICMSMonoReten { get; set; }
+
+        /// <summary>
+        ///     W06d.1 - Quantidade tributada do ICMS monofásico retido anteriormente
+        /// </summary>
+        [DFeElement(TipoCampo.De4, "qBCMonoRet", Id = "W06d.1", Min = 5, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
+        public decimal QtdeBCMonoRet { get; set; }
+
+        /// <summary>
+        ///     W06e - Valor do ICMS monofásico próprio retido anteriormente
+        /// </summary>
+        [DFeElement(TipoCampo.De2, "vICMSMonoRet", Id = "W06e", Min = 3, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
+        public decimal VICMSMonoRet { get; set; }
+
+        /// <summary>
         ///     W07 - Valor Total dos produtos e serviços
         /// </summary>
         [DFeElement(TipoCampo.De2, "vProd", Id = "W07", Min = 3, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]

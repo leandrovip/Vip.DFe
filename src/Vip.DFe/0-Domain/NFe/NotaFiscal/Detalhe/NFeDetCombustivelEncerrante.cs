@@ -45,6 +45,12 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         [DFeElement(TipoCampo.De3, "vEncFin", Id = "LA16", Min = 3, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal VEncFin { get; set; }
 
+        /// <summary>
+        ///     LA17 - Valor do Encerrante no final do abastecimento
+        /// </summary>
+        [DFeElement(TipoCampo.De3, "pBio", Id = "LA16", Min = 5, Max = 7, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public decimal PBio { get; set; }
+
         #endregion
     }
 }

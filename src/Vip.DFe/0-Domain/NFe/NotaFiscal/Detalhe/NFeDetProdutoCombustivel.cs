@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using Vip.DFe.Attributes;
+using Vip.DFe.Document;
 using Vip.DFe.Enum;
 using Vip.DFe.NFe.Interfaces;
 using Vip.DFe.Serializer;
@@ -20,6 +21,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         {
             CIDE = new NFeDetCombustivelCIDE();
             Encerrante = new NFeDetCombustivelEncerrante();
+            OrigComb = new DFeCollection<NFeDetCombustivelOrigComb>();
         }
 
         #endregion
@@ -99,6 +101,12 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         [DFeElement("encerrante", Id = "LA11", Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public NFeDetCombustivelEncerrante Encerrante { get; set; }
 
+        /// <summary>
+        ///     LA18 - Grupo indicador da origem do combustível
+        /// </summary>
+        [DFeCollection("origComb", Id = "LA18", MinSize = 0, MaxSize = 30, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public DFeCollection<NFeDetCombustivelOrigComb> OrigComb { get; set; }
+
         #endregion
 
         #region Methods
@@ -111,6 +119,11 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         private bool ShouldSerializeCIDE()
         {
             return CIDE.vCIDE != 0;
+        }
+
+        private bool ShouldSerializeOrigComb()
+        {
+            return OrigComb.Count > 0;
         }
 
         private bool ShouldSerializePGLP()

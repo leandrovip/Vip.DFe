@@ -15,15 +15,19 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
         #region Properties
 
         /// <summary>
-        ///     <para>N02 (ICMS00) - Grupo Tributação do ICMS= 00</para>
-        ///     <para>N03 (ICMS10) - Grupo Tributação do ICMS = 10 </para>
-        ///     <para>N04 (ICMS20) - Grupo Tributação do ICMS = 20</para>
-        ///     <para>N05 (ICMS30) - Grupo Tributação do ICMS = 30</para>
-        ///     <para>N06 (ICMS40) - Grupo Tributação ICMS = 40, 41, 50</para>
-        ///     <para>N07 (ICMS51) - Grupo Tributação do ICMS = 51</para>
-        ///     <para>N08 (ICMS60) - Grupo Tributação do ICMS = 60</para>
-        ///     <para>N09 (ICMS70) - Grupo Tributação do ICMS = 70</para>
-        ///     <para>N10 (ICMS90) - Grupo Tributação do ICMS = 90</para>
+        ///     <para>N02  (ICMS00) - Grupo Tributação do ICMS = 00</para>
+        ///     <para>N02a (ICMS00) - Grupo Tributação do ICMS = 02</para>
+        ///     <para>N03  (ICMS10) - Grupo Tributação do ICMS = 10 </para>
+        ///     <para>N03a (ICMS15) - Grupo Tributação do ICMS = 15 </para>
+        ///     <para>N04  (ICMS20) - Grupo Tributação do ICMS = 20</para>
+        ///     <para>N05  (ICMS30) - Grupo Tributação do ICMS = 30</para>
+        ///     <para>N06  (ICMS40) - Grupo Tributação do ICMS = 40, 41, 50</para>
+        ///     <para>N07  (ICMS51) - Grupo Tributação do ICMS = 51</para>
+        ///     <para>N07a (ICMS53) - Grupo Tributação do ICMS = 53</para>
+        ///     <para>N08  (ICMS60) - Grupo Tributação do ICMS = 60</para>
+        ///     <para>N08a (ICMS61) - Grupo Tributação do ICMS = 61</para>
+        ///     <para>N09  (ICMS70) - Grupo Tributação do ICMS = 70</para>
+        ///     <para>N10  (ICMS90) - Grupo Tributação do ICMS = 90</para>
         ///     <para>
         ///         N10a (ICMSPart) - Grupo de Partilha do ICMS entre a UF de origem e UF de destino ou a UF definida na
         ///         legislação.
@@ -40,12 +44,16 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
         ///     <para>N10h (ICMSSN900) - Grupo CRT=1 – Simples Nacional e CSOSN=900</para>
         /// </summary>
         [DFeItem(typeof(Icms00), "ICMS00")]
+        [DFeItem(typeof(Icms02), "ICMS02")]
         [DFeItem(typeof(Icms10), "ICMS10")]
+        [DFeItem(typeof(Icms15), "ICMS15")]
         [DFeItem(typeof(Icms20), "ICMS20")]
         [DFeItem(typeof(Icms30), "ICMS30")]
         [DFeItem(typeof(Icms40), "ICMS40")]
         [DFeItem(typeof(Icms51), "ICMS51")]
+        [DFeItem(typeof(Icms53), "ICMS53")]
         [DFeItem(typeof(Icms60), "ICMS60")]
+        [DFeItem(typeof(Icms61), "ICMS61")]
         [DFeItem(typeof(Icms70), "ICMS70")]
         [DFeItem(typeof(Icms90), "ICMS90")]
         [DFeItem(typeof(IcmsPart), "ICMSPart")]
@@ -57,10 +65,6 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
         [DFeItem(typeof(IcmsSn500), "ICMSSN500")]
         [DFeItem(typeof(IcmsSn900), "ICMSSN900")]
         public INFeIcms Tipo { get; set; }
-
-        #endregion
-
-        #region Methods
 
         #endregion
     }
