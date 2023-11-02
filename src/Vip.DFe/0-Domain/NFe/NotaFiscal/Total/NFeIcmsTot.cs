@@ -87,7 +87,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Total
         /// <summary>
         ///     W06b.1 - Quantidade tributada do ICMS monofásico próprio
         /// </summary>
-        [DFeElement(TipoCampo.De4, "qBCMono", Id = "W06b.1", Min = 5, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
+        [DFeElement(TipoCampo.De2, "qBCMono", Id = "W06b.1", Min = 3, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
         public decimal QtdeBCMono { get; set; }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Total
         /// <summary>
         ///     W06c.1 - Quantidade tributada do ICMS monofásico sujeito a retenção
         /// </summary>
-        [DFeElement(TipoCampo.De4, "qBCMonoReten", Id = "W06b.1", Min = 5, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
+        [DFeElement(TipoCampo.De2, "qBCMonoReten", Id = "W06b.1", Min = 3, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
         public decimal QtdeBCMonoReten { get; set; }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Total
         /// <summary>
         ///     W06d.1 - Quantidade tributada do ICMS monofásico retido anteriormente
         /// </summary>
-        [DFeElement(TipoCampo.De4, "qBCMonoRet", Id = "W06d.1", Min = 5, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
+        [DFeElement(TipoCampo.De2, "qBCMonoRet", Id = "W06d.1", Min = 3, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
         public decimal QtdeBCMonoRet { get; set; }
 
         /// <summary>

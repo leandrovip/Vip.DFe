@@ -102,6 +102,12 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         public NFeDetCombustivelEncerrante Encerrante { get; set; }
 
         /// <summary>
+        ///     LA17 - Percentual do índice de mistura do Biodiesel B100 no óleo diesel B
+        /// </summary>
+        [DFeElement(TipoCampo.De4, "pBio", Id = "LA17", Min = 5, Max = 7, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public decimal PBio { get; set; }
+
+        /// <summary>
         ///     LA18 - Grupo indicador da origem do combustível
         /// </summary>
         [DFeCollection("origComb", Id = "LA18", MinSize = 0, MaxSize = 30, Ocorrencia = Ocorrencia.NaoObrigatoria)]
