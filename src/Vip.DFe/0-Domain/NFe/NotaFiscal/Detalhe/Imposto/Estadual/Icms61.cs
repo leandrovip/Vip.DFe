@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
+using Vip.DFe.NFe.Interfaces;
 using Vip.DFe.Serializer;
 using Vip.DFe.Shared.Enum;
 
@@ -9,7 +10,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual;
 /// <summary>
 ///     N08a - Grupo Tributação do ICMS monofásico
 /// </summary>
-public class Icms61 : GenericClone<Icms61>, INotifyPropertyChanged
+public class Icms61 : GenericClone<Icms61>, INFeIcms
 {
     #region Events
 
