@@ -48,8 +48,8 @@ namespace Vip.DFe.Demo
             /*
              * ATENÇÃO:
              * 
-             * cNF DEVE SER GERADO RANDOMICAMENTE!!!RS
-             * */
+             * cNF DEVE SER GERADO RANDOMICAMENTE!
+             */
 
             var ide = new NFeIde
             {
@@ -149,7 +149,8 @@ namespace Vip.DFe.Demo
 
         internal NFeInformacaoAdicional GetInformacoesComplementares() => new NFeInformacaoAdicional
         {
-            InformacaoComplementar = "PRAZO < > & PARA TROCA DE ATÉ 7 DIAS. OBRIGADO PELA PREFERENCIA.\r\nTESTE"
+            //InformacaoComplementar = "PRAZO < > & PARA TROCA DE ATÉ 7 DIAS. OBRIGADO PELA PREFERENCIA.\r\nTESTE"
+            InformacaoComplementar = @"MEMÓRIA DE CÁLCULO DE ICMS // VALOR TOTAL DA NOTA:  848,00 x 12% (ALIQUOTA COM RED. BS DE CÁLC) = R$ 101,76 (ICMS) // DEV. PARC. REF. A NF-e 10511 CHAVE 3523 1215 2422 2800 0246 5500 1000 0105 1118 7951 6016 // DEV. PARC. REF. A NF-e 10303 CHAVE 3523 1215 2422 2800 0246 5500 1000 0103 0314 8721 0524 // PRODUTO DEVOLVIDO PERMEADO DE SORO"
         };
 
         public NFeTotal GetTotal(List<NFeDetalhe> produtos)
