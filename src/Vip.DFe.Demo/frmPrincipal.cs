@@ -12,10 +12,6 @@ namespace Vip.DFe.Demo
 {
     public partial class frmPrincipal : Form
     {
-        #region Propriedades
-
-        #endregion
-
         #region Construtores
 
         public frmPrincipal()
@@ -30,14 +26,14 @@ namespace Vip.DFe.Demo
         private void btnCertificado_Click(object sender, EventArgs e)
         {
             var certificado = CertificadoHelper.Obter();
-            txtCertificado.Text = certificado.NumeroSerie;
+            txtCertificado.Text = certificado == null ? "" : certificado.NumeroSerie;
         }
 
         private void btnAutorizacao_Click(object sender, EventArgs e)
         {
             var nfeService = ObterService();
 
-            var nfe = GerarNFe(1043);
+            var nfe = GerarNFe(1046);
             nfeService.Documentos.Add(nfe);
 
             var teste = nfeService.AutorizacaoLote();
@@ -189,7 +185,9 @@ namespace Vip.DFe.Demo
                         Certificado = txtCertificado.Text,
                         Senha = txtSenhaCertificado.Text,
                         ManterEmCache = true
-                    }
+                    },
+                    RemoverAcentos = true,
+                    RemoverEspacos = true
                 }
             };
         }

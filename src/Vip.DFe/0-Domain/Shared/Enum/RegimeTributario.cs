@@ -8,6 +8,7 @@ namespace Vip.DFe.Shared.Enum
     ///     <para>1 – Simples Nacional</para>
     ///     <para>2 – Simples Nacional - Ecesso de sublimite de receita bruta</para>
     ///     <para>3 – Regime Normal</para>
+    ///     <para>4 – Simples Nacional - MEI</para>
     /// </summary>
     public enum RegimeTributario
     {
@@ -18,6 +19,10 @@ namespace Vip.DFe.Shared.Enum
         SimplesNacionalExcesso = 2,
 
         [DFeEnum("3")] [Description("3 - Regime Normal")]
-        Normal = 3
+        Normal = 3,
+
+        [DFeEnum("4")]
+        [Description("4 - MEI")]
+        MEI = 4,
     }
 }
