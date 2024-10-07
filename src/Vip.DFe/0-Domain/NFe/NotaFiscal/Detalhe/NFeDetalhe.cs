@@ -61,7 +61,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         /// <summary>
         ///     V01 - Informações Adicionais do Produto
         /// </summary>
-        [DFeElement(TipoCampo.Str, "infAdProd", Id = "V01", Min = 1, Max = 500, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.Custom, "infAdProd", Id = "V01", Min = 1, Max = 500, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string InfAdProd { get; set; }
 
         #endregion
@@ -73,7 +73,10 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
             return ImpostoDevol.PDevol > 0 || ImpostoDevol.Ipi.VIpiDevol > 0;
         }
 
-        private string SerializeInfAdProd() => InfAdProd.RemoveBreakline();
+        private string SerializeInfAdProd()
+        {
+            return InfAdProd.RemoveBreakline();
+        }
 
         private object DeserializeInfAdProd(string value) => value;
 

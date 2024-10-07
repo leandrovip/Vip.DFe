@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Vip.DFe.Attributes;
 using Vip.DFe.Document;
 using Vip.DFe.Enum;
@@ -307,6 +308,13 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
             code = code.OnlyNumbers();
             return code.IsGtin() ? code : "SEM GTIN";
         }
+
+        private string SerializeXProd()
+        {
+            return XProd.Truncate(120);
+        }
+
+        private object DeserializeXProd(string value) => value;
 
         #endregion
     }

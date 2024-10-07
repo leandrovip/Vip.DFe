@@ -307,7 +307,7 @@ namespace Vip.DFe.Demo
             return notasRefs;
         }
 
-        public DFeCollection<NFeDetalhe> GetDetalhesProdutosNF()
+        public DFeCollection<NFeDetalhe> GetDetalhesProdutosNF(string infoProduto)
         {
             var produto = new DadosProduto(ambiente, modeloDoc);
             var listaDetalhes = new DFeCollection<NFeDetalhe>();
@@ -324,6 +324,8 @@ namespace Vip.DFe.Demo
                 Produto = produto.GetProduto(),
                 Imposto = produto.GetImposto()
             };
+
+            itemDetalhe.InfAdProd = infoProduto;
 
             //var glp = new NFeDetProdutoCombustivel()
             //{

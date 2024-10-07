@@ -33,7 +33,7 @@ namespace Vip.DFe.Demo
         {
             var nfeService = ObterService();
 
-            var nfe = GerarNFe(1046);
+            var nfe = GerarNFe(1048, "");
             nfeService.Documentos.Add(nfe);
 
             var teste = nfeService.AutorizacaoLote();
@@ -192,7 +192,7 @@ namespace Vip.DFe.Demo
             };
         }
 
-        private NFe.NotaFiscal.NFe GerarNFe(int numero)
+        private NFe.NotaFiscal.NFe GerarNFe(int numero, string infoProduto)
         {
             var informacoes = new DadosNFe(TipoAmbiente.Homologacao, NFeModelo.NFe, NFeFinalidade.Normal, 1, numero);
             var nfe = new NFe.NotaFiscal.NFe
@@ -224,7 +224,7 @@ namespace Vip.DFe.Demo
 
             //nfe.InfNFe.Ide.NFref.AddRange(informacoes.GetNotasReferenciadas());
 
-            nfe.InfNFe.Detalhe.AddRange(informacoes.GetDetalhesProdutosNF()); //itens da NF
+            nfe.InfNFe.Detalhe.AddRange(informacoes.GetDetalhesProdutosNF(infoProduto)); //itens da NF
             nfe.InfNFe.Pagamento = informacoes.GetPagamentos();               //informações de pagamento da NF
             nfe.InfNFe.Total = informacoes.GetTotal(nfe.InfNFe.Detalhe);
 
