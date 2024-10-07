@@ -175,7 +175,7 @@ namespace Vip.DFe.Extensions
 
         public static string RemoveBreakline(this string text)
         {
-            return text.Replace('\r', ';').Replace('\n', ';');
+            return text.IsNullOrEmpty() ? "" : text.Replace('\r', ';').Replace('\n', ';');
         }
 
         /// <summary>

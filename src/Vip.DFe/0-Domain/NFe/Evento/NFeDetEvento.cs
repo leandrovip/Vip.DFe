@@ -143,6 +143,16 @@ namespace Vip.DFe.NFe.Evento
             return XCondUso.IsNotNullOrEmpty();
         }
 
+        private bool ShouldSerializeNProt()
+        {
+            return NProt.IsNotNullOrEmpty();
+        }
+
+        private bool ShouldSerializeXJust()
+        {
+            return XJust.IsNotNullOrEmpty();
+        }
+
         private string SerializeXCondUso()
         {
             return DFeConstantes.CondicaoUso;
@@ -153,15 +163,9 @@ namespace Vip.DFe.NFe.Evento
             return value;
         }
 
-        private bool ShouldSerializeNProt()
-        {
-            return NProt.IsNotNullOrEmpty();
-        }
+        private string SerializeXCorrecao() => XCorrecao.RemoveBreakline();
 
-        private bool ShouldSerializeXJust()
-        {
-            return XJust.IsNotNullOrEmpty();
-        }
+        private object DeserializeXCorrecao(string value) => value;
 
         #endregion
     }

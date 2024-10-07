@@ -2,6 +2,7 @@
 using Vip.DFe.Attributes;
 using Vip.DFe.Document;
 using Vip.DFe.Enum;
+using Vip.DFe.Extensions;
 using Vip.DFe.Serializer;
 
 namespace Vip.DFe.NFe.NotaFiscal.Detalhe
@@ -71,6 +72,10 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         {
             return ImpostoDevol.PDevol > 0 || ImpostoDevol.Ipi.VIpiDevol > 0;
         }
+
+        private string SerializeInfAdProd() => InfAdProd.RemoveBreakline();
+
+        private object DeserializeInfAdProd(string value) => value;
 
         #endregion
     }
