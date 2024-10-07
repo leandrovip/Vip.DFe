@@ -36,7 +36,6 @@ namespace Vip.DFe.Demo
         /// <returns>Retorna a coleção de certificados digitais</returns>
         private static X509Certificate2Collection AbrirTelaSelecao()
         {
-            var x509Cert = new X509Certificate2();
             var store = new X509Store("MY", StoreLocation.CurrentUser);
             store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
             var collection = store.Certificates;
