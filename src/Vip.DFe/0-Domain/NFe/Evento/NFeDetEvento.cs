@@ -37,7 +37,7 @@ namespace Vip.DFe.NFe.Evento
         /// <summary>
         ///     HP20 - Correção a ser considerada, texto livre. A correção mais recente substitui as anteriores.
         /// </summary>
-        [DFeElement(TipoCampo.Str, "xCorrecao", Id = "HP20", Min = 15, Max = 1000, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.Custom, "xCorrecao", Id = "HP20", Min = 15, Max = 1000, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string XCorrecao { get; set; }
 
         /// <summary>
