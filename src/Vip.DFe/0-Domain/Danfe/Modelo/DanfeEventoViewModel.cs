@@ -158,6 +158,8 @@ namespace Vip.DFe.Danfe.Modelo
             DanfeConstantes.TextoCreditos = textoCreditos;
         }
 
+        public virtual string TextoCorrecao() => BreakLines(Correcao);
+
         #endregion
 
         #region Methods Static

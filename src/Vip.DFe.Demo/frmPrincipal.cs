@@ -120,7 +120,7 @@ namespace Vip.DFe.Demo
 
         private void btnGerarDanfe_Click(object sender, EventArgs e)
         {
-            const string arquivoXml = @"D:\35220812332134000199550010000002011411406829-procNFe.xml";
+            const string arquivoXml = @"D:\35241012332134000199550020000001271982279432-procNFe.xml";
             const string caminhoArquivoPdf = @"D:\danfeOk.pdf";
 
             var modelo = DanfeViewModel.CriarDeArquivoXml(arquivoXml);
@@ -142,7 +142,7 @@ namespace Vip.DFe.Demo
 
         private void btnGerarDanfeEvento_Click(object sender, EventArgs e)
         {
-            const string arquivo = @"D:\35210438707682000140550010000010661360746950_110110_02-procEventoNFe.xml";
+            const string arquivo = @"D:\35241012332134000199550020000001281395463217_110110_01-procEventoNFe.xml";
 
             var modelo = DanfeEventoViewModel.CriarDeArquivoXml(arquivo);
             modelo.DefinirTextoCreditos("Emitido pelo software VipERP - www.vipsolucoes.com");

@@ -114,13 +114,19 @@
         {
             get
             {
-                string descriCaoCompleta = Descricao;
+                var descriCaoCompleta = Descricao;
 
-                if (!string.IsNullOrWhiteSpace(InformacoesAdicionais)) descriCaoCompleta += "\r\n" + InformacoesAdicionais;
+                if (!string.IsNullOrWhiteSpace(InformacoesAdicionais)) descriCaoCompleta += "\r\n" + BreakLines(InformacoesAdicionais);
 
                 return descriCaoCompleta;
             }
         }
+
+        #endregion
+
+        #region Methods Privates
+
+        private string BreakLines(string str) => str == null ? string.Empty : str.Replace(';', '\n');
 
         #endregion
     }

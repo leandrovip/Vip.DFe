@@ -22,6 +22,17 @@ namespace Vip.DFe.Danfe.Elementos
 
         #region Constructors
 
+        public TextBlock(string text, Fonte f)
+        {
+            Text = text;
+            Fonte = f;
+            Blocks = new List<string[]>();
+            BlocksW = new List<float[]>();
+            SplitText();
+            AlinhamentoHorizontal = AlinhamentoHorizontal.Esquerda;
+            Lines = new List<string>();
+        }
+
         #endregion
 
         #region Properties
@@ -172,17 +183,6 @@ namespace Vip.DFe.Danfe.Elementos
                 Blocks.Add(blocks);
                 BlocksW.Add(blocksW);
             }
-        }
-
-        public TextBlock(string text, Fonte f)
-        {
-            Text = text;
-            Fonte = f;
-            Blocks = new List<string[]>();
-            BlocksW = new List<float[]>();
-            SplitText();
-            AlinhamentoHorizontal = AlinhamentoHorizontal.Esquerda;
-            Lines = new List<string>();
         }
 
         #endregion

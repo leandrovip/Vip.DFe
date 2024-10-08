@@ -10,7 +10,7 @@ namespace Vip.DFe.Danfe.BlocosEvento
 
         public BlocoEventoCartaCorrecao(DanfeEventoViewModel viewModel, Estilo estilo) : base(viewModel, estilo)
         {
-            var correcao = new CampoMultilinha("", viewModel.Correcao, estilo, AlinhamentoHorizontal.Esquerda, true) {Height = AlturaCorrecao};
+            var correcao = new CampoMultilinha("", viewModel.TextoCorrecao(), estilo, AlinhamentoHorizontal.Esquerda, true) {Height = AlturaCorrecao};
             var linha = new FlexibleLine {Height = AlturaCorrecao};
             linha.ComElemento(correcao).ComLargurasIguais();
 
