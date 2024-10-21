@@ -170,7 +170,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Identificacao
         ///     </para>
         /// </summary>
         [DFeElement(TipoCampo.DatHorTz, "dhCont", Id = "B28", Min = 1, Max = 25, Ocorrencia = Ocorrencia.NaoObrigatoria)]
-        public DateTime DhCont { get; set; }
+        public DateTimeOffset DhCont { get; set; }
 
         /// <summary>
         ///     B29 - Informar a Justificativa da entrada

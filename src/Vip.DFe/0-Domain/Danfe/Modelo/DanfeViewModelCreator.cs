@@ -278,7 +278,7 @@ namespace Vip.DFe.Danfe.Modelo
             // Contingência SVC-AN e SVC-RS
             if (model.TipoEmissao == TipoEmissao.SVCAN || model.TipoEmissao == TipoEmissao.SVCRS)
             {
-                model.ContingenciaDataHora = ide.DhCont;
+                model.ContingenciaDataHora = ide.DhCont.DateTime;
                 model.ContingenciaJustificativa = ide.XJust;
             }
 
