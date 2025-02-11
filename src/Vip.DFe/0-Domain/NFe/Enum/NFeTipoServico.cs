@@ -42,10 +42,15 @@
         ///     Distribui documentos e informações de interesse do ator da NF-e
         /// </summary>
         NFeDistribuicaoDFe,
+        
+        /// <summary>
+        ///     URL para consulta do QrCode da NFC-e.
+        /// </summary>
+        NFCeUrlQrCode,
 
         /// <summary>
-        ///     Serviço destinado a administração do CSC.
+        ///     URL para consulta da chave da NFC-e.
         /// </summary>
-        NfceAdministracaoCSC
+        NFCeUrlChave,
     }
 }
