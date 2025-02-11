@@ -42,7 +42,7 @@ namespace Vip.DFe.NFe.Configuration
         /// </summary>
         public string ObterCaminhoAutorizado(DateTime data, string diretorioBackup = "") =>
             // TODO: Futuramente gerar modelo NFe ou NFce
-            ObterCaminho("Autorizado", data, diretorioBackup: diretorioBackup);
+            ObterCaminho("Autorizado", data, diretorioBackup);
 
         /// <summary>
         ///     Retornar o caminho onde será salvo os arquivos Assinados
@@ -69,7 +69,7 @@ namespace Vip.DFe.NFe.Configuration
         /// <summary>
         ///     Gera um caminho para salvar o arquivo desejado
         /// </summary>
-        private string ObterCaminho(string caminho, DateTime? data = null, string modeloDescricao = "", string diretorioBackup = "")
+        private string ObterCaminho(string caminho, DateTime? data = null, string diretorioBackup = "")
         {
             // Diretório - NFe/
             var pathDefault = $@"{AppDomain.CurrentDomain.BaseDirectory}\NFe";
@@ -86,13 +86,14 @@ namespace Vip.DFe.NFe.Configuration
             var cnpj = Parent.CNPJ;
             if (cnpj.IsNotNullOrEmpty()) diretorio = Path.Combine(diretorio, cnpj);
 
-            // NFe/00000000000000/Enviado
-            if (caminho.IsNotNullOrEmpty()) diretorio = Path.Combine(diretorio, caminho);
-
-            // NFe/00000000000000/Enviado/NFCe
+            // NFe/00000000000000/NFCe
+            var modeloDescricao = Parent.Modelo.GetDescription();
             if (modeloDescricao.IsNotNullOrEmpty()) diretorio = Path.Combine(diretorio, modeloDescricao);
 
-            // NFe/00000000000000/Enviado/NFce/202009
+            // NFe/00000000000000/NFCe/Enviado
+            if (caminho.IsNotNullOrEmpty()) diretorio = Path.Combine(diretorio, caminho);
+
+            // NFe/00000000000000/NFCe/Enviado/202009
             if (data.HasValue) diretorio = Path.Combine(diretorio, data.Value.ToString("yyyyMM"));
 
             if (!Directory.Exists(diretorio)) Directory.CreateDirectory(diretorio);
@@ -140,17 +141,6 @@ namespace Vip.DFe.NFe.Configuration
                 case NFeSchema.EnvCCe:
                     schemaPath = Path.Combine(diretorioSchema, "envCCe_v1.00.xsd");
                     break;
-
-                //case SchemaCTe.ConsCad:
-                //    schemaPath = Path.Combine(PathSchemas, "consCad_v2.00.xsd");
-                //    break;
-                //case SchemaCTe.DistDFeInt:
-                //    schemaPath = Path.Combine(PathSchemas, "distDFeInt_v1.00.xsd");
-                //    break;
-                //    case SchemaCTe.ProcEventoCTe:
-                //    schemaPath = Path.Combine(PathSchemas, $"procEventoCTe_v{versao.GetDescription()}.xsd");
-                //    break;
-
                 default:
                     throw new ArgumentOutOfRangeException(nameof(schema), schema, null);
             }

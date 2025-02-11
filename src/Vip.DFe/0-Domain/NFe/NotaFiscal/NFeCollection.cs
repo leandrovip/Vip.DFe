@@ -252,6 +252,11 @@ namespace Vip.DFe.NFe.NotaFiscal
             Guard.Against<VipException>(listaErros.Any(), $"{(Parent.Configuracoes.ExibeErrosSchema ? listaErros.AsString() : "Erros na validação do arquivo xml (Schema NF-e)")}");
         }
 
+        /// <summary>
+        ///     Verifica se existem documentos no objeto
+        /// </summary>
+        public bool IsEmpty() => !_nfes.Any();
+
         #endregion Methods
     }
 }

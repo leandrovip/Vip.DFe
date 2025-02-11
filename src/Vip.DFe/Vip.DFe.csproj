@@ -35,7 +35,7 @@
 		<Folder Include="1-Services\SAT\Manager\" />
 		<Folder Include="1-Services\SAT\Interfaces\" />
 		<Folder Include="1-Services\SAT\Configuration\" />
-		<Folder Include="2-Core\Control\" />
+		<Folder Include="2-Core\Controls\" />
 		<Folder Include="3-Infra\Exception\" />
 		<Folder Include="3-Infra\Interops\" />
 		<Folder Include="3-Infra\Graphics\" />

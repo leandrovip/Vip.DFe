@@ -6,6 +6,6 @@ namespace Vip.DFe.NFe.Enum
     public enum NFeModelo : byte
     {
         [DFeEnum("55")] [Description("NFe")] NFe = 55,
-        [DFeEnum("65")] [Description("NCFe")] NFCe = 65
+        [DFeEnum("65")] [Description("NFCe")] NFCe = 65
     }
 }

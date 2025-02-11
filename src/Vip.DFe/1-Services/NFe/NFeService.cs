@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
-using Vip.DFe.Control;
+using Vip.DFe.Controls;
 using Vip.DFe.Exception;
 using Vip.DFe.Extensions;
 using Vip.DFe.NFe.Configuration;
@@ -110,6 +110,39 @@ namespace Vip.DFe.NFe
                 Status = NFeStatus.EmEspera;
             }
 
+            return autorizacao;
+        }
+
+        /// <summary>
+        ///     Método para enviar a primeira NFe carregada na coleção (padrão síncrono) - Autorizacao
+        /// </summary>
+        public NFeAutorizacaoResposta Autorizacao()
+        {
+            Configuracoes.Validar();
+
+            var oldProtocol = ServicePointManager.SecurityProtocol;
+            ServicePointManager.SecurityProtocol = _securityProtocol;
+            _certificado = Configuracoes.Certificado.ObterCertificado();
+
+            Assinar(_certificado);
+            Validar();
+
+            NFeAutorizacaoResposta autorizacao;
+
+            try
+            {
+                Status = NFeStatus.Autorizacao;
+                using var service = new NFeServAutorizacao(Configuracoes, _certificado);
+                autorizacao = service.Autorizacao(Documentos.NFe.FirstOrDefault());
+            }
+            finally
+            {
+                LiberarCacheCertificado();
+                ServicePointManager.SecurityProtocol = oldProtocol;
+                Status = NFeStatus.EmEspera;
+            }
+
+            if (Configuracoes.EnviarModoSincrono) GerarNFeProc(null);
             return autorizacao;
         }
 

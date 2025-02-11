@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Vip.DFe.Demo
+namespace Vip.DFe.Demo.Helpers
 {
     public static class CertificadoHelper
     {
         #region Métodos Estáticos
 
-        public static CertificadoDigital Obter()
+        public static Models.CertificadoDigital Obter()
         {
             var certificadoSelecionado = Selecionar();
             if (certificadoSelecionado == null) return null;
 
-            return new CertificadoDigital(certificadoSelecionado.SerialNumber, certificadoSelecionado.Subject, certificadoSelecionado.NotAfter);
+            return new Models.CertificadoDigital(certificadoSelecionado.SerialNumber, certificadoSelecionado.Subject, certificadoSelecionado.NotAfter);
         }
 
         /// <summary>
