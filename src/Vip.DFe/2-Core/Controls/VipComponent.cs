@@ -3,7 +3,7 @@ using System.ComponentModel;
 using Vip.DFe.Conveter;
 using Vip.DFe.Extensions;
 
-namespace Vip.DFe.Control
+namespace Vip.DFe.Controls
 {
     /// <summary>
     ///     Classe base para componentes

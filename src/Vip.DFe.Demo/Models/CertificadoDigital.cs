@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vip.DFe.Demo
+namespace Vip.DFe.Demo.Models
 {
     public class CertificadoDigital
     {
@@ -35,11 +35,5 @@ namespace Vip.DFe.Demo
 
         #endregion
 
-        #region Constantes
-
-        public const int NumeroSerieMaxLength = 1000;
-        public const int SujeitoMaxLength = 1000;
-
-        #endregion
     }
 }

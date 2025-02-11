@@ -23,6 +23,7 @@ namespace Vip.DFe.NFe.Configuration
             Modelo = NFeModelo.NFe;
             Versao = NFeVersao.v400;
             _cnpj = "";
+            EnviarModoSincrono = false;
             ValidarDigest = true;
             RemoverAcentos = true;
             RemoverEspacos = true;
@@ -48,6 +49,7 @@ namespace Vip.DFe.NFe.Configuration
             set => _cnpj = value.TrimVip().OnlyNumbers();
         }
 
+        public bool EnviarModoSincrono { get; set; }
         public bool ValidarDigest { get; set; }
         public bool RemoverAcentos { get; set; }
         public bool RemoverEspacos { get; set; }

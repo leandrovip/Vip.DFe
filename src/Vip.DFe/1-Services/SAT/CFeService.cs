@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Text;
-using Vip.DFe.Control;
+using Vip.DFe.Controls;
 using Vip.DFe.Enum;
 using Vip.DFe.Exception;
 using Vip.DFe.Extensions;
