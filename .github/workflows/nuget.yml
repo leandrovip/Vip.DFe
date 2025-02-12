@@ -52,7 +52,7 @@ jobs:
         run: msbuild .\src\Vip.DFe.sln /p:Configuration=Release /p:Version=${{ steps.envs.outputs.VERSION_PROJECT }}
 
       - name: "Test Project"
-        run: dotnet vstest src\Vip.DFe.Test\bin\Release\net6.0\Vip.DFe.Tests.dll
+        run: dotnet vstest src\Vip.DFe.Tests\bin\Release\net6.0\Vip.DFe.Tests.dll
 
       - name: "Create Package"
         run: msbuild .\src\Vip.DFe\Vip.DFe.csproj /t:Pack /p:Configuration=Release /p:PackageVersion=${{ steps.envs.outputs.VERSION_PACKAGE }}
