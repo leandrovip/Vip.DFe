@@ -7,57 +7,49 @@ on:
         description: "É beta? (digite -beta)"
         required: false
 
-env:
-  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-  # Stop wasting time caching packages
-  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
-  # Disable sending usage data to Microsoft
-  DOTNET_CLI_TELEMETRY_OPTOUT: false
-
 jobs:
   deploy-package:
     runs-on: windows-latest
 
     steps:
       - name: "Checkout branch"
-        uses: actions/checkout@main
+        uses: actions/checkout@v3
 
       - name: "Set Variables"
         id: envs
         run: |
-          echo "::set-output name=VERSION_PROJECT::1.1.${Env:GITHUB_RUN_NUMBER}"
-          echo "::set-output name=VERSION_PACKAGE::1.1.${Env:GITHUB_RUN_NUMBER}${{ github.event.inputs.typeBuild }}"
+          echo "::set-output name=VERSION_PROJECT::1.1.${{ github.run_number }}"
+          echo "::set-output name=VERSION_PACKAGE::1.1.${{ github.run_number }}${{ github.event.inputs.typeBuild }}"
 
       - name: "Variables Test"
         run: |
           echo Version: ${{ steps.envs.outputs.VERSION_PROJECT }}
           echo Version2: ${{ steps.envs.outputs.VERSION_PACKAGE }}
 
-      - name: "Force url nuget"
+      - name: "Force nuget source"
         uses: fabriciomurta/ensure-nuget-source@v1
         with:
           name: "nuget.org"
           url: "https://api.nuget.org/v3/index.json"
 
-      - name: "Setup .NET Core"
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: "6.0.x"
+      - name: "Clean Solution"
+        run: |
+          msbuild .\src\Vip.DFe.sln /t:Clean /p:Configuration=Release
+          nuget locals all -clear
 
-      - name: Clean
-        run: dotnet clean .\src\Vip.DFe.sln && dotnet nuget locals all --clear
+      - name: "Restore Dependencies"
+        run: nuget restore .\src\Vip.DFe.sln
 
-      - name: Restore dependencies
-        run: dotnet restore .\src\Vip.DFe.sln --force
+      - name: "Build Solution"
+        run: msbuild .\src\Vip.DFe.sln /p:Configuration=Release /p:Version=${{ steps.envs.outputs.VERSION_PROJECT }}
 
-      - name: Build Project
-        run: dotnet build .\src\Vip.DFe.sln --configuration Release -p:Version=${{ steps.envs.outputs.VERSION_PROJECT }}
+      - name: "Test Project"
+        run: |
+          REM Ajuste o caminho para o seu assembly de teste, se houver
+          vstest.console.exe .\src\Vip.DFe.Test\bin\Release\Vip.DFe.Test.dll
 
-      - name: Test Project
-        run: dotnet test .\src\Vip.DFe.sln
+      - name: "Create Package"
+        run: msbuild .\src\Vip.DFe\Vip.DFe.csproj /t:Pack /p:Configuration=Release /p:PackageVersion=${{ steps.envs.outputs.VERSION_PACKAGE }}
 
-      - name: Create Package
-        run: dotnet pack .\src\Vip.DFe\Vip.DFe.csproj --configuration Release -p:Version=${{ steps.envs.outputs.VERSION_PACKAGE }}
-      
-      - name: Publish Package
-        run: dotnet nuget push .\src\Vip.DFe\bin\Release\*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_TOKEN }}
+      - name: "Publish Package"
+        run: nuget push .\src\Vip.DFe\bin\Release\*.nupkg -Source https://api.nuget.org/v3/index.json -ApiKey ${{ secrets.NUGET_TOKEN }}
