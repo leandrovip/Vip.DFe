@@ -273,10 +273,17 @@ namespace Vip.DFe.Demo
 
         private void FuncaoAutorizacao()
         {
-            var documento = ObterDocumento();
+            var gerarNovoXml = true;
+
+            if (txtXml.Text.IsNotEmpty())
+            {
+                gerarNovoXml = MessageBox.Show("Deseja utilizar o XML preenchido?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
+            }
+
+            var documento = gerarNovoXml ? ObterDocumento() : NFe.NotaFiscal.NFe.Load(txtXml.Text);
 
             _service.Documentos.Add(documento);
-            txtXml.Text = _service.Documentos.IsEmpty() ? "" : _service.Documentos.NFe.FirstOrDefault().Xml.FormatarXml();
+            txtXml.Text = _service.Documentos.IsEmpty() ? "" : _service.Documentos.NFe.FirstOrDefault().GetXml().FormatarXml();
 
             try
             {
@@ -290,6 +297,9 @@ namespace Vip.DFe.Demo
 
                 var xmlAssinado = _service.Documentos.NFe.FirstOrDefault();
                 if (xmlAssinado.IsNotNull()) txtXml.Text = xmlAssinado.Assinado ? xmlAssinado.GetXml().FormatarXml() : "";
+
+                if (retorno.NFeAutorizada.IsNotNull())
+                    txtResultado.Text = retorno.NFeAutorizada.Xml.FormatarXml();
             }
             catch (System.Exception ex)
             {
@@ -1369,7 +1379,7 @@ namespace Vip.DFe.Demo
 
             _configuracao.EmitenteCnpj = txtEmitenteCnpj.Text;
             _configuracao.EmitenteInscricaoEstadual = txtEmitenteInscricaoEstadual.Text;
-            _configuracao.EmitenteRazaoSocial = txtDestinatarioRazaoSocial.Text;
+            _configuracao.EmitenteRazaoSocial = txtEmitenteRazaoSocial.Text;
             _configuracao.EmitenteRegimeTributario = cboEmitenteRegimeTributario.GetEnumValue<RegimeTributario>();
             _configuracao.EmitenteLogradouro = txtEmitenteLogradouro.Text;
             _configuracao.EmitenteNumero = txtEmitenteNumero.Text;

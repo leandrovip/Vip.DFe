@@ -44,8 +44,7 @@ namespace Vip.DFe.Danfe.Modelo
             catch (System.Exception ex)
             {
                 if (ex.InnerException is XmlException e) throw new System.Exception($"Não foi possível interpretar o Xml. Linha {e.LineNumber} Posição {e.LinePosition}.");
-
-                throw new XmlException("O Xml não parece ser uma NF-e processada.", ex);
+                throw new XmlException($"Não foi possível processar o XML da NF-e.\r\n\r\nMensagem: {ex.Message}", ex);
             }
         }
 
