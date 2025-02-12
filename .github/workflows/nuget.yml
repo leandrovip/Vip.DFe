@@ -32,6 +32,9 @@ jobs:
           name: "nuget.org"
           url: "https://api.nuget.org/v3/index.json"
 
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
       - name: "Clean Solution"
         run: |
           msbuild .\src\Vip.DFe.sln /t:Clean /p:Configuration=Release
