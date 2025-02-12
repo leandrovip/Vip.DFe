@@ -23,6 +23,7 @@ namespace Vip.DFe.Demo.Models
         public bool RemoverAcentos { get; set; } = true;
         public bool RemoverEspacos { get; set; } = true;
         public bool ExibirErroSchema { get; set; } = true;
+        public bool EnviarModoSincrono { get; set; }
 
         #endregion
 

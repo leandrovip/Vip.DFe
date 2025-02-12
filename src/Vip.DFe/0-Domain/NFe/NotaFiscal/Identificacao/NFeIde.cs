@@ -190,7 +190,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Identificacao
 
         #region Methods
 
-        public bool ShouldSerializeDhSaiEnt() => DhSaiEnt.HasValue;
+        public bool ShouldSerializeDhSaiEnt() => Modelo != NFeModelo.NFCe && DhSaiEnt.HasValue;
 
         public bool ShouldSerializeDhCont() => TipoEmissao != TipoEmissao.Normal;
 

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
 using Vip.DFe.Exception;
 
@@ -369,6 +371,28 @@ namespace Vip.DFe.Extensions
         public static string Truncate(this string value, int maxLength)
         {
             return value?.Substring(0, Math.Min(value.Length, maxLength));
+        }
+
+        public static string ObterHex(this string value)
+        {
+            var hex = "";
+            foreach (var c in value)
+            {
+                int tmp = c;
+                hex += $"{Convert.ToUInt32(tmp.ToString()):x2}";
+            }
+
+            return hex;
+        }
+
+        public static string ObterHexSha1(this string value)
+        {
+            var bytes = Encoding.UTF8.GetBytes(value);
+
+            var sha1 = SHA1.Create();
+            var hashBytes = sha1.ComputeHash(bytes);
+
+            return hashBytes.ObterHex();
         }
     }
 }

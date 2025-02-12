@@ -289,7 +289,7 @@ namespace Vip.DFe.Demo
                 txtParametro.Text = retorno.Resultado.InfRec.NRec;
 
                 var xmlAssinado = _service.Documentos.NFe.FirstOrDefault();
-                if (xmlAssinado.IsNotNull()) txtXml.Text = xmlAssinado.Assinado ? xmlAssinado.Xml : "";
+                if (xmlAssinado.IsNotNull()) txtXml.Text = xmlAssinado.Assinado ? xmlAssinado.GetXml().FormatarXml() : "";
             }
             catch (System.Exception ex)
             {
@@ -537,7 +537,7 @@ namespace Vip.DFe.Demo
                 txtParametro.Text = retorno.Resultado.InfRec.NRec;
 
                 var xmlAssinado = _service.Documentos.NFe.FirstOrDefault();
-                if (xmlAssinado.IsNotNull()) txtXml.Text = xmlAssinado.Assinado ? xmlAssinado.Xml : "";
+                if (xmlAssinado.IsNotNull()) txtXml.Text = xmlAssinado.Assinado ? xmlAssinado.GetXml().FormatarXml() : "";
             }
             catch (System.Exception ex)
             {
@@ -732,7 +732,7 @@ namespace Vip.DFe.Demo
                         Codigo = item.Codigo,
                         CEAN = "SEM GTIN",
                         CEANTrib = "SEM GTIN",
-                        XProd = item.Descricao,
+                        XProd = numeroItem == 2 && _configuracao.Ambiente == TipoAmbiente.Homologacao ? "NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL" : item.Descricao,
                         NCM = item.NCM,
                         CEST = item.CEST,
                         CBenef = "",
@@ -1347,6 +1347,7 @@ namespace Vip.DFe.Demo
             _configuracao.RemoverAcentos = ckbRemoverAcentos.Checked;
             _configuracao.RemoverEspacos = ckbRemoverEspacos.Checked;
             _configuracao.ExibirErroSchema = ckbExibirErroSchema.Checked;
+            _configuracao.EnviarModoSincrono = ckbEnviarModoSincrono.Checked;
 
             _configuracao.CertificadoNumeroSerie = txtCertificadoNumeroSerie.Text;
             _configuracao.CertificadoSenha = txtCertificadoSenha.Text;
@@ -1479,9 +1480,13 @@ namespace Vip.DFe.Demo
             service.Configuracoes.Modelo = _configuracao.Modelo;
             service.Configuracoes.Versao = _configuracao.Versao;
 
+            service.Configuracoes.NFCeIdToken = _configuracao.IdToken;
+            service.Configuracoes.NFCeCSC = _configuracao.CscToken;
+
             service.Configuracoes.RemoverAcentos = _configuracao.RemoverAcentos;
             service.Configuracoes.RemoverEspacos = _configuracao.RemoverEspacos;
             service.Configuracoes.ExibeErrosSchema = _configuracao.ExibirErroSchema;
+            service.Configuracoes.EnviarModoSincrono = _configuracao.EnviarModoSincrono;
 
             service.Configuracoes.Certificado.Certificado = _configuracao.CertificadoNumeroSerie;
             service.Configuracoes.Certificado.Senha = _configuracao.CertificadoSenha;

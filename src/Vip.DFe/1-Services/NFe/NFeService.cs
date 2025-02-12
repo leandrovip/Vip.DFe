@@ -114,7 +114,7 @@ namespace Vip.DFe.NFe
         }
 
         /// <summary>
-        ///     Método para enviar a primeira NFe carregada na coleção (padrão síncrono) - Autorizacao
+        ///     Método para enviar a primeira NFe carregada na coleção (padrão para NFCe) - Autorizacao
         /// </summary>
         public NFeAutorizacaoResposta Autorizacao()
         {
@@ -142,7 +142,7 @@ namespace Vip.DFe.NFe
                 Status = NFeStatus.EmEspera;
             }
 
-            if (Configuracoes.EnviarModoSincrono) GerarNFeProc(null);
+            if (Configuracoes.EnviarModoSincrono) GerarNFeProc(autorizacao);
             return autorizacao;
         }
 
@@ -412,7 +412,7 @@ namespace Vip.DFe.NFe
         }
 
         /// <summary>
-        ///     Gera classe procNFe
+        ///     Gera classe procNFe via RetAutorizacao / Lote
         /// </summary>
         private void GerarNFeProc(NFeRetAutorizacaoResposta retAutorizacao)
         {
@@ -436,6 +436,29 @@ namespace Vip.DFe.NFe
             }
 
             retAutorizacao.NFeAutorizadas = autorizadas.ToArray();
+        }
+
+        /// <summary>
+        ///     Gera classe procNFe via autorizacao / síncrono
+        /// </summary>
+        private void GerarNFeProc(NFeAutorizacaoResposta autorizacao)
+        {
+            if (autorizacao.Resultado.CStat != 104 || autorizacao.Resultado.ProtNFe.IsNull()) return;
+
+            var protNFe = autorizacao.Resultado.ProtNFe;
+
+            var nfe = Documentos.NFe.FirstOrDefault();
+            if (nfe.IsNull()) return;
+
+            if (Configuracoes.ValidarDigest)
+                Guard.Against<VipException>(protNFe.InfProt.DigVal.IsNotNullOrEmpty() && protNFe.InfProt.DigVal != nfe.Signature.SignedInfo.Reference.DigestValue, $"DigestValue do documento {nfe.InfNFe.Id} não confere.");
+
+            var nfeProc = new NFeProc { Versao = nfe.InfNFe.Versao, NFe = nfe, ProtNFe = protNFe };
+            if (nfeProc.Processado)
+            {
+                autorizacao.NFeAutorizada = nfeProc;
+                nfeProc.Gravar(Configuracoes);
+            }
         }
 
         /// <summary>

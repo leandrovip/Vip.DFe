@@ -93,6 +93,11 @@ namespace Vip.DFe.Extensions
             return Equals(value, null);
         }
 
+        public static bool IsNotNull<T>(this T value)
+        {
+            return value != null;
+        }
+
         /// <summary>
         ///     Checar se o valor esta entre os valores informados.
         /// </summary>
