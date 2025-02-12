@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using Vip.DFe.Enum;
+﻿using Vip.DFe.Enum;
 using Vip.DFe.Extensions;
 using Vip.DFe.NFe.Enum;
 using Vip.DFe.Shared.Enum;
