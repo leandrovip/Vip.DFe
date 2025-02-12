@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Vip.DFe.Extensions;
+using Vip.DFe.NFe.Enum;
 using Vip.DFe.Shared.Enum;
 
 namespace Vip.DFe.NFe.Configuration
@@ -46,6 +47,18 @@ namespace Vip.DFe.NFe.Configuration
                             x.Versao == Parent.Versao &&
                             x.Ambiente == Parent.Ambiente)
                 .ToList();
+        }
+
+        public string ObterUrlQrCode()
+        {
+            var endereco = NFeEnderecoCollection.listaEnderecos.FirstOrDefault(x => x.Autorizadora == UF.GetDescription() && x.Modelo == Parent.Modelo && x.Versao == Parent.Versao && x.Ambiente == Parent.Ambiente && x.TipoServico == NFeTipoServico.NFCeUrlQrCode);
+            return endereco.IsNull() ? "" : endereco.Url;
+        }
+
+        public string ObterUrlChave()
+        {
+            var endereco = NFeEnderecoCollection.listaEnderecos.FirstOrDefault(x => x.Autorizadora == UF.GetDescription() && x.Modelo == Parent.Modelo && x.Versao == Parent.Versao && x.Ambiente == Parent.Ambiente && x.TipoServico == NFeTipoServico.NFCeUrlChave);
+            return endereco.IsNull() ? "" : endereco.Url;
         }
 
         #endregion

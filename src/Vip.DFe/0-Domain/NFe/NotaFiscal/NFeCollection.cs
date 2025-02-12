@@ -231,7 +231,11 @@ namespace Vip.DFe.NFe.NotaFiscal
         /// <param name="options"></param>
         public void Assinar(X509Certificate2 certificado, SaveOptions options)
         {
-            foreach (var nfe in NFe) nfe.Assinar(certificado, options);
+            foreach (var nfe in NFe)
+            {
+                nfe.Assinar(certificado, options);
+                nfe.GerarQrCode(Parent.Configuracoes);
+            }
         }
 
         /// <summary>

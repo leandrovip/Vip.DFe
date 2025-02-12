@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrincipal));
             this.tbcPrincipal = new System.Windows.Forms.TabControl();
             this.tbpIdentificacao = new System.Windows.Forms.TabPage();
@@ -203,6 +203,7 @@
             this.txtEnvelopSoap = new FastColoredTextBoxNS.FastColoredTextBox();
             this.txtEnvio = new FastColoredTextBoxNS.FastColoredTextBox();
             this.txtResultado = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.ckbEnviarModoSincrono = new System.Windows.Forms.CheckBox();
             this.tbcPrincipal.SuspendLayout();
             this.tbpIdentificacao.SuspendLayout();
             this.gpbEmitente.SuspendLayout();
@@ -844,6 +845,7 @@
             // 
             // gpbConfiguracao
             // 
+            this.gpbConfiguracao.Controls.Add(this.ckbEnviarModoSincrono);
             this.gpbConfiguracao.Controls.Add(this.ckbExibirErroSchema);
             this.gpbConfiguracao.Controls.Add(this.ckbRemoverEspacos);
             this.gpbConfiguracao.Controls.Add(this.ckbRemoverAcentos);
@@ -879,9 +881,10 @@
             // ckbExibirErroSchema
             // 
             this.ckbExibirErroSchema.AutoSize = true;
-            this.ckbExibirErroSchema.Location = new System.Drawing.Point(283, 172);
+            this.ckbExibirErroSchema.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.ckbExibirErroSchema.Location = new System.Drawing.Point(235, 172);
             this.ckbExibirErroSchema.Name = "ckbExibirErroSchema";
-            this.ckbExibirErroSchema.Size = new System.Drawing.Size(150, 18);
+            this.ckbExibirErroSchema.Size = new System.Drawing.Size(135, 17);
             this.ckbExibirErroSchema.TabIndex = 25;
             this.ckbExibirErroSchema.Text = "Exibir Erros de Schema";
             this.ckbExibirErroSchema.UseVisualStyleBackColor = true;
@@ -889,9 +892,10 @@
             // ckbRemoverEspacos
             // 
             this.ckbRemoverEspacos.AutoSize = true;
-            this.ckbRemoverEspacos.Location = new System.Drawing.Point(156, 172);
+            this.ckbRemoverEspacos.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.ckbRemoverEspacos.Location = new System.Drawing.Point(122, 172);
             this.ckbRemoverEspacos.Name = "ckbRemoverEspacos";
-            this.ckbRemoverEspacos.Size = new System.Drawing.Size(121, 18);
+            this.ckbRemoverEspacos.Size = new System.Drawing.Size(111, 17);
             this.ckbRemoverEspacos.TabIndex = 24;
             this.ckbRemoverEspacos.Text = "Remover Espaços";
             this.ckbRemoverEspacos.UseVisualStyleBackColor = true;
@@ -899,9 +903,10 @@
             // ckbRemoverAcentos
             // 
             this.ckbRemoverAcentos.AutoSize = true;
+            this.ckbRemoverAcentos.Font = new System.Drawing.Font("Tahoma", 8F);
             this.ckbRemoverAcentos.Location = new System.Drawing.Point(9, 172);
             this.ckbRemoverAcentos.Name = "ckbRemoverAcentos";
-            this.ckbRemoverAcentos.Size = new System.Drawing.Size(123, 18);
+            this.ckbRemoverAcentos.Size = new System.Drawing.Size(111, 17);
             this.ckbRemoverAcentos.TabIndex = 23;
             this.ckbRemoverAcentos.Text = "Remover Acentos";
             this.ckbRemoverAcentos.UseVisualStyleBackColor = true;
@@ -1788,8 +1793,8 @@
             this.dgItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgItem.Location = new System.Drawing.Point(6, 59);
             this.dgItem.Name = "dgItem";
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dgItem.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgItem.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dgItem.Size = new System.Drawing.Size(765, 410);
             this.dgItem.TabIndex = 6;
             // 
@@ -2212,6 +2217,17 @@
             this.txtResultado.TabIndex = 2;
             this.txtResultado.Zoom = 100;
             // 
+            // ckbEnviarModoSincrono
+            // 
+            this.ckbEnviarModoSincrono.AutoSize = true;
+            this.ckbEnviarModoSincrono.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.ckbEnviarModoSincrono.Location = new System.Drawing.Point(372, 172);
+            this.ckbEnviarModoSincrono.Name = "ckbEnviarModoSincrono";
+            this.ckbEnviarModoSincrono.Size = new System.Drawing.Size(96, 17);
+            this.ckbEnviarModoSincrono.TabIndex = 26;
+            this.ckbEnviarModoSincrono.Text = "Modo Síncrono";
+            this.ckbEnviarModoSincrono.UseVisualStyleBackColor = true;
+            // 
             // frmPrincipal
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -2439,5 +2455,6 @@
         private System.Windows.Forms.TabPage tbpResultado;
         private FastColoredTextBoxNS.FastColoredTextBox txtEnvio;
         private FastColoredTextBoxNS.FastColoredTextBox txtResultado;
+        private System.Windows.Forms.CheckBox ckbEnviarModoSincrono;
     }
 }

@@ -238,6 +238,11 @@ namespace Vip.DFe.NFe.NotaFiscal
             return Destinatario.CNPJ.IsNotNullOrEmpty() || Destinatario.CPF.IsNotNullOrEmpty() || Destinatario.Nome.IsNotNullOrEmpty();
         }
 
+        private bool ShouldSerializeCobranca()
+        {
+            return !Cobranca.Fatura.IsNull() && Cobranca.Duplicata.Any();
+        }
+
         private bool ShouldSerializeRetirada()
         {
             return Retirada.CNPJ.IsNotNullOrEmpty() || Retirada.CPF.IsNotNullOrEmpty() || Retirada.Logradouro.IsNotNullOrEmpty() || Retirada.Municipio.IsNotNullOrEmpty();

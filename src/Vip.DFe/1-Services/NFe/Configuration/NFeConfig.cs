@@ -1,4 +1,5 @@
-﻿using Vip.DFe.Enum;
+﻿using System.Drawing;
+using Vip.DFe.Enum;
 using Vip.DFe.Extensions;
 using Vip.DFe.NFe.Enum;
 using Vip.DFe.Shared.Enum;
@@ -23,6 +24,8 @@ namespace Vip.DFe.NFe.Configuration
             Modelo = NFeModelo.NFe;
             Versao = NFeVersao.v400;
             _cnpj = "";
+            NFCeIdToken = "";
+            NFCeCSC = "";
             EnviarModoSincrono = false;
             ValidarDigest = true;
             RemoverAcentos = true;
@@ -48,6 +51,9 @@ namespace Vip.DFe.NFe.Configuration
             get => _cnpj;
             set => _cnpj = value.TrimVip().OnlyNumbers();
         }
+
+        public string NFCeIdToken { get; set; }
+        public string NFCeCSC { get; set; }
 
         public bool EnviarModoSincrono { get; set; }
         public bool ValidarDigest { get; set; }

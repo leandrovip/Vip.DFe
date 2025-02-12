@@ -78,7 +78,7 @@ namespace Vip.DFe.Demo.Models
         private static readonly List<string> _listaNCM = new List<string>
         {
             "01012100", "02013000", "03022000", "04011010", "05021000",
-            "06019090", "07096000", "08031000", "09012100", "10063021"
+            "07096000", "08031000", "09012100", "10063021"
         };
 
         #endregion
