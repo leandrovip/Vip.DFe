@@ -15,7 +15,7 @@
   </a>
 </p>
 
-Biblioteca responsável pela emissão de DFe´s. Até o momento implementado CFe SAT e NFe.
+Biblioteca responsável pela emissão de DFe´s como CFe SAT, NFe e NFCe
 
 Em desenvolvimento, use por sua conta e risco!
 
