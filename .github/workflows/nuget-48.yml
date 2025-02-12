@@ -1,0 +1,55 @@
+name: Publish NuGet.org (.NET Framework)
+
+on:
+  workflow_dispatch:
+    inputs:
+      typeBuild:
+        description: "É beta? (digite -beta)"
+        required: false
+
+jobs:
+  deploy-package:
+    runs-on: windows-latest
+
+    steps:
+      - name: "Checkout branch"
+        uses: actions/checkout@v3
+
+      - name: "Set Variables"
+        id: envs
+        run: |
+          echo "::set-output name=VERSION_PROJECT::1.1.${{ github.run_number }}"
+          echo "::set-output name=VERSION_PACKAGE::1.1.${{ github.run_number }}${{ github.event.inputs.typeBuild }}"
+
+      - name: "Variables Test"
+        run: |
+          echo Version: ${{ steps.envs.outputs.VERSION_PROJECT }}
+          echo Version2: ${{ steps.envs.outputs.VERSION_PACKAGE }}
+
+      - name: "Force nuget source"
+        uses: fabriciomurta/ensure-nuget-source@v1
+        with:
+          name: "nuget.org"
+          url: "https://api.nuget.org/v3/index.json"
+
+      - name: "Clean Solution"
+        run: |
+          msbuild .\src\Vip.DFe.sln /t:Clean /p:Configuration=Release
+          nuget locals all -clear
+
+      - name: "Restore Dependencies"
+        run: nuget restore .\src\Vip.DFe.sln
+
+      - name: "Build Solution"
+        run: msbuild .\src\Vip.DFe.sln /p:Configuration=Release /p:Version=${{ steps.envs.outputs.VERSION_PROJECT }}
+
+      - name: "Test Project"
+        run: |
+          REM Ajuste o caminho para o seu assembly de teste, se houver
+          vstest.console.exe .\src\Vip.DFe.Test\bin\Release\Vip.DFe.Test.dll
+
+      - name: "Create Package"
+        run: msbuild .\src\Vip.DFe\Vip.DFe.csproj /t:Pack /p:Configuration=Release /p:PackageVersion=${{ steps.envs.outputs.VERSION_PACKAGE }}
+
+      - name: "Publish Package"
+        run: nuget push .\src\Vip.DFe\bin\Release\*.nupkg -Source https://api.nuget.org/v3/index.json -ApiKey ${{ secrets.NUGET_TOKEN }}
