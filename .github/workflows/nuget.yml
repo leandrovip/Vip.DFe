@@ -32,6 +32,11 @@ jobs:
           name: "nuget.org"
           url: "https://api.nuget.org/v3/index.json"
 
+      - name: "Setup .NET Core"
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "7.0.x"
+
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1
 
@@ -47,8 +52,7 @@ jobs:
         run: msbuild .\src\Vip.DFe.sln /p:Configuration=Release /p:Version=${{ steps.envs.outputs.VERSION_PROJECT }}
 
       - name: "Test Project"
-        run: |
-          vstest.console.exe .\src\Vip.DFe.Test\bin\Release\Vip.DFe.Test.dll
+        run: dotnet vstest .\src\Vip.DFe.Test\bin\Release\Vip.DFe.Test.dll
 
       - name: "Create Package"
         run: msbuild .\src\Vip.DFe\Vip.DFe.csproj /t:Pack /p:Configuration=Release /p:PackageVersion=${{ steps.envs.outputs.VERSION_PACKAGE }}
