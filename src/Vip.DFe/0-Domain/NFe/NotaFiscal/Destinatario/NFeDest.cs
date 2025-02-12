@@ -48,7 +48,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Destinatario
         /// <summary>
         ///     E03a - Identificador do destinatário, em caso de comprador estrangeiro
         /// </summary>
-        [DFeElement(TipoCampo.Str, "idEstrangeiro", Id = "E03a", Min = 0, Max = 20, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.Str, "idEstrangeiro", Id = "E03a", Min = 0, Max = 20, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string IdEstrangeiro { get; set; }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Destinatario
         /// <summary>
         ///     E16a - Indicador da IE do destinatário:
         /// </summary>
-        [DFeElement(TipoCampo.Enum, "indIEDest", Id = "E16a", Min = 1, Max = 1, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.Enum, "indIEDest", Id = "E16a", Min = 1, Max = 1, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public NFeIndIeDest IndIEDest { get; set; }
 
         /// <summary>
@@ -130,6 +130,16 @@ namespace Vip.DFe.NFe.NotaFiscal.Destinatario
         private bool ShouldSerializeEmail()
         {
             return Email.IsEmail();
+        }
+
+        private bool ShouldSerializeEndereco()
+        {
+            return Endereco.Logradouro.IsNotNullOrEmpty() || Endereco.Municipio.IsNotNullOrEmpty() || Endereco.UF.IsNotNullOrEmpty();
+        }
+
+        private bool ShouldSerializeIndIEDest()
+        {
+            return CPF.IsNotNullOrEmpty() || CNPJ.IsNotNullOrEmpty();
         }
 
         private string SerializeNome()

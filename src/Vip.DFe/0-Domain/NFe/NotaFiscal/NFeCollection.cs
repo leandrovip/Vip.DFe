@@ -233,6 +233,7 @@ namespace Vip.DFe.NFe.NotaFiscal
         {
             foreach (var nfe in NFe)
             {
+                if (nfe.Assinado) continue;
                 nfe.Assinar(certificado, options);
                 nfe.GerarQrCode(Parent.Configuracoes);
             }
