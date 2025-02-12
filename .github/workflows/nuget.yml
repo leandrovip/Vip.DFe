@@ -48,7 +48,6 @@ jobs:
 
       - name: "Test Project"
         run: |
-          REM Ajuste o caminho para o seu assembly de teste, se houver
           vstest.console.exe .\src\Vip.DFe.Test\bin\Release\Vip.DFe.Test.dll
 
       - name: "Create Package"
