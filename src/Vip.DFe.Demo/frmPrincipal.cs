@@ -742,7 +742,7 @@ namespace Vip.DFe.Demo
                         Codigo = item.Codigo,
                         CEAN = "SEM GTIN",
                         CEANTrib = "SEM GTIN",
-                        XProd = numeroItem == 2 && _configuracao.Ambiente == TipoAmbiente.Homologacao ? "NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL" : item.Descricao,
+                        XProd = item.Descricao,
                         NCM = item.NCM,
                         CEST = item.CEST,
                         CBenef = "",

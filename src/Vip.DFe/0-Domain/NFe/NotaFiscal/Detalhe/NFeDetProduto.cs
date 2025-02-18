@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Vip.DFe.Attributes;
 using Vip.DFe.Document;
 using Vip.DFe.Enum;
@@ -8,10 +7,11 @@ using Vip.DFe.Extensions;
 using Vip.DFe.NFe.Enum;
 using Vip.DFe.NFe.Interfaces;
 using Vip.DFe.Serializer;
+using Vip.DFe.Shared.Enum;
 
 namespace Vip.DFe.NFe.NotaFiscal.Detalhe
 {
-    public sealed class NFeDetProduto : GenericClone<NFeDetProduto>, INotifyPropertyChanged
+    public sealed class NFeDetProduto : DFeParentItem<NFeDetProduto, NFeDetalhe>, INotifyPropertyChanged
     {
         #region Events
 
@@ -36,6 +36,11 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
             Rastreabilidade = new DFeCollection<NFeDetRastreabilidade>();
         }
 
+        public NFeDetProduto(NFeDetalhe parent) : this()
+        {
+            Parent = parent;
+        }
+
         #endregion
 
         #region Properties
@@ -55,7 +60,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         /// <summary>
         ///     I04 - Descrição do produto ou serviço
         /// </summary>
-        [DFeElement(TipoCampo.Str, "xProd", Id = "I04", Min = 2, Max = 120, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.Custom, "xProd", Id = "I04", Min = 2, Max = 120, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string XProd { get; set; }
 
         /// <summary>
@@ -311,7 +316,8 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
 
         private string SerializeXProd()
         {
-            return XProd.Truncate(120);
+            var nome = Parent?.Parent.InfNFe.Ide.TpAmb == TipoAmbiente.Homologacao && Parent.NItem == 1 ? DFeConstantes.NFeItemHomologacao : XProd;
+            return nome.TrimVip().Truncate(120);
         }
 
         private object DeserializeXProd(string value) => value;

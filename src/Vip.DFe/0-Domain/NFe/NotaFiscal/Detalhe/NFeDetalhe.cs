@@ -15,11 +15,17 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
 
         #endregion
 
+        #region Fields
+
+        private NFeDetProduto _produto;
+
+        #endregion
+
         #region Constructors
 
         public NFeDetalhe()
         {
-            Produto = new NFeDetProduto();
+            _produto = new NFeDetProduto(this);
             Imposto = new NFeDetImposto();
             ImpostoDevol = new NFeDetImpostoDevol();
         }
@@ -43,7 +49,17 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         ///     I01 - Detalhamento de Produtos e Serviços
         /// </summary>
         [DFeElement("prod", Id = "I01", Ocorrencia = Ocorrencia.Obrigatoria)]
-        public NFeDetProduto Produto { get; set; }
+        public NFeDetProduto Produto
+        {
+            get => _produto;
+            set
+            {
+                if (_produto == value) return;
+                _produto = value;
+                if (_produto.Parent != this)
+                    _produto.Parent = this;
+            }
+        }
 
         /// <summary>
         ///     M01 - Tributos incidentes no Produto ou Serviço

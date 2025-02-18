@@ -18,6 +18,7 @@
 
         public const string Isento = "ISENTO";
         public const string NFeHomologacao = "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL";
+        public const string NFeItemHomologacao = "NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL";
         public const string Cancelamento = "Cancelamento";
         public const string CartaoCorecao = "Carta de Correcao";
 
