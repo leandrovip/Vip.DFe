@@ -43,6 +43,12 @@ namespace Vip.DFe.NFe.NotaFiscal.Pagamento
         /// <summary>
         ///     YA03 - Valor do Pagamento
         /// </summary>
+        [DFeElement(TipoCampo.Str, "xPag", Id = "YA02a", Min = 2, Max = 60, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public string XPag { get; set; }
+
+        /// <summary>
+        ///     YA03 - Valor do Pagamento
+        /// </summary>
         [DFeElement(TipoCampo.De2, "vPag", Id = "YA03", Min = 3, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal VPag { get; set; }
 
@@ -64,6 +70,11 @@ namespace Vip.DFe.NFe.NotaFiscal.Pagamento
         private bool ShouldSerializeCard()
         {
             return Card.Cnpj.IsNotNullOrEmpty() || Card.CAut.IsNotNullOrEmpty() || Card.Bandeira.HasValue;
+        }
+
+        private bool ShouldSerializeXPag()
+        {
+            return XPag.IsNotNullOrEmpty();
         }
 
         #endregion

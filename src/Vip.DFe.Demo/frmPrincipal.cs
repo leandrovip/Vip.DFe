@@ -921,7 +921,8 @@ namespace Vip.DFe.Demo
                     var detPag = new NFeDetPag
                     {
                         TPag = pagamento,
-                        VPag = valorPagamnento
+                        VPag = valorPagamnento,
+                        XPag = pagamento == MeioPagamento.Outros ? "IFOOD" : ""
                     };
 
                     if (pagamento == MeioPagamento.CartaodeCredito || pagamento == MeioPagamento.CartaodeDebito)
