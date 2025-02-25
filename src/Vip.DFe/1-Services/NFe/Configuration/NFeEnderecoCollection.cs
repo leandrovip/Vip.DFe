@@ -574,8 +574,8 @@ namespace Vip.DFe.NFe.Configuration
             new NFeEndereco(NFeTipoServico.NfeConsultaProtocolo, NFeModelo.NFCe, "SP", NFeVersao.v400, TipoAmbiente.Producao, "https://nfce.fazenda.sp.gov.br/ws/NFeConsultaProtocolo4.asmx "),
             new NFeEndereco(NFeTipoServico.NfeStatusServico, NFeModelo.NFCe, "SP", NFeVersao.v400, TipoAmbiente.Producao, "https://nfce.fazenda.sp.gov.br/ws/NFeStatusServico4.asmx"),
             new NFeEndereco(NFeTipoServico.RecepcaoEvento, NFeModelo.NFCe, "SP", NFeVersao.v400, TipoAmbiente.Producao, "https://nfce.fazenda.sp.gov.br/ws/NFeRecepcaoEvento4.asmx"),
-            new NFeEndereco(NFeTipoServico.NFeAutorizacao, NFeModelo.NFCe, "SP", NFeVersao.v400, TipoAmbiente.Producao, "https://nfce.fazenda.sp.gov.br/ws/NFeRecepcaoEvento4.asmx"),
-            new NFeEndereco(NFeTipoServico.NFeRetAutorizacao, NFeModelo.NFCe, "SP", NFeVersao.v400, TipoAmbiente.Producao, "https://nfce.fazenda.sp.gov.br/ws/NFeRecepcaoEvento4.asmx"),
+            new NFeEndereco(NFeTipoServico.NFeAutorizacao, NFeModelo.NFCe, "SP", NFeVersao.v400, TipoAmbiente.Producao, "https://nfce.fazenda.sp.gov.br/ws/NFeAutorizacao4.asmx"),
+            new NFeEndereco(NFeTipoServico.NFeRetAutorizacao, NFeModelo.NFCe, "SP", NFeVersao.v400, TipoAmbiente.Producao, "https://nfce.fazenda.sp.gov.br/ws/NFeRetAutorizacao4.asmx"),
 
             #endregion
 
