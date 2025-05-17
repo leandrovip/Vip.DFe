@@ -138,18 +138,6 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
         [DFeElement(TipoCampo.De2, "vCredICMSSN", Id = "N30", Min = 3, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
         public decimal VCredIcmsSn { get; set; }
 
-        /// <summary>
-        ///     N31 - Valor do ICMS desonerado
-        /// </summary>
-        [DFeElement(TipoCampo.De2, "vICMSDeson", Id = "N31", Min = 3, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
-        public decimal VIcmsDeson { get; set; }
-
-        /// <summary>
-        ///     N32 - Motivo da desoneração do ICMS
-        /// </summary>
-        [DFeElement(TipoCampo.Enum, "motDesICMS", Id = "N32", Min = 2, Max = 2, Ocorrencia = Ocorrencia.NaoObrigatoria)]
-        public NFeMotivoDesoneracao MotDesIcms { get; set; }
-
         #endregion
 
         #region Methods
@@ -157,8 +145,6 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
         private bool ShouldSerializeModBc() => ModBc.HasValue;
 
         private bool ShouldSerializeModBcSt() => ModBcSt.HasValue;
-
-        private bool ShouldSerializeMotDesIcms() => VIcmsDeson > 0;
 
         #endregion
     }
