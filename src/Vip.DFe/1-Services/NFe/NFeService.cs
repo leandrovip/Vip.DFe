@@ -70,7 +70,7 @@ namespace Vip.DFe.NFe
 
         #endregion Propriedades
 
-        #region Methods
+        #region Public Methods
 
         /// TODO: Gerar método para compactar a mensagem
         /// <summary>
@@ -311,6 +311,57 @@ namespace Vip.DFe.NFe
         }
 
         /// <summary>
+        ///     Método para cancelar uma NFe por substituição
+        /// </summary>
+        public NFeRecepcaoEventoResposta CancelarSubstituicao(string cnpj, string chave, string numeroProtocolo, int sequencialEvento, string justificativa, string chaveReferenciada, string versaoAplicacao)
+        {
+            #region Validação
+
+            cnpj = cnpj.OnlyNumbers();
+            numeroProtocolo = numeroProtocolo.OnlyNumbers();
+            versaoAplicacao = versaoAplicacao.IsNotNullOrEmpty() ? versaoAplicacao.TrimVip() : "1.0";
+
+            Guard.Against<ArgumentException>(cnpj.IsNullOrEmpty(), "ERRO: Informe o CNPJ ou CPF");
+            Guard.Against<ArgumentNullException>(chave.IsNullOrEmpty(), "ERRO: Informe a Chave");
+            Guard.Against<ArgumentNullException>(chaveReferenciada.IsNullOrEmpty(), "ERRO: Informe a Chave Referenciada, substituta à cancelada");
+            Guard.Against<ArgumentNullException>(numeroProtocolo.IsNullOrEmpty(), "ERRO: Informe o número do protocolo");
+            Guard.Against<ArgumentNullException>(justificativa.IsNullOrEmpty(), "ERRO: Informe a justificativa do cancelamento");
+            Guard.Against<ArgumentException>(justificativa.Length < 15, "ERRO: Justificativa deve ter mais de 15 caracteres");
+            Guard.Against<ArgumentException>(justificativa.Length > 255, "ERRO: Justificativa deve ter menos de 255 caracteres caracteres");
+
+            #endregion
+
+            var evento = new NFeEvento
+            {
+                Versao = NFeVersao.v100,
+                InfEvento = new NFeInfEvento
+                {
+                    VerEvento = NFeVersao.v100,
+                    COrgao = Configuracoes.Webservices.UF,
+                    TpAmb = Configuracoes.Ambiente,
+                    Documento = cnpj,
+                    Chave = chave.TrimVip(),
+                    DhEvento = DateTimeOffset.Now,
+                    TpEvento = NFeTipoEvento.CancelamentoST,
+                    NSeqEvento = sequencialEvento,
+                    DetEvento = new NFeDetEvento
+                    {
+                        Versao = NFeVersao.v100,
+                        DescEvento = DFeConstantes.CancelamentoSubstituicao,
+                        COrgaoAutor = Configuracoes.Webservices.UF,
+                        TipoAutor = NFeTipoAutor.EmpresaEmitente,
+                        VerAplic = versaoAplicacao,
+                        NProt = numeroProtocolo,
+                        XJust = justificativa,
+                        ChaveRef = chaveReferenciada
+                    }
+                }
+            };
+
+            return RecepcaoEvento(evento);
+        }
+
+        /// <summary>
         ///     Método para gerar um CCe
         /// </summary>
         public NFeRecepcaoEventoResposta CartaoCorrecao(string cnpj, string chave, int sequencialEvento, string correcao)
@@ -364,6 +415,10 @@ namespace Vip.DFe.NFe
             Documentos.Assinar(certificado, Configuracoes.ObterOptions());
         }
 
+        #endregion Methods
+
+        #region Private Methods
+
         /// <summary>
         ///     Valida os documentos adicionados através do Schema.
         /// </summary>
@@ -395,6 +450,9 @@ namespace Vip.DFe.NFe
                 {
                     case NFeTipoEvento.Cancelamento:
                         Status = NFeStatus.Cancelamento;
+                        break;
+                    case NFeTipoEvento.CancelamentoST:
+                        Status = NFeStatus.CancelamentoST;
                         break;
                     case NFeTipoEvento.CartaCorrecao:
                         Status = NFeStatus.CCe;
@@ -512,7 +570,7 @@ namespace Vip.DFe.NFe
             _certificado?.Reset();
         }
 
-        #endregion Methods
+        #endregion
 
         #region Override
 

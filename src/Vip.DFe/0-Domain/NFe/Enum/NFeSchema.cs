@@ -11,6 +11,7 @@
         EnviNFe,
         ConsReciNFe,
         EnvEventoCancNFe,
+        EnvEventoCancSubst,
         EnvCCe
     }
 }

@@ -35,6 +35,9 @@ namespace Vip.DFe.NFe.ServRecepcaoEvento
                     case NFeTipoEvento.Cancelamento:
                         Schema = NFeSchema.EnvEventoCancNFe;
                         break;
+                    case NFeTipoEvento.CancelamentoST:
+                        Schema = NFeSchema.EnvEventoCancSubst;
+                        break;
                     case NFeTipoEvento.CartaCorrecao:
                         Schema = NFeSchema.EnvCCe;
                         break;

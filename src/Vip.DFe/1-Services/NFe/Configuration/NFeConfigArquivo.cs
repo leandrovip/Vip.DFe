@@ -138,6 +138,9 @@ namespace Vip.DFe.NFe.Configuration
                 case NFeSchema.EnvEventoCancNFe:
                     schemaPath = Path.Combine(diretorioSchema, "envEventoCancNFe_v1.00.xsd");
                     break;
+                case NFeSchema.EnvEventoCancSubst:
+                    schemaPath = Path.Combine(diretorioSchema, "envEventoCancSubst_v1.00.xsd");
+                    break;
                 case NFeSchema.EnvCCe:
                     schemaPath = Path.Combine(diretorioSchema, "envCCe_v1.00.xsd");
                     break;

@@ -80,7 +80,7 @@ namespace Vip.DFe.NFe.Evento
         public int? NSeqEvento { get; set; }
 
         /// <summary>
-        ///     R22 - (EPEC) Idem a mensagem de entrada.
+        ///     R22 - Idem a mensagem de entrada. EPEC ou Cancelamento por substituição.
         /// </summary>
         [DFeElement(TipoCampo.Str, "cOrgaoAutor", Id = "R22", Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string COrgaoAutor { get; set; }

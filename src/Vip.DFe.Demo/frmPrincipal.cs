@@ -212,11 +212,11 @@ namespace Vip.DFe.Demo
                 var funcao = cboFuncoes.GetEnumValue<FuncaoServico>();
                 switch (funcao)
                 {
-                    case FuncaoServico.AutorizacaoLote:
-                        FuncaoAutorizacaoLote();
-                        break;
                     case FuncaoServico.Autorizacao:
                         FuncaoAutorizacao();
+                        break;
+                    case FuncaoServico.AutorizacaoLote:
+                        FuncaoAutorizacaoLote();
                         break;
                     case FuncaoServico.ConsultarAutorizacao:
                         FuncaoConsultarAutorizacao();
@@ -229,6 +229,9 @@ namespace Vip.DFe.Demo
                         break;
                     case FuncaoServico.CancelarDocumento:
                         FuncaoCancelarDocumento();
+                        break;
+                    case FuncaoServico.CancelarSubstituicao:
+                        FuncaoCancelarSubstituicao();
                         break;
                     case FuncaoServico.InutilizarNumeracao:
                         FuncaoInutilizarNumeracao();
@@ -438,6 +441,36 @@ namespace Vip.DFe.Demo
             try
             {
                 var retorno = _service.Cancelar(_configuracao.EmitenteCnpj, chaveAcesso, protocolo, 1, "NOTA FISCAL ELETRONICA CANCELADA");
+                txtEnvio.Text = retorno.XmlEnvio.FormatarXml();
+                txtRetorno.Text = retorno.XmlRetorno.FormatarXml();
+                txtEnvelopSoap.Text = retorno.EnvelopeSoap.FormatarXml();
+                txtResultado.Text = retorno.Resultado.Xml.FormatarXml();
+            }
+            catch (System.Exception ex)
+            {
+                tbcEvento.SelectTab(tbpErro);
+                tbpErro.Focus();
+                txtErro.Text = ex.Message;
+                txtErro.Text += ex.InnerException.IsNotNull() ? "\r\n\r\n" + ex.InnerException.Message : "";
+            }
+        }
+
+        private void FuncaoCancelarSubstituicao()
+        {
+            if (txtParametro.Text.IsNullOrEmpty() || txtParametro.Text.Length < 100)
+            {
+                MessageBox.Show("Informe chave de acesso + número do protocolo + chave de acesso referenciada para cancelar o documento por substituição\r\n\r\nExemplo: chaveAcesso;numeroProtocolo;chaveRerefenciada");
+                return;
+            }
+
+            var texto = txtParametro.Text.Split(';');
+            var chaveAcesso = texto[0];
+            var protocolo = texto[1];
+            var chaveReferenciada = texto[2];
+
+            try
+            {
+                var retorno = _service.CancelarSubstituicao(_configuracao.EmitenteCnpj, chaveAcesso, protocolo, 1, "DOCUMENTO FISCAL CANCELADO POR SUBSTITUICAO", chaveReferenciada, "1.0.1");
                 txtEnvio.Text = retorno.XmlEnvio.FormatarXml();
                 txtRetorno.Text = retorno.XmlRetorno.FormatarXml();
                 txtEnvelopSoap.Text = retorno.EnvelopeSoap.FormatarXml();
