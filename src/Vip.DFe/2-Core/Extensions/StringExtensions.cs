@@ -190,12 +190,18 @@ namespace Vip.DFe.Extensions
         {
             try
             {
-                if (value.IsNullOrEmpty() || value.Length == 1) return value;
-                return new string(value.ToCharArray().Reverse().ToArray());
+                if (value.IsNullOrEmpty() || value.Length == 1)
+                    return value;
+
+                var chars = value.ToCharArray();
+                Array.Reverse(chars);
+
+                return new string(chars);
             }
-            catch
+            catch (System.Exception ex)
             {
-                throw new VipException("Erro ao reverter string");
+                // manter o contexto da exceção ajuda no diagnóstico
+                throw new VipException("Erro ao reverter string", ex);
             }
         }
 

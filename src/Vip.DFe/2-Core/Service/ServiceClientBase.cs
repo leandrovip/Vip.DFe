@@ -18,17 +18,11 @@ namespace Vip.DFe.Service
 
             binding.UseDefaultWebProxy = true;
 
-            if (ClientCredentials != null)
-                ClientCredentials.ClientCertificate.Certificate = certificado;
+            if (ClientCredentials != null) ClientCredentials.ClientCertificate.Certificate = certificado;
+            if (url.Trim().ToLower().StartsWith("https")) binding.Security.Mode = BasicHttpSecurityMode.Transport;
+            if (certificado != null) binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Certificate;
 
-            if (url.Trim().ToLower().StartsWith("https"))
-                binding.Security.Mode = BasicHttpSecurityMode.Transport;
-
-            if (certificado != null)
-                binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Certificate;
-
-            var endpointInspector = new InspectorBehavior((sender, args) => BeforeSendDFeRequest(args.Message),
-                (sender, args) => AfterReceiveDFeReply(args.Message));
+            var endpointInspector = new InspectorBehavior((sender, args) => BeforeSendDFeRequest(args.Message), (sender, args) => AfterReceiveDFeReply(args.Message));
 
             Endpoint.EndpointBehaviors.Add(endpointInspector);
 

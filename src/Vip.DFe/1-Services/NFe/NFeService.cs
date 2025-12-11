@@ -227,7 +227,11 @@ namespace Vip.DFe.NFe
             {
                 Status = NFeStatus.Consulta;
                 using var service = new NFeServConsultaProtocolo(Configuracoes, _certificado);
-                return service.Consulta(chave);
+                var retornoConsulta = service.Consulta(chave);
+
+                GerarNFeProc(retornoConsulta);
+
+                return retornoConsulta;
             }
             finally
             {
@@ -453,10 +457,34 @@ namespace Vip.DFe.NFe
             if (Configuracoes.ValidarDigest)
                 Guard.Against<VipException>(protNFe.InfProt.DigVal.IsNotNullOrEmpty() && protNFe.InfProt.DigVal != nfe.Signature.SignedInfo.Reference.DigestValue, $"DigestValue do documento {nfe.InfNFe.Id} não confere.");
 
-            var nfeProc = new NFeProc { Versao = nfe.InfNFe.Versao, NFe = nfe, ProtNFe = protNFe };
+            var nfeProc = new NFeProc {Versao = nfe.InfNFe.Versao, NFe = nfe, ProtNFe = protNFe};
             if (nfeProc.Processado)
             {
                 autorizacao.NFeAutorizada = nfeProc;
+                nfeProc.Gravar(Configuracoes);
+            }
+        }
+
+        /// <summary>
+        ///     Gera classe procNFe via consulta de protocolo
+        /// </summary>
+        private void GerarNFeProc(NFeConsultaProtocoloResposta consulta)
+        {
+            if (consulta.Resultado.ProtNFe.IsNull()) return;
+            if (consulta.Resultado.CStat != 100 && consulta.Resultado.CStat != 150) return;
+
+            var protNFe = consulta.Resultado.ProtNFe;
+
+            var nfe = Documentos.NFe.FirstOrDefault();
+            if (nfe.IsNull()) return;
+
+            if (Configuracoes.ValidarDigest)
+                Guard.Against<VipException>(protNFe.InfProt.DigVal.IsNotNullOrEmpty() && protNFe.InfProt.DigVal != nfe.Signature.SignedInfo.Reference.DigestValue, $"DigestValue do documento {nfe.InfNFe.Id} não confere.");
+
+            var nfeProc = new NFeProc {Versao = nfe.InfNFe.Versao, NFe = nfe, ProtNFe = protNFe};
+            if (nfeProc.Processado)
+            {
+                consulta.NFeAutorizada = nfeProc;
                 nfeProc.Gravar(Configuracoes);
             }
         }

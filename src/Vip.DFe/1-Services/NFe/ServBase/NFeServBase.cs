@@ -63,15 +63,6 @@ namespace Vip.DFe.NFe.ServBase
             #endregion
         }
 
-        //protected void GravarEvento(string conteudoArquivo, string nomeArquivo, NFeTipoEvento evento, DateTime data, string cnpj)
-        //{
-        //    if (!Configuracoes.Arquivos.Salvar) return;
-
-        //    conteudoArquivo = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" + conteudoArquivo.RemoverDeclaracaoXml();
-        //    nomeArquivo = Path.Combine(Configuracoes.Arquivos.GetPathEvento(evento, cnpj, data), nomeArquivo);
-        //    File.WriteAllText(nomeArquivo, conteudoArquivo, Encoding.UTF8);
-        //}
-
         #endregion Methods
     }
 }
