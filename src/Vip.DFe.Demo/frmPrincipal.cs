@@ -275,10 +275,7 @@ namespace Vip.DFe.Demo
         {
             var gerarNovoXml = true;
 
-            if (txtXml.Text.IsNotEmpty())
-            {
-                gerarNovoXml = MessageBox.Show("Deseja utilizar o XML preenchido?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
-            }
+            if (txtXml.Text.IsNotEmpty()) gerarNovoXml = MessageBox.Show("Deseja utilizar o XML preenchido?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No;
 
             var documento = gerarNovoXml ? ObterDocumento() : NFe.NotaFiscal.NFe.Load(txtXml.Text);
 
@@ -481,6 +478,14 @@ namespace Vip.DFe.Demo
                 MessageBox.Show("Informe o número da chave de acesso para executar a consulta");
                 return;
             }
+
+            if (txtXml.Text.IsNotEmpty())
+                if (MessageBox.Show("Deseja utilizar o XML preenchido?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    var documento = NFe.NotaFiscal.NFe.Load(txtXml.Text);
+                    _service.Documentos.Clear();
+                    _service.Documentos.Add(documento);
+                }
 
             try
             {
@@ -854,13 +859,13 @@ namespace Vip.DFe.Demo
 
             var detItens = listaDetalhes.Where(x => x.Produto.IndTot == NFeIndTotal.ValorItemCompoeTotalNota).ToList();
 
-            var valorFrete = _itens.Sum(x => x.Frete);
-            var valorOutro = _itens.Sum(x => x.Outros);
-            var valorSeguro = _itens.Sum(x => x.Seguro);
-            var totalItens = detItens.Where(p => p.Produto.IndTot == NFeIndTotal.ValorItemCompoeTotalNota).Sum(p => p.Produto.VProd);
-            var totalDesconto = detItens.Where(p => p.Produto.IndTot == NFeIndTotal.ValorItemCompoeTotalNota).Sum(p => p.Produto.VDesc);
-            var totalOutros = detItens.Where(p => p.Produto.IndTot == NFeIndTotal.ValorItemCompoeTotalNota).Sum(e => e.Produto.VOutro);
-            var totalTrib = detItens.Where(p => p.Produto.IndTot == NFeIndTotal.ValorItemCompoeTotalNota).Sum(p => p.Imposto.VTotTrib);
+            var valorFrete = _itens.Sum(x => x.Frete).Round();
+            var valorOutro = _itens.Sum(x => x.Outros).Round();
+            var valorSeguro = _itens.Sum(x => x.Seguro).Round();
+            var totalItens = detItens.Where(p => p.Produto.IndTot == NFeIndTotal.ValorItemCompoeTotalNota).Sum(p => p.Produto.VProd).Round();
+            var totalDesconto = detItens.Where(p => p.Produto.IndTot == NFeIndTotal.ValorItemCompoeTotalNota).Sum(p => p.Produto.VDesc).Round();
+            var totalOutros = detItens.Where(p => p.Produto.IndTot == NFeIndTotal.ValorItemCompoeTotalNota).Sum(e => e.Produto.VOutro).Round();
+            var totalTrib = detItens.Where(p => p.Produto.IndTot == NFeIndTotal.ValorItemCompoeTotalNota).Sum(p => p.Imposto.VTotTrib).Round();
 
             var valorFCPST = 0;
             var valorIcmsST = 0;
@@ -914,7 +919,7 @@ namespace Vip.DFe.Demo
             }
             else
             {
-                var valorPagamnento = (icmsTot.VNf / _meioPagamentos.Count).Round();
+                var valorPagamnento = (icmsTot.VNf.Round() / _meioPagamentos.Count).Round();
 
                 foreach (var pagamento in _meioPagamentos)
                 {

@@ -91,7 +91,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
 
         private string SerializeInfAdProd()
         {
-            return InfAdProd.RemoveBreakline();
+            return InfAdProd.Truncate(500).TrimVip().RemoveBreakline();
         }
 
         private object DeserializeInfAdProd(string value) => value;
