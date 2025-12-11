@@ -8,6 +8,7 @@
         RetAutorizacao,
         Consulta,
         Cancelamento,
+        CancelamentoST,
         Inutilizacao,
         Recibo,
         Cadastro,

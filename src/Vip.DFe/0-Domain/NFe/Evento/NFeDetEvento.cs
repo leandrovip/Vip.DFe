@@ -4,6 +4,7 @@ using Vip.DFe.Enum;
 using Vip.DFe.Extensions;
 using Vip.DFe.NFe.Enum;
 using Vip.DFe.Serializer;
+using Vip.DFe.Shared.Enum;
 
 namespace Vip.DFe.NFe.Evento
 {
@@ -25,10 +26,32 @@ namespace Vip.DFe.NFe.Evento
         public NFeVersao Versao { get; set; }
 
         /// <summary>
-        ///     HP19 - "Cancelamento", "Carta de Correção", "Carta de Correcao" ou "EPEC"
+        ///     HP19 - "Cancelamento", "“Cancelamento por substituição", "Carta de Correção", "Carta de Correcao" ou "EPEC"
         /// </summary>
         [DFeElement(TipoCampo.Str, "descEvento", Id = "HP19", Min = 5, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string DescEvento { get; set; }
+
+        #endregion
+
+        #region Cancelamento por Substituicao
+
+        /// <summary>
+        ///     HP20 - Código do órgão autor do evento. Específico para evento de cancelamento por substituição
+        /// </summary>
+        [DFeElement(TipoCampo.Enum, "cOrgaoAutor", Id = "HP20", Min = 2, Max = 2, Ocorrencia = Ocorrencia.Obrigatoria)]
+        public CodigoUF? COrgaoAutor { get; set; }
+
+        /// <summary>
+        ///     HP21 - Tipo do autor do evento. Exclusivo para evento de cancelamento por substituição
+        /// </summary>
+        [DFeElement(TipoCampo.Enum, "tpAutor", Id = "HP21", Min = 1, Max = 1, Ocorrencia = Ocorrencia.Obrigatoria)]
+        public NFeTipoAutor? TipoAutor { get; set; }
+
+        /// <summary>
+        ///     HP22 - Versão da aplicação do autor do evento
+        /// </summary>
+        [DFeElement(TipoCampo.Str, "verAplic", Id = "HR22", Min = 1, Max = 20, Ocorrencia = Ocorrencia.Obrigatoria)]
+        public string VerAplic { get; set; }
 
         #endregion
 
@@ -52,16 +75,26 @@ namespace Vip.DFe.NFe.Evento
         #region Cancelamento
 
         /// <summary>
-        ///     HP20 - Informar o número do Protocolo de Autorização da NF-e a ser Cancelada.
+        ///     HP23 - Informar o número do Protocolo de Autorização da NF-e a ser Cancelada.
         /// </summary>
-        [DFeElement(TipoCampo.StrNumber, "nProt", Id = "HP20", Min = 15, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.StrNumber, "nProt", Id = "HP23", Min = 15, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string NProt { get; set; }
 
         /// <summary>
-        ///     HP21 - Informar a justificativa do cancelamento
+        ///     HP30 - Informar a justificativa do cancelamento
         /// </summary>
-        [DFeElement(TipoCampo.Str, "xJust", Id = "HP21", Min = 15, Max = 255, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.Str, "xJust", Id = "HP30", Min = 15, Max = 255, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string XJust { get; set; }
+
+        #endregion
+
+        #region Chave Referenciada - Cancelamento Substituicao
+
+        /// <summary>
+        ///     HP31 - Chave de Acesso da NF-e substituta da NFe a ser cancelada (Nota gerada em contingencia)
+        /// </summary>
+        [DFeElement(TipoCampo.StrNumber, "chNFeRef", Id = "HP31", Min = 44, Max = 44, Ocorrencia = Ocorrencia.Obrigatoria)]
+        public string ChaveRef { get; set; }
 
         #endregion
 
@@ -133,6 +166,26 @@ namespace Vip.DFe.NFe.Evento
 
         #region Methods
 
+        private bool ShouldSerializeChaveRef()
+        {
+            return ChaveRef.IsNotNullOrEmpty();
+        }
+
+        private bool ShouldSerializeVerAplic()
+        {
+            return VerAplic.IsNotNullOrEmpty();
+        }
+
+        private bool ShouldSerializeTipoAutor()
+        {
+            return TipoAutor.HasValue;
+        }
+
+        private bool ShouldSerializeCOrgaoAutor()
+        {
+            return COrgaoAutor.HasValue;
+        }
+
         private bool ShouldSerializeXCorrecao()
         {
             return XCorrecao.IsNotNullOrEmpty();
@@ -163,7 +216,7 @@ namespace Vip.DFe.NFe.Evento
             return value;
         }
 
-        private string SerializeXCorrecao() => XCorrecao.RemoveBreakline();
+        private string SerializeXCorrecao() => XCorrecao.Truncate(1000).RemoveBreakline().TrimVip();
 
         private object DeserializeXCorrecao(string value) => value;
 
