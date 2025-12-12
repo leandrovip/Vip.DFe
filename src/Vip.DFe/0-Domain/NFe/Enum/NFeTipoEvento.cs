@@ -20,7 +20,7 @@ namespace Vip.DFe.NFe.Enum
         /// <summary>
         ///     110112 - Cancelamento Substituição
         /// </summary>
-        [DFeEnum("110112")] [Description("Cancelamento ST")]
+        [DFeEnum("110112")] [Description("Cancelamento-ST")]
         CancelamentoST = 110112,
 
         /// <summary>
