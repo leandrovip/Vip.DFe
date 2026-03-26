@@ -71,7 +71,7 @@ namespace Vip.DFe.NFe.ServInutilizacao
                 var resposta = new NFeInutilizacaoResposta(dadosMsg, returnValue.Mensagem.OuterXml, EnvelopeSoap, RetornoWS);
 
                 if (resposta.Resultado.InfInut.CStat == 102)
-                    GravarXmlInutilizacao(resposta.XmlRetorno, $"{idInutilizacao.OnlyNumbers()}-inu-nfe.xml");
+                    GravarXmlInutilizacao(resposta.XmlRetorno, $"{idInutilizacao.OnlyNumbers()}-procInutNFe.xml");
 
                 return resposta;
             }
