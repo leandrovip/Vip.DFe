@@ -68,11 +68,18 @@ namespace Vip.DFe.Danfe
             Gfx.Flush();
         }
 
-        public void DesenharAvisoHomologacao()
+        public void DesenharAviso(params string[] linhas)
         {
-            TextStack ts = new TextStack(RetanguloCorpo) {AlinhamentoVertical = AlinhamentoVertical.Centro, AlinhamentoHorizontal = AlinhamentoHorizontal.Centro, LineHeightScale = 0.9F}
-                .AddLine("SEM VALOR FISCAL", Danfe.EstiloPadrao.CriarFonteRegular(48))
-                .AddLine("AMBIENTE DE HOMOLOGAÇÃO", Danfe.EstiloPadrao.CriarFonteRegular(30));
+            if (linhas == null || linhas.Length == 0) return;
+
+            var tamanhosFonte = ObterTamanhosFonteAviso(linhas.Length);
+            var ts = new TextStack(RetanguloCorpo) {AlinhamentoVertical = AlinhamentoVertical.Centro, AlinhamentoHorizontal = AlinhamentoHorizontal.Centro, LineHeightScale = 0.9F};
+
+            for (int i = 0; i < linhas.Length; i++)
+            {
+                var indiceFonte = i < tamanhosFonte.Length ? i : tamanhosFonte.Length - 1;
+                ts.AddLine(linhas[i], Danfe.EstiloPadrao.CriarFonteRegular(tamanhosFonte[indiceFonte]));
+            }
 
             Gfx.PrimitiveComposer.BeginLocalState();
             Gfx.PrimitiveComposer.SetFillColor(new DeviceRGBColor(0.35, 0.35, 0.35));
@@ -148,6 +155,13 @@ namespace Vip.DFe.Danfe
                 Gfx.PrimitiveComposer.End();
                 RetanguloDesenhavel = RetanguloDesenhavel.CutLeft(canhoto.Height * Danfe.ViewModel.QuantidadeCanhotos);
             }
+        }
+
+        private static float[] ObterTamanhosFonteAviso(int quantidadeLinhas)
+        {
+            if (quantidadeLinhas <= 1) return new[] {48F};
+            if (quantidadeLinhas == 2) return new[] {48F, 30F};
+            return new[] {38F, 30F, 24F};
         }
 
         #endregion

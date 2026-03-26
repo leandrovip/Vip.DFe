@@ -154,6 +154,11 @@ namespace Vip.DFe.Danfe.Modelo
         public string ProtocoloAutorizacao { get; set; }
 
         /// <summary>
+        ///     Indica que o DANFE foi gerado a partir de um XML sem protocolo de autorização.
+        /// </summary>
+        public bool ModoEspelho { get; set; }
+
+        /// <summary>
         ///     Faturas da Nota Fiscal
         /// </summary>
         public List<DuplicataViewModel> Duplicatas { get; set; }

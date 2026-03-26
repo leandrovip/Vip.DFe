@@ -181,10 +181,27 @@ namespace Vip.DFe.Danfe
             page.DesenharBlocos(Paginas.Count == 1);
             page.DesenharCreditos();
 
-            if (ViewModel.TipoAmbiente == 2)
-                page.DesenharAvisoHomologacao();
+            var linhasAviso = ObterLinhasAviso();
+            if (linhasAviso.Length > 0)
+                page.DesenharAviso(linhasAviso);
 
             return page;
+        }
+
+        private string[] ObterLinhasAviso()
+        {
+            if (ViewModel.ModoEspelho)
+            {
+                if (ViewModel.TipoAmbiente == 2)
+                    return new[] { "DANFE EM PRÉ-VISUALIZAÇÃO", "SEM AUTORIZAÇÃO DE USO", "AMBIENTE DE HOMOLOGAÇÃO"};
+
+                return new[] { "DANFE EM PRÉ-VISUALIZAÇÃO", "SEM AUTORIZAÇÃO DE USO"};
+            }
+
+            if (ViewModel.TipoAmbiente == 2)
+                return new[] {"SEM VALOR FISCAL", "AMBIENTE DE HOMOLOGAÇÃO"};
+
+            return Array.Empty<string>();
         }
 
         private void AdicionarMetadata()

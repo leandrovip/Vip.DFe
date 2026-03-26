@@ -341,7 +341,7 @@ namespace Vip.DFe.Demo
 
         private void FuncaoGerarDanfe()
         {
-            if (txtXml.Text.IsNullOrEmpty()) txtParametro.Text = ObterCaminhoArquivo();
+            if (txtXml.Text.IsNullOrEmpty() && txtParametro.Text.IsNullOrEmpty()) txtParametro.Text = ObterCaminhoArquivo();
 
             if (txtXml.Text.IsNullOrEmpty() && txtParametro.Text.IsNullOrEmpty())
             {
