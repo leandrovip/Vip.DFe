@@ -20,6 +20,8 @@ namespace Vip.DFe.Danfe.Blocos
 
         public BlocoIdentificacaoEmitente(DanfeViewModel viewModel, Estilo estilo) : base(viewModel, estilo)
         {
+            var protocoloAutorizacao = ViewModel.ModoEspelho ? "SEM PROTOCOLO - PRÉ VISUALIZAÇÃO" : ViewModel.ProtocoloAutorizacao;
+
             var textoConsulta = new TextoSimples(Estilo, DanfeConstantes.TextoConsulta)
             {
                 Height = 8,
@@ -47,7 +49,7 @@ namespace Vip.DFe.Danfe.Blocos
 
             AdicionarLinhaCampos()
                 .ComCampo("Natureza da operação", ViewModel.NaturezaOperacao)
-                .ComCampo("Protocolo de autorização", ViewModel.ProtocoloAutorizacao, AlinhamentoHorizontal.Centro)
+                .ComCampo("Protocolo de autorização", protocoloAutorizacao, AlinhamentoHorizontal.Centro)
                 .ComLarguras(0, 46.5F);
 
             AdicionarLinhaCampos()

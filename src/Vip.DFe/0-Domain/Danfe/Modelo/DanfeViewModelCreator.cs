@@ -15,7 +15,9 @@ using Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual;
 using Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Federal;
 using Vip.DFe.NFe.NotaFiscal.Emitente;
 using Vip.DFe.NFe.NotaFiscal.Total;
+using Vip.DFe.NFe.Protocolo;
 using Vip.DFe.Shared.Enum;
+using NFeNotaFiscal = Vip.DFe.NFe.NotaFiscal.NFe;
 
 namespace Vip.DFe.Danfe.Modelo
 {
@@ -38,12 +40,12 @@ namespace Vip.DFe.Danfe.Modelo
         {
             try
             {
-                var nfe = NFeProc.Load(stream);
-                return CreateFromXml(nfe);
+                return CreateFromXmlContent(ReadXmlContent(stream));
             }
             catch (System.Exception ex)
             {
-                if (ex.InnerException is XmlException e) throw new System.Exception($"Não foi possível interpretar o Xml. Linha {e.LineNumber} Posição {e.LinePosition}.");
+                if (ex is XmlException xmlException) throw new System.Exception($"Não foi possível interpretar o Xml. Linha {xmlException.LineNumber} Posição {xmlException.LinePosition}.", ex);
+                if (ex.InnerException is XmlException e) throw new System.Exception($"Não foi possível interpretar o Xml. Linha {e.LineNumber} Posição {e.LinePosition}.", ex);
                 throw new XmlException($"Não foi possível processar o XML da NF-e.\r\n\r\nMensagem: {ex.Message}", ex);
             }
         }
@@ -52,8 +54,11 @@ namespace Vip.DFe.Danfe.Modelo
         {
             try
             {
-                var nfe = NFeProc.Load(xml);
-                return CreateFromXml(nfe);
+                return CreateFromXmlContent(xml);
+            }
+            catch (XmlException ex)
+            {
+                throw new System.Exception($"Não foi possível interpretar o texto Xml. {ex.Message}", ex);
             }
             catch (System.Exception ex)
             {
@@ -94,12 +99,27 @@ namespace Vip.DFe.Danfe.Modelo
 
         public static DanfeViewModel CreateFromXml(NFeProc procNfe)
         {
+            if (procNfe == null) throw new ArgumentNullException(nameof(procNfe));
+
+            return CreateFromXml(procNfe.NFe, procNfe.ProtNFe?.InfProt);
+        }
+
+        internal static DanfeViewModel CreateFromXml(NFeNotaFiscal nfe)
+        {
+            if (nfe == null) throw new ArgumentNullException(nameof(nfe));
+
+            return CreateFromXml(nfe, null);
+        }
+
+        private static DanfeViewModel CreateFromXml(NFeNotaFiscal nfe, NFeInfProt infProt)
+        {
             var model = new DanfeViewModel();
 
-            var nfe = procNfe.NFe;
             var infNfe = nfe.InfNFe;
             var ide = infNfe.Ide;
+            var modoEspelho = infProt == null;
 
+            model.ModoEspelho = modoEspelho;
             model.TipoEmissao = ide.TipoEmissao;
 
             if (ide.Modelo != NFeModelo.NFe)
@@ -110,14 +130,17 @@ namespace Vip.DFe.Danfe.Modelo
 
             model.Orientacao = ide.TipoImpressao == TipoImpressao.NormalRetrato ? Orientacao.Retrato : Orientacao.Paisagem;
 
-            var infProt = procNfe.ProtNFe.InfProt;
-            model.CodigoStatusReposta = infProt.CStat;
-            model.DescricaoStatusReposta = infProt.Motivo;
+            if (infProt != null)
+            {
+                model.CodigoStatusReposta = infProt.CStat;
+                model.DescricaoStatusReposta = infProt.Motivo;
+            }
+
             model.TipoAmbiente = (int) ide.TpAmb;
             model.NfNumero = (int) ide.NumeroNFe;
             model.NfSerie = ide.Serie;
             model.NaturezaOperacao = ide.NatOp;
-            model.ChaveAcesso = procNfe.NFe.InfNFe.Id.Substring(3);
+            model.ChaveAcesso = nfe.InfNFe.Id.Substring(3);
             model.TipoNF = (int) ide.TipoNFe;
 
             model.Emitente = ObterEmitente(infNfe.Emitente);
@@ -260,14 +283,15 @@ namespace Vip.DFe.Danfe.Modelo
             var infAdic = infNfe.InformacaoAdicional;
             if (infAdic != null)
             {
-                model.InformacoesComplementares = procNfe.NFe.InfNFe.InformacaoAdicional.InformacaoComplementar;
-                model.InformacoesAdicionaisFisco = procNfe.NFe.InfNFe.InformacaoAdicional.InformacaoFisco;
+                model.InformacoesComplementares = infAdic.InformacaoComplementar;
+                model.InformacoesAdicionaisFisco = infAdic.InformacaoFisco;
             }
 
             #endregion
 
-            var infoProt = procNfe.ProtNFe.InfProt;
-            model.ProtocoloAutorizacao = string.Format(DanfeHelper.Cultura, "{0} - {1}", infoProt.NProt, infoProt.DhRecbto.DateTime);
+            if (infProt != null)
+                model.ProtocoloAutorizacao = string.Format(DanfeHelper.Cultura, "{0} - {1}", infProt.NProt, infProt.DhRecbto.DateTime);
+
             model.DataHoraEmissao = ide.DhEmi.DateTime;
             model.DataSaidaEntrada = ide.DhSaiEnt?.DateTime;
 
@@ -287,6 +311,53 @@ namespace Vip.DFe.Danfe.Modelo
         #endregion
 
         #region Private methods
+
+        private static DanfeViewModel CreateFromXmlContent(string xml)
+        {
+            var rootName = GetXmlRootName(xml);
+
+            switch (rootName)
+            {
+                case "nfeProc":
+                    return CreateFromXml(NFeProc.Load(xml));
+                case "NFe":
+                    return CreateFromXml(NFeNotaFiscal.Load(xml));
+                default:
+                    throw new XmlException($"Documento raiz '{rootName}' não suportado para geração da DANFE.");
+            }
+        }
+
+        private static string ReadXmlContent(Stream stream)
+        {
+            if (stream == null) throw new ArgumentNullException(nameof(stream));
+            if (stream.CanSeek) stream.Position = 0;
+
+            using (var reader = new StreamReader(stream, Encoding.UTF8, true, 1024, true))
+            {
+                var xml = reader.ReadToEnd();
+                if (stream.CanSeek) stream.Position = 0;
+                return xml;
+            }
+        }
+
+        private static string GetXmlRootName(string xml)
+        {
+            if (string.IsNullOrWhiteSpace(xml))
+                throw new XmlException("O conteúdo Xml não foi informado.");
+
+            var settings = new XmlReaderSettings
+            {
+                DtdProcessing = DtdProcessing.Prohibit,
+                IgnoreWhitespace = true
+            };
+
+            using (var stringReader = new StringReader(xml))
+            using (var reader = XmlReader.Create(stringReader, settings))
+            {
+                reader.MoveToContent();
+                return reader.LocalName;
+            }
+        }
 
         private static EmpresaViewModel ObterEmitente(NFeEmit emit)
         {
