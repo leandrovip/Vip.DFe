@@ -193,9 +193,9 @@ namespace Vip.DFe.Danfe
             if (ViewModel.ModoEspelho)
             {
                 if (ViewModel.TipoAmbiente == 2)
-                    return new[] { "DANFE EM PRÉ-VISUALIZAÇÃO", "SEM AUTORIZAÇÃO DE USO", "AMBIENTE DE HOMOLOGAÇÃO"};
+                    return new[] { "DANFE SEM VALOR FISCAL", "SEM AUTORIZAÇÃO DE USO", "AMBIENTE DE HOMOLOGAÇÃO"};
 
-                return new[] { "DANFE EM PRÉ-VISUALIZAÇÃO", "SEM AUTORIZAÇÃO DE USO"};
+                return new[] { "DANFE SEM VALOR FISCAL", "SEM AUTORIZAÇÃO DE USO"};
             }
 
             if (ViewModel.TipoAmbiente == 2)
