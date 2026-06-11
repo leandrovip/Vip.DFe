@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
-using Vip.DFe.Extensions;
 using Vip.DFe.Serializer;
 using Vip.DFe.Shared.Enum;
 
@@ -54,7 +54,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Total
         ///     W22a - Data da prestação do serviço
         /// </summary>
         [DFeElement(TipoCampo.Dat, "dCompet", Id = "W22a", Min = 10, Max = 10, Ocorrencia = Ocorrencia.Obrigatoria)]
-        public string DCompet { get; set; }
+        public DateTime DCompet { get; set; }
 
         /// <summary>
         ///     W22b - Valor total dedução para redução da Base de Cálculo
@@ -95,11 +95,6 @@ namespace Vip.DFe.NFe.NotaFiscal.Total
         #endregion
 
         #region Methods
-
-        private bool ShouldSerializeDCompet()
-        {
-            return DCompet.IsNotNullOrEmpty();
-        }
 
         private bool ShouldSerializeCRegTrib()
         {
