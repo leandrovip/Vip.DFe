@@ -17,10 +17,16 @@ namespace Vip.DFe.NFe.NotaFiscal.Identificacao
         #region Properties
 
         /// <summary>
-        ///     BA02 - Chave de acesso da NF-e referenciada
+        ///     BA02 - Chave de acesso da NF-e ou NFC-e referenciada
         /// </summary>
         [DFeElement(TipoCampo.Str, "refNFe", Id = "BA02", Min = 44, Max = 44, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string RefNFe { get; set; }
+
+        /// <summary>
+        ///     BA02a - Chave da NF-e com o código numérico zerado
+        /// </summary>
+        [DFeElement(TipoCampo.Str, "refNFeSig", Id = "BA02a", Min = 44, Max = 44, Ocorrencia = Ocorrencia.Obrigatoria)]
+        public string RefNFeSig { get; set; }
 
         /// <summary>
         ///     BA03 - Informação da NF modelo 1/1A referenciada
@@ -51,6 +57,8 @@ namespace Vip.DFe.NFe.NotaFiscal.Identificacao
         #region Methods
 
         private bool ShouldSerializeRefNFe() => RefNFe.IsNotNullOrEmpty();
+
+        private bool ShouldSerializeRefNFeSig() => RefNFeSig.IsNotNullOrEmpty();
 
         private bool ShouldSerializeRefNF() => RefNF != null;
 

@@ -54,7 +54,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
         /// <summary>
         ///     N16 - Alíquota do imposto - pICMS
         /// </summary>
-        [DFeElement(TipoCampo.De4, "pICMS", Id = "N16", Min = 5, Max = 5, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.De4, "pICMS", Id = "N16", Min = 5, Max = 10, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal PIcms { get; set; }
 
         /// <summary>

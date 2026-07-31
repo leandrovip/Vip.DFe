@@ -84,6 +84,13 @@ namespace Vip.DFe.NFe.NotaFiscal.Identificacao
         public DateTimeOffset? DhSaiEnt { get; set; }
 
         /// <summary>
+        ///     B10a - Data da previsão de entrega ou disponibilização do bem.
+        ///     Mercadoria/Produto no padrão UTC, não informar este campo para NFCe
+        /// </summary>
+        [DFeElement(TipoCampo.Dat, "dPrevEntrega", Id = "B10a", Min = 25, Max = 25, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public DateTimeOffset? DPrevEntrega { get; set; }
+
+        /// <summary>
         ///     B11 - Tipo do Documento Fiscal
         ///     <br />0 - Entrada
         ///     <br />1 - Saída
@@ -102,6 +109,17 @@ namespace Vip.DFe.NFe.NotaFiscal.Identificacao
         /// </summary>
         [DFeElement(TipoCampo.Int, "cMunFG", Id = "B12", Min = 7, Max = 7, Ocorrencia = Ocorrencia.Obrigatoria)]
         public int CMunFG { get; set; }
+
+        /// <summary>
+        ///     B12a - Código do Município de consumo, fato gerador do IBS / CBS
+        ///     Informar o município de ocorrência do fato gerador do IBS / CBS.
+        ///     Campo preenchido somente quando “indPres = 5 (Operação
+        ///     presencial, fora do estabelecimento)”, e não estiver preenchido o
+        ///     endereço do destinatário(grupo: E05) nem o local de entrega(grupo:
+        ///     G01).
+        /// </summary>
+        [DFeElement(TipoCampo.Int, "cMunFGIBS", Id = "B12a", Min = 7, Max = 7, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public int CMunFGIBS { get; set; }
 
         /// <summary>
         ///     B21 - Formato de impressão do DANFE
@@ -134,6 +152,18 @@ namespace Vip.DFe.NFe.NotaFiscal.Identificacao
         public NFeFinalidade FinNFe { get; set; }
 
         /// <summary>
+        ///     B25.1 - Tipo de Nota de Débito
+        /// </summary>
+        [DFeElement(TipoCampo.Enum, "tpNFDebito", Id = "B25.1", Min = 1, Max = 1, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public NFeTipoNotaDebito TpNFDebito { get; set; }
+
+        /// <summary>
+        ///     B25.2 - Tipo de Nota de Crédito
+        /// </summary>
+        [DFeElement(TipoCampo.Enum, "tpNFCredito", Id = "B25.2", Min = 1, Max = 1, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public NFeTipoNotaCredito TpNFCredito { get; set; }
+
+        /// <summary>
         ///     B25a - Indica operação com consumidor final
         /// </summary>
         [DFeElement(TipoCampo.Enum, "indFinal", Id = "B25a", Min = 1, Max = 1, Ocorrencia = Ocorrencia.Obrigatoria)]
@@ -150,6 +180,12 @@ namespace Vip.DFe.NFe.NotaFiscal.Identificacao
         /// </summary>
         [DFeElement(TipoCampo.Enum, "indIntermed", Id = "B25c", Min = 1, Max = 1, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public NFeIndIntermed IndIntermed { get; set; }
+
+        /// <summary>
+        ///     B25d - Código indicador do local da operação de fornecimento
+        /// </summary>
+        [DFeElement(TipoCampo.StrNumber, "cIndOp", Id = "B25d", Min = 1, Max = 6, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public string cIndOp { get; set; }
 
         /// <summary>
         ///     B26 - Processo de emissão utilizado com a seguinte codificação:
@@ -183,6 +219,18 @@ namespace Vip.DFe.NFe.NotaFiscal.Identificacao
         /// </summary>
         [DFeCollection("NFref", Id = "BA01", MinSize = 0, MaxSize = 500, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public DFeCollection<NFeNfRef> NFref { get; set; }
+
+        /// <summary>
+        ///     BB01 - Grupo de compra covernamental
+        /// </summary>
+        [DFeElement("gCompraGov", Id = "BB01", Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public NFeGCompraGov GCompraGov { get; set; }
+
+        /// <summary>
+        ///     BC01 - Grupo de notas de antecipação de pagamento
+        /// </summary>
+        [DFeElement("gPagAntecipado", Id = "BC01", Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public NFeGPagAntecipado GPagAntecipado { get; set; }
 
         //#endregion
 

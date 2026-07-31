@@ -44,7 +44,7 @@ namespace Vip.DFe.NFe.ServRecepcaoEvento.Domain
         [DFeElement(TipoCampo.Enum, "cOrgao", Min = 2, Max = 2, Ocorrencia = Ocorrencia.Obrigatoria)]
         public CodigoUF COrgao { get; set; }
 
-        [DFeElement(TipoCampo.Int, "cStat", Min = 1, Max = 3, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.Int, "cStat", Min = 1, Max = 4, Ocorrencia = Ocorrencia.Obrigatoria)]
         public int CStat { get; set; }
 
         [DFeElement(TipoCampo.Str, "xMotivo", Min = 1, Max = 255, Ocorrencia = Ocorrencia.Obrigatoria)]
