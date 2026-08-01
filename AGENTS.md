@@ -43,6 +43,7 @@ packages/           # dependências locais da Demo (nuget.config aponta para cá
 - **Alterações mínimas**: não faça refatorações amplas; faça a mudança mais local possível.
 - **Preserve contratos públicos**: assinaturas e namespaces de métodos públicos são consumidos por clientes do NuGet; não quebre sem necessidade explícita.
 - Se algo estiver incerto no código, marque como `Hipótese a validar` na documentação, não invente.
+- Para alterações de leiaute XML de NF-e/NFC-e/SAT/eventos baseadas em Nota Técnica, schemas ou especificação de campos, use a skill `nfe-xml-nota-tecnica` antes de implementar.
 
 ## Tarefas multi-camada (exemplos)
 
