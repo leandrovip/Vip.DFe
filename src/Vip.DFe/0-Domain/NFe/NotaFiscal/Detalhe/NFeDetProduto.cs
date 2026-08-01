@@ -100,11 +100,18 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         public string CNPJFab { get; set; }
 
         /// <summary>
-        ///     Código de Benefício fiscal utilizado pela UF, aplicado ao item. Obs: Deve ser utilizado o mesmo código adotado na
+        ///     I05f - Código de Benefício fiscal utilizado pela UF, aplicado ao item. Obs: Deve ser utilizado o mesmo código
+        ///     adotado na
         ///     EFD e outras declarações, nas UF que o exigem.
         /// </summary>
-        [DFeElement(TipoCampo.Str, "cBenef", Min = 10, Max = 10, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.Str, "cBenef", Id = "I05f", Min = 10, Max = 10, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string CBenef { get; set; }
+
+        /// <summary>
+        ///     I05k - Classificação para subapuração o IBS na ZFM
+        /// </summary>
+        [DFeElement(TipoCampo.Enum, "tpCredPresIBSZFM", Id = "I05k", Min = 1, Max = 1, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public NFeTipoCredPresIbsZFM? TpCredPresIBSZFM { get; set; }
 
         /// <summary>
         ///     I06 - Código EX TIPI (3 posições)
@@ -198,6 +205,12 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         public NFeIndTotal IndTot { get; set; }
 
         /// <summary>
+        ///     I17c - Indicador de fornecimento de bem móvel usado
+        /// </summary>
+        [DFeElement(TipoCampo.Int, "indBemMovelUsado", Id = "I17c", Min = 1, Max = 1, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public int IndBemMovelUsado { get; set; }
+
+        /// <summary>
         ///     I18 - Declaração de Importação
         /// </summary>
         [DFeCollection("DI", Id = "I18", MinSize = 0, MaxSize = 100, Ocorrencia = Ocorrencia.NaoObrigatoria)]
@@ -278,6 +291,11 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
             return IndEscala.HasValue;
         }
 
+        private bool ShouldSerializeTpCredPresIBSZFM()
+        {
+            return TpCredPresIBSZFM.HasValue;
+        }
+
         private bool ShouldSerializeDeclaracaoImportacaoCampo()
         {
             return DeclaracaoImportacao.Any();
@@ -286,6 +304,11 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         private bool ShouldSerializeNItemPed()
         {
             return XPed.IsNotNullOrEmpty();
+        }
+
+        private bool ShouldSerializeIndBemMovelUsado()
+        {
+            return IndBemMovelUsado != 0;
         }
 
         private string SerializeCEAN()

@@ -80,6 +80,24 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         [DFeElement(TipoCampo.Custom, "infAdProd", Id = "V01", Min = 1, Max = 500, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string InfAdProd { get; set; }
 
+        /// <summary>
+        ///     VA01 - Grupo de observações de uso livre para o item da NF-e
+        /// </summary>
+        [DFeElement("obsItem", Id = "VA01", Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public NFeDetObsItem ObsItem { get; set; }
+
+        /// <summary>
+        ///     VB01 - Valor total do Item, correspondente à sua participação no total da nota
+        /// </summary>
+        [DFeElement(TipoCampo.De2, "vItem", Id = "VB01", Min = 3, Max = 15, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public decimal VItem { get; set; }
+
+        /// <summary>
+        ///     VC01 - Grupo de Documento Fiscal Referenciado no item
+        /// </summary>
+        [DFeElement("DFeReferenciado", Id = "VC01", Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public NFeDFeReferenciado DFeReferenciado { get; set; }
+
         #endregion
 
         #region Methods
@@ -89,9 +107,19 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
             return ImpostoDevol.PDevol > 0 || ImpostoDevol.Ipi.VIpiDevol > 0;
         }
 
+        private bool ShouldSerializeObsItem()
+        {
+            return ObsItem?.ObsCont != null || ObsItem?.ObsFisco != null;
+        }
+
         private string SerializeInfAdProd()
         {
             return InfAdProd.Truncate(500).TrimVip().RemoveBreakline();
+        }
+
+        private bool ShouldSerializeDFeReferenciado()
+        {
+            return DFeReferenciado?.ChaveAcesso.IsNotNullOrEmpty() == true;
         }
 
         private object DeserializeInfAdProd(string value) => value;

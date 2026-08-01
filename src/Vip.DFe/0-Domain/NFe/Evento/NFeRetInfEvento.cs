@@ -46,7 +46,7 @@ namespace Vip.DFe.NFe.Evento
         /// <summary>
         ///     HR16 - Código do status da resposta.
         /// </summary>
-        [DFeElement(TipoCampo.Int, "cStat", Id = "HR16", Min = 3, Max = 3, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.Int, "cStat", Id = "HR16", Min = 3, Max = 4, Ocorrencia = Ocorrencia.Obrigatoria)]
         public int CStat { get; set; }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Vip.DFe.NFe.Evento
         /// <summary>
         ///     HR26 - Número do Protocolo da NF-e
         /// </summary>
-        [DFeElement(TipoCampo.StrNumber, "nProt", Id = "HR26", Min = 15, Max = 15, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.StrNumber, "nProt", Id = "HR26", Min = 15, Max = 17, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string NProt { get; set; }
 
         /// <summary>

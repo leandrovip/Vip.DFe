@@ -15,6 +15,14 @@ namespace Vip.DFe.NFe.Enum
         Ajuste = 3,
 
         [DFeEnum("4")] [Description("4 - Devolução de Mercadoria")]
-        Devolucao = 4
+        Devolucao = 4,
+
+        [DFeEnum("5")]
+        [Description("5 - Nota de Crédito")]
+        Credito = 5,
+
+        [DFeEnum("6")]
+        [Description("6 - Nota de Débito")]
+        Debito = 6,
     }
 }

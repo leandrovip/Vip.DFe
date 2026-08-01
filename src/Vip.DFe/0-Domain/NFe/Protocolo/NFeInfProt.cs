@@ -50,7 +50,7 @@ namespace Vip.DFe.NFe.Protocolo
         /// <summary>
         ///     PR09 - Número do Protocolo da NF-e
         /// </summary>
-        [DFeElement(TipoCampo.StrNumber, "nProt", Id = "PR09", Min = 15, Max = 15, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.StrNumber, "nProt", Id = "PR09", Min = 15, Max = 17, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string NProt { get; set; }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Vip.DFe.NFe.Protocolo
         /// <summary>
         ///     PR11 - Código do status da resposta.
         /// </summary>
-        [DFeElement(TipoCampo.Int, "cStat", Id = "PR11", Min = 3, Max = 3, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.Int, "cStat", Id = "PR11", Min = 3, Max = 4, Ocorrencia = Ocorrencia.Obrigatoria)]
         public int CStat { get; set; }
 
         /// <summary>

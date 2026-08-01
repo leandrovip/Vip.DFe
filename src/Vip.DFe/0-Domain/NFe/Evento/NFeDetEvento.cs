@@ -77,7 +77,7 @@ namespace Vip.DFe.NFe.Evento
         /// <summary>
         ///     HP23 - Informar o número do Protocolo de Autorização da NF-e a ser Cancelada.
         /// </summary>
-        [DFeElement(TipoCampo.StrNumber, "nProt", Id = "HP23", Min = 15, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.StrNumber, "nProt", Id = "HP23", Min = 15, Max = 17, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string NProt { get; set; }
 
         /// <summary>

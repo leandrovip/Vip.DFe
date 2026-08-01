@@ -20,7 +20,7 @@ namespace Vip.DFe.NFe.ServBase
         [DFeElement(TipoCampo.Str, "verAplic", Min = 1, Max = 20, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string VersaoAplicacao { get; set; }
 
-        [DFeElement(TipoCampo.Int, "cStat", Min = 1, Max = 3, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.Int, "cStat", Min = 1, Max = 4, Ocorrencia = Ocorrencia.Obrigatoria)]
         public int CStat { get; set; }
 
         [DFeElement(TipoCampo.Str, "xMotivo", Min = 1, Max = 255, Ocorrencia = Ocorrencia.Obrigatoria)]

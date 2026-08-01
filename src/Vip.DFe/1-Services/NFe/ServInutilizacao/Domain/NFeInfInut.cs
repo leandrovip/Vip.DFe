@@ -44,7 +44,7 @@ namespace Vip.DFe.NFe.ServInutilizacao.Domain
         /// <summary>
         ///     DR07 - Código do status da resposta (vide item 5.1.1).
         /// </summary>
-        [DFeElement(TipoCampo.Int, "cStat", Min = 1, Max = 3, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.Int, "cStat", Min = 1, Max = 4, Ocorrencia = Ocorrencia.Obrigatoria)]
         public int CStat { get; set; }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Vip.DFe.NFe.ServInutilizacao.Domain
         /// <summary>
         ///     DR17 - Número do Protocolo de Inutilização (vide item 5.6).
         /// </summary>
-        [DFeElement(TipoCampo.Str, "nProt", Min = 1, Max = 15, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.Str, "nProt", Min = 1, Max = 17, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string NProt { get; set; }
 
         #endregion

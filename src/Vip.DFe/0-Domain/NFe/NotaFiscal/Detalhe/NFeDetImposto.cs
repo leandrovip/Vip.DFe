@@ -5,6 +5,7 @@ using Vip.DFe.Extensions;
 using Vip.DFe.NFe.Interfaces;
 using Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual;
 using Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Federal;
+using Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs;
 using Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Municipal;
 using Vip.DFe.Serializer;
 
@@ -29,6 +30,8 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
             Cofins = new Cofins();
             CofinsSt = new CofinsSt();
             IcmsUfDest = new IcmsUfDest();
+            IS = new ImpostoSeletivo();
+            IbsCbs = new IbsCbs();
         }
 
         #endregion
@@ -91,6 +94,18 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         [DFeElement("ICMSUFDest", Id = "NA01", Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public IcmsUfDest IcmsUfDest { get; set; }
 
+        /// <summary>
+        ///     UB01 - Grupo do Imposto Seletivo
+        /// </summary>
+        [DFeElement("IS", Id = "UB01", Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public ImpostoSeletivo IS { get; set; }
+
+        /// <summary>
+        ///     UB12 - Grupo de informações dos tributos IBS, CBS e Imposto Seletivo
+        /// </summary>
+        [DFeElement("IBSCBS", Id = "UB12", Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public IbsCbs IbsCbs { get; set; }
+
         #endregion
 
         #region Methods
@@ -118,6 +133,16 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         private bool ShouldSerializeIcmsUfDest()
         {
             return IcmsUfDest.VIcmsUfDest > 0 || IcmsUfDest.VIcmsUfRemet > 0;
+        }
+
+        private bool ShouldSerializeIS()
+        {
+            return IS.CstIS.IsNotNullOrEmpty();
+        }
+
+        private bool ShouldSerializeIbsCbs()
+        {
+            return IbsCbs.Cst.IsNotNullOrEmpty();
         }
 
         #endregion

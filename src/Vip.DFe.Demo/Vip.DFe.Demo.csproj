@@ -74,8 +74,8 @@
     <Reference Include="Vip.Extensions, Version=1.0.24.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Vip.Extensions.1.0.24\lib\netstandard2.0\Vip.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Vip.Fiscal, Version=1.1.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Vip.Fiscal.1.1.6\lib\netstandard2.0\Vip.Fiscal.dll</HintPath>
+    <Reference Include="Vip.Fiscal, Version=1.2.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Vip.Fiscal.1.2.7-beta\lib\netstandard2.0\Vip.Fiscal.dll</HintPath>
     </Reference>
     <Reference Include="Vip.Pdf, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Vip.Pdf.1.0.2\lib\netstandard2.0\Vip.Pdf.dll</HintPath>
@@ -84,6 +84,9 @@
   <ItemGroup>
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Models\CertificadoDigital.cs" />
+    <Compile Include="Models\ItemTributavelDemo.cs" />
+    <Compile Include="Services\ResultadoTributacaoDemo.cs" />
+    <Compile Include="Services\TributacaoDemoService.cs" />
     <Compile Include="Helpers\CertificadoHelper.cs" />
     <Compile Include="Enums\FuncaoServico.cs" />
     <Compile Include="Models\Configuracao.cs" />
