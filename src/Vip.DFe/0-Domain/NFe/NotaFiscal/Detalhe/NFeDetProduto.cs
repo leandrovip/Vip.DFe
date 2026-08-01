@@ -100,11 +100,18 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         public string CNPJFab { get; set; }
 
         /// <summary>
-        ///     Código de Benefício fiscal utilizado pela UF, aplicado ao item. Obs: Deve ser utilizado o mesmo código adotado na
+        ///     I05f - Código de Benefício fiscal utilizado pela UF, aplicado ao item. Obs: Deve ser utilizado o mesmo código
+        ///     adotado na
         ///     EFD e outras declarações, nas UF que o exigem.
         /// </summary>
-        [DFeElement(TipoCampo.Str, "cBenef", Min = 10, Max = 10, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.Str, "cBenef", Id = "I05f", Min = 10, Max = 10, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string CBenef { get; set; }
+
+        /// <summary>
+        ///     I05k - Classificação para subapuração o IBS na ZFM
+        /// </summary>
+        [DFeElement(TipoCampo.Enum, "tpCredPresIBSZFM", Id = "I05k", Min = 1, Max = 1, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public NFeTipoCredPresIbsZFM TpCredPresIBSZFM { get; set; }
 
         /// <summary>
         ///     I06 - Código EX TIPI (3 posições)
@@ -196,6 +203,12 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         /// </summary>
         [DFeElement(TipoCampo.Enum, "indTot", Id = "I17b", Min = 1, Max = 1, Ocorrencia = Ocorrencia.Obrigatoria)]
         public NFeIndTotal IndTot { get; set; }
+
+        /// <summary>
+        ///     I17c - Indicador de fornecimento de bem móvel usado
+        /// </summary>
+        [DFeElement(TipoCampo.Enum, "indBemMovelUsado", Id = "I17c", Min = 1, Max = 1, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public NFeIndTotal IndBemMovelUsado { get; set; }
 
         /// <summary>
         ///     I18 - Declaração de Importação
