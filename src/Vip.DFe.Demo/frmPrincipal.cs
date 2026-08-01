@@ -12,6 +12,7 @@ using Vip.DFe.Demo.Enums;
 using Vip.DFe.Demo.Extensions;
 using Vip.DFe.Demo.Helpers;
 using Vip.DFe.Demo.Models;
+using Vip.DFe.Demo.Services;
 using Vip.DFe.Document;
 using Vip.DFe.NFe;
 using Vip.DFe.NFe.Enum;
@@ -21,6 +22,7 @@ using Vip.DFe.NFe.NotaFiscal.Destinatario;
 using Vip.DFe.NFe.NotaFiscal.Detalhe;
 using Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual;
 using Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Federal;
+using Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs;
 using Vip.DFe.NFe.NotaFiscal.Emitente;
 using Vip.DFe.NFe.NotaFiscal.Identificacao;
 using Vip.DFe.NFe.NotaFiscal.InformacaoAdicional;
@@ -28,7 +30,6 @@ using Vip.DFe.NFe.NotaFiscal.Pagamento;
 using Vip.DFe.NFe.NotaFiscal.Total;
 using Vip.DFe.NFe.NotaFiscal.Transporte;
 using Vip.DFe.Shared.Enum;
-using Icms00 = Vip.Fiscal.Imposto.Icms.Icms00;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace Vip.DFe.Demo
@@ -39,6 +40,7 @@ namespace Vip.DFe.Demo
 
         private readonly ConfiguracaoService _serviceConfiguracao;
         private readonly Configuracao _configuracao;
+        private readonly TributacaoDemoService _tributacaoDemoService;
         private readonly BindingList<Item> _itens;
         private readonly BindingList<MeioPagamento> _meioPagamentos;
         private NFeService _service;
@@ -93,6 +95,7 @@ namespace Vip.DFe.Demo
 
             _serviceConfiguracao = new ConfiguracaoService();
             _configuracao = _serviceConfiguracao.Obter();
+            _tributacaoDemoService = new TributacaoDemoService();
         }
 
         #endregion
@@ -758,6 +761,7 @@ namespace Vip.DFe.Demo
             #region Detalhes
 
             var listaDetalhes = new DFeCollection<NFeDetalhe>();
+            var tributacoes = new List<ResultadoTributacaoDemo>();
             var numeroItem = 1;
             foreach (var item in _itens)
             {
@@ -767,6 +771,9 @@ namespace Vip.DFe.Demo
                 var unidadeTributada = itemGLP ? "KG" : item.Medida;
                 var quantidadeTributada = itemGLP ? 13 * item.Quantidade : item.Quantidade;
                 var valorItemTributado = itemGLP ? item.ValorItem.Division(13).Round(5) : item.ValorItem;
+
+                var tributacao = _tributacaoDemoService.Calcular(item, _configuracao.EmitenteRegimeTributario, _configuracao.DestinoOperacao);
+                tributacoes.Add(tributacao);
 
                 #endregion
 
@@ -801,7 +808,7 @@ namespace Vip.DFe.Demo
                         NItemPed = 0,
                     },
                     InfAdProd = "INFORMACAO ADICIONAL PRODUTO",
-                    Imposto = GerarImposto(item),
+                    Imposto = GerarImposto(tributacao),
                     //ImpostoDevol = GerarImpostoDevolvido(item, natureza)
                 };
 
@@ -900,20 +907,20 @@ namespace Vip.DFe.Demo
             var totalOutros = detItens.Where(p => p.Produto.IndTot == NFeIndTotal.ValorItemCompoeTotalNota).Sum(e => e.Produto.VOutro).Round();
             var totalTrib = detItens.Where(p => p.Produto.IndTot == NFeIndTotal.ValorItemCompoeTotalNota).Sum(p => p.Imposto.VTotTrib).Round();
 
-            var valorFCPST = 0;
-            var valorIcmsST = 0;
-            var valorIPI = 0;
-            var valorPIS = 0;
-            var valorCOFINS = 0;
-            var valorFCP = 0;
-            var valorFCPSTRet = 0;
+            var valorFCPST = 0m;
+            var valorIcmsST = 0m;
+            var valorIPI = 0m;
+            var valorPIS = tributacoes.Sum(x => x.Produto.ValorPis).Round();
+            var valorCOFINS = tributacoes.Sum(x => x.Produto.ValorCofins).Round();
+            var valorFCP = tributacoes.Sum(x => x.Produto.Fcp).Round();
+            var valorFCPSTRet = 0m;
 
             var icmsTot = new NFeIcmsTot
             {
                 VBcSt = 0,
                 VSt = 0,
-                VBc = 0,
-                VIcms = 0,
+                VBc = tributacoes.Sum(x => x.Produto.BaseCalculoIcms).Round(),
+                VIcms = tributacoes.Sum(x => x.Produto.ValorIcms).Round(),
                 VProd = totalItens,
                 VNf = totalItens - totalDesconto + valorFCPST + valorIcmsST + valorIPI + valorFrete + totalOutros + valorSeguro,
                 VDesc = totalDesconto,
@@ -931,7 +938,7 @@ namespace Vip.DFe.Demo
                 VIcmsDeson = 0
             };
 
-            var total = new NFeTotal {IcmsTot = icmsTot};
+            var total = new NFeTotal {IcmsTot = icmsTot, IbsCbsTot = GerarIbsCbsTotal(tributacoes)};
             nfe.InfNFe.Total = total;
 
             #endregion
@@ -1063,39 +1070,39 @@ namespace Vip.DFe.Demo
             return notasRefs;
         }
 
-        private NFeDetImposto GerarImposto(Item item)
+        private NFeDetImposto GerarImposto(ResultadoTributacaoDemo tributacao)
         {
             var detImposto = new NFeDetImposto
             {
-                Imposto = GerarIcms(item),
+                Imposto = GerarIcms(tributacao),
                 //Ipi = GerarIpi(item),
-                Pis = GerarPis(),
-                Cofins = GerarCofins()
+                Pis = GerarPis(tributacao),
+                Cofins = GerarCofins(tributacao),
+                IbsCbs = GerarIbsCbs(tributacao)
             };
 
             return detImposto;
         }
 
-        private INFeImposto GerarIcms(Item item)
+        private INFeImposto GerarIcms(ResultadoTributacaoDemo tributacao)
         {
             INFeIcms icms = null;
             const OrigemMercadoria origem = OrigemMercadoria.Nacional;
 
-            var cstIcms = _configuracao.EmitenteRegimeTributario.Equals(RegimeTributario.Normal) ? "00" : "102";
+            var cstIcms = _configuracao.EmitenteRegimeTributario.Equals(RegimeTributario.Normal) || _configuracao.EmitenteRegimeTributario.Equals(RegimeTributario.SimplesNacionalExcesso) ? "00" : "102";
 
             switch (cstIcms)
             {
                 case "00":
-                    var fiscal = new Icms00((item.Quantidade + item.ValorItem).Round(), item.Frete, item.Seguro, item.Outros, 0, item.Desconto, 18);
-                    icms = new NFe.NotaFiscal.Detalhe.Imposto.Estadual.Icms00
+                    icms = new Icms00
                     {
                         Origem = origem,
                         ModBC = NFeModalidadeBC.ValorOperacao,
-                        VBc = fiscal.BaseIcms(),
-                        PIcms = 18,
-                        VIcms = fiscal.ValorIcms(),
-                        PFcp = 0,
-                        VFcp = 0
+                        VBc = tributacao.Produto.BaseCalculoIcms,
+                        PIcms = tributacao.Entidade.PercentualIcms,
+                        VIcms = tributacao.Produto.ValorIcms,
+                        PFcp = tributacao.Entidade.PercentualFcp,
+                        VFcp = tributacao.Produto.Fcp
                     };
                     break;
                 case "102":
@@ -1343,16 +1350,85 @@ namespace Vip.DFe.Demo
             return new Icms {Tipo = icms};
         }
 
-        private Pis GerarPis()
+        private Pis GerarPis(ResultadoTributacaoDemo tributacao)
         {
-            INFePis pis = new PisNt {Cst = "09"};
+            INFePis pis = new PisAliq
+            {
+                Cst = "01",
+                VBc = tributacao.Produto.BaseCalculoPis,
+                PPis = tributacao.Entidade.PercentualPis,
+                VPis = tributacao.Produto.ValorPis
+            };
+
             return new Pis {Imposto = pis};
         }
 
-        private Cofins GerarCofins()
+        private Cofins GerarCofins(ResultadoTributacaoDemo tributacao)
         {
-            INFeCofins cofins = new CofinsNt {Cst = "09"};
+            INFeCofins cofins = new CofinsAliq
+            {
+                Cst = "01",
+                VBc = tributacao.Produto.BaseCalculoCofins,
+                PCofins = tributacao.Entidade.PercentualCofins,
+                VCofins = tributacao.Produto.ValorCofins
+            };
+
             return new Cofins {Imposto = cofins};
+        }
+
+        private IbsCbs GerarIbsCbs(ResultadoTributacaoDemo tributacao)
+        {
+            return new IbsCbs
+            {
+                Cst = "000",
+                CClassTrib = "000001",
+                GrupoIbsCbs = new GrupoIbsCbs
+                {
+                    VBc = tributacao.BaseIbsCbs,
+                    IbsUf = new IbsUf
+                    {
+                        PIbsUf = tributacao.Entidade.PercentualIbsUF,
+                        VIbsUf = tributacao.ValorIbsUf
+                    },
+                    IbsMunicipio = new IbsMunicipio
+                    {
+                        PIbsMun = tributacao.Entidade.PercentualIbsMunicipal,
+                        VIbsMun = tributacao.ValorIbsMunicipal
+                    },
+                    VIbs = tributacao.ValorIbs,
+                    Cbs = new Cbs
+                    {
+                        PCbs = tributacao.Entidade.PercentualCbs,
+                        VCbs = tributacao.ValorCbs
+                    }
+                }
+            };
+        }
+
+        private NFeIbsCbsTot GerarIbsCbsTotal(IEnumerable<ResultadoTributacaoDemo> tributacoes)
+        {
+            var lista = tributacoes.ToList();
+
+            return new NFeIbsCbsTot
+            {
+                VBcIbsCbs = lista.Sum(x => x.BaseIbsCbs).Round(),
+                Ibs = new NFeIbsTot
+                {
+                    IbsUf = new NFeIbsUfTot
+                    {
+                        VIbsUf = lista.Sum(x => x.ValorIbsUf).Round()
+                    },
+                    IbsMunicipio = new NFeIbsMunicipioTot
+                    {
+                        VIbsMun = lista.Sum(x => x.ValorIbsMunicipal).Round()
+                    },
+                    VIbs = lista.Sum(x => x.ValorIbs).Round()
+                },
+                Cbs = new NFeCbsTot
+                {
+                    VCbs = lista.Sum(x => x.ValorCbs).Round()
+                }
+            };
         }
 
         #endregion

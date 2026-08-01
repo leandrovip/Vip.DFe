@@ -86,7 +86,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Total
 
         private bool ShouldSerializeIbsCbsTot()
         {
-            return IbsCbsTot != null && (IbsCbsTot.VBcIbsCbs > 0 || IbsCbsTot.Ibs != null || IbsCbsTot.Cbs != null || IbsCbsTot.Mono != null || IbsCbsTot.EstornoCredito != null);
+            return IbsCbsTot != null && IbsCbsTot.VBcIbsCbs > 0;
         }
 
         private bool ShouldSerializeVNfTot()

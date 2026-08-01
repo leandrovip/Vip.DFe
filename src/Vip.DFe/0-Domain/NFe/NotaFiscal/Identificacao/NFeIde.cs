@@ -246,6 +246,12 @@ namespace Vip.DFe.NFe.NotaFiscal.Identificacao
 
         private bool ShouldSerializeIndIntermed() => IndPres == NFePresencaComprador.Internet || IndPres == NFePresencaComprador.Teleatendimento || IndPres == NFePresencaComprador.NFCeEntregaDomicilio || IndPres == NFePresencaComprador.Outros;
 
+        private bool ShouldSerializeCMunFGIBS() => CMunFGIBS != 0;
+
+        private bool ShouldSerializeTpNFDebito() => FinNFe == NFeFinalidade.Debito;
+
+        private bool ShouldSerializeTpNFCredito() => FinNFe == NFeFinalidade.Credito;
+
         private string SerializeVerProc() => VerProc.IsNullOrEmpty() ? "4.00" : VerProc;
 
         private object DeserializeVerProc(string value) => value;
