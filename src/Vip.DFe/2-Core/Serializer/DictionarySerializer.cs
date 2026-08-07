@@ -88,12 +88,9 @@ namespace Vip.DFe.Serializer
 
         public static object Deserialize(PropertyInfo prop, XElement parent, object parentItem, SerializerOptions options)
         {
-            Guard.Against<VipException>(!prop.HasAttribute<DFeDictionaryAttribute>(),
-                $"Atributo necessário não encontrado [{nameof(DFeDictionaryAttribute)}]");
-            Guard.Against<VipException>(!prop.HasAttribute<DFeDictionaryKeyAttribute>(),
-                $"Atributo necessário não encontrado [{nameof(DFeDictionaryKeyAttribute)}]");
-            Guard.Against<VipException>(!prop.HasAttribute<DFeDictionaryValueAttribute>(),
-                $"Atributo necessário não encontrado [{nameof(DFeDictionaryValueAttribute)}]");
+            Guard.Against<VipException>(!prop.HasAttribute<DFeDictionaryAttribute>(), $"Atributo necessário não encontrado [{nameof(DFeDictionaryAttribute)}]");
+            Guard.Against<VipException>(!prop.HasAttribute<DFeDictionaryKeyAttribute>(), $"Atributo necessário não encontrado [{nameof(DFeDictionaryKeyAttribute)}]");
+            Guard.Against<VipException>(!prop.HasAttribute<DFeDictionaryValueAttribute>(), $"Atributo necessário não encontrado [{nameof(DFeDictionaryValueAttribute)}]");
 
             var tag = prop.GetAttribute<DFeDictionaryAttribute>();
             var keyAtt = prop.GetAttribute<DFeDictionaryKeyAttribute>();

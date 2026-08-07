@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
+using Vip.DFe.Extensions;
 using Vip.DFe.Serializer;
 
 namespace Vip.DFe.NFe.NotaFiscal.Total
@@ -44,6 +45,18 @@ namespace Vip.DFe.NFe.NotaFiscal.Total
         /// </summary>
         [DFeElement("gEstornoCred", Id = "W59e", Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public NFeEstornoCreditoTot EstornoCredito { get; set; }
+
+        #endregion
+
+        #region Methods
+
+        private bool ShouldSerializeIbs() => Ibs.IsNotNull() && (Ibs.VIbs != 0 || Ibs.IbsUf.VIbsUf != 0 || Ibs.IbsMunicipio.VIbsMun != 0);
+
+        private bool ShouldSerializeCbs() => Cbs.IsNotNull() && (Cbs.VCbs != 0 || Cbs.VDif != 0 || Cbs.VCredPres != 0 || Cbs.VCredPresCondSus != 0 || Cbs.VDevTrib != 0);
+
+        private bool ShouldSerializeMono() => Mono.IsNotNull() && (Mono.VCbsMono != 0 || Mono.VCbsMonoRet != 0 || Mono.VCbsMonoReten != 0 || Mono.VIbsMono != 0 || Mono.VIbsMonoRet != 0 || Mono.VIbsMonoReten != 0);
+
+        private bool ShouldSerializeEstornoCredito() => EstornoCredito.IsNotNull() && (EstornoCredito.VCbsEstCred != 0 || EstornoCredito.VIbsEstCred != 0);
 
         #endregion
     }

@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
+using Vip.DFe.Extensions;
 using Vip.DFe.Serializer;
 
 namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs
@@ -90,6 +91,20 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs
         {
             return IndDoacao == 1;
         }
+
+        private bool ShouldSerializeGrupoIbsCbs() => GrupoIbsCbs.IsNotNull() && GrupoIbsCbs.VBc != 0;
+
+        private bool ShouldSerializeIbsCbsMono() => IbsCbsMono.IsNotNull() && (IbsCbsMono.VTotCbsMonoItem != 0 || IbsCbsMono.VTotIbsMonoItem != 0);
+
+        private bool ShouldSerializeTransferenciaCredito() => TransferenciaCredito.IsNotNull() && (TransferenciaCredito.VCbs != 0 || TransferenciaCredito.VIbs != 0);
+
+        private bool ShouldSerializeAjusteCompetencia() => AjusteCompetencia.IsNotNull() && (AjusteCompetencia.VIbs != 0 || AjusteCompetencia.VCbs != 0);
+
+        private bool ShouldSerializeEstornoCredito() => EstornoCredito.IsNotNull() && (EstornoCredito.VCbsEstCred != 0 || EstornoCredito.VIbsEstCred != 0);
+
+        private bool ShouldSerializeCreditoPresumidoOperacao() => CreditoPresumidoOperacao.IsNotNull() && CreditoPresumidoOperacao.CCredPres.IsNotNullOrEmpty();
+
+        private bool ShouldSerializeCreditoPresumidoIbsZfm() => CreditoPresumidoIbsZfm.IsNotNull() && CreditoPresumidoIbsZfm.CompetApur.IsNotNullOrEmpty();
 
         #endregion
     }
