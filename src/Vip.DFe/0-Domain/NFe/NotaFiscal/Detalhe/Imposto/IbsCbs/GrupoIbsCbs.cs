@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
+using Vip.DFe.Extensions;
 using Vip.DFe.Serializer;
 
 namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs
@@ -71,6 +72,14 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs
         /// </summary>
         [DFeElement("gTribCompraGov", Id = "UB82a", Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public TributacaoCompraGov TributacaoCompraGov { get; set; }
+
+        #endregion
+
+        #region Métodos Privados
+
+        private bool ShouldSerializeTributacaoRegular() => TributacaoRegular.IsNotNull() && TributacaoRegular.CstReg.IsNotNullOrEmpty();
+
+        private bool ShouldSerializeTributacaoCompraGov() => TributacaoCompraGov.IsNotNull() && (TributacaoCompraGov.PAliqCbs != 0 || TributacaoCompraGov.PAliqIbsMun != 0 || TributacaoCompraGov.PAliqIbsUf != 0);
 
         #endregion
     }

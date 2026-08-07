@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
+using Vip.DFe.Extensions;
 using Vip.DFe.Serializer;
 
 namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs
@@ -53,6 +54,18 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs
         /// </summary>
         [DFeElement(TipoCampo.De2, "vCBS", Id = "UB67", Min = 3, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal VCbs { get; set; }
+
+        #endregion
+
+        #region Métodos Privados
+
+        private bool ShouldSerializeDiferimento() => Diferimento.IsNotNull() && (Diferimento.PDif != 0 || Diferimento.VDif != 0);
+
+        private bool ShouldSerializeDevolucaoTributo() => DevolucaoTributo.IsNotNull() && (DevolucaoTributo.PDevTrib != 0 || DevolucaoTributo.VDevTrib != 0);
+
+        private bool ShouldSerializeReducaoAliquota() => ReducaoAliquota.IsNotNull() && (ReducaoAliquota.PAliqEfet != 0 || ReducaoAliquota.PRedAliq != 0);
+
+        private bool ShouldSerializeAlcZfmCbs() => AlcZfmCbs?.TpAlcZfmCbs != 0;
 
         #endregion
     }

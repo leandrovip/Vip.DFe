@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using Vip.DFe.Attributes;
 using Vip.DFe.Document;
 using Vip.DFe.Enum;
@@ -251,6 +252,10 @@ namespace Vip.DFe.NFe.NotaFiscal.Identificacao
         private bool ShouldSerializeTpNFDebito() => FinNFe == NFeFinalidade.Debito;
 
         private bool ShouldSerializeTpNFCredito() => FinNFe == NFeFinalidade.Credito;
+
+        private bool ShouldSerializeGCompraGov() => GCompraGov.IsNotNull() && (int) GCompraGov.TpOperGov != 0;
+
+        private bool ShouldSerializeGPagAntecipado() => GPagAntecipado.IsNotNull() && GPagAntecipado.RefNFe.IsNotNull();
 
         private string SerializeVerProc() => VerProc.IsNullOrEmpty() ? "4.00" : VerProc;
 
