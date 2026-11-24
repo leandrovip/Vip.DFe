@@ -15,6 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Fixtures\**\*.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\schemas\*.xsd" Link="schemas\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Vip.DFe\Vip.DFe.csproj" />
   </ItemGroup>
 

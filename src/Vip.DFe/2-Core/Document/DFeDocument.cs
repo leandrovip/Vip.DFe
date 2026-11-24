@@ -121,12 +121,15 @@ namespace Vip.DFe.Document
 
             if (encoding != null) serializer.Options.Encoding = encoding;
 
+            var inicio = stream.Position;
             serializer.Serialize(this, stream);
 
+            stream.Position = inicio;
             using (var ms = new MemoryStream())
             {
                 stream.CopyTo(ms);
-                stream.Position = 0;
+                stream.Position = inicio;
+                ms.Position = 0;
                 using (var reader = new StreamReader(ms, serializer.Options.Encoding)) Xml = reader.ReadToEnd();
             }
         }

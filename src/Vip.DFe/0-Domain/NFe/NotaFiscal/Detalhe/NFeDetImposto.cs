@@ -112,37 +112,37 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
 
         private bool ShouldSerializeIpi()
         {
-            return Ipi.CEnq.IsNotNullOrEmpty();
+            return Ipi != null && Ipi.CEnq.IsNotNullOrEmpty();
         }
 
         private bool ShouldSerializeII()
         {
-            return II.VIi > 0 || II.VIof > 0;
+            return II != null && (II.VIi > 0 || II.VIof > 0);
         }
 
         private bool ShouldSerializePisSt()
         {
-            return PisSt.VPis > 0;
+            return PisSt != null && PisSt.VPis > 0;
         }
 
         private bool ShouldSerializeCofinsSt()
         {
-            return CofinsSt.VCofins > 0;
+            return CofinsSt != null && CofinsSt.VCofins > 0;
         }
 
         private bool ShouldSerializeIcmsUfDest()
         {
-            return IcmsUfDest.VIcmsUfDest > 0 || IcmsUfDest.VIcmsUfRemet > 0;
+            return IcmsUfDest != null && (IcmsUfDest.VIcmsUfDest > 0 || IcmsUfDest.VIcmsUfRemet > 0);
         }
 
         private bool ShouldSerializeIS()
         {
-            return IS.CstIS.IsNotNullOrEmpty();
+            return IS != null && IS.CstIS.IsNotNullOrEmpty();
         }
 
         private bool ShouldSerializeIbsCbs()
         {
-            return IbsCbs.Cst.IsNotNullOrEmpty();
+            return IbsCbs != null && IbsCbs.Cst.IsNotNullOrEmpty();
         }
 
         #endregion
