@@ -85,11 +85,11 @@ namespace Vip.DFe.NFe.NotaFiscal.Identificacao
         public DateTimeOffset? DhSaiEnt { get; set; }
 
         /// <summary>
-        ///     B10a - Data da previsão de entrega ou disponibilização do bem.
-        ///     Mercadoria/Produto no padrão UTC, não informar este campo para NFCe
+        ///     B10a - Data da previsão de entrega ou disponibilização do bem (TData, formato AAAA-MM-DD).
+        ///     Não informar este campo para NFCe.
         /// </summary>
-        [DFeElement(TipoCampo.Dat, "dPrevEntrega", Id = "B10a", Min = 25, Max = 25, Ocorrencia = Ocorrencia.NaoObrigatoria)]
-        public DateTimeOffset? DPrevEntrega { get; set; }
+        [DFeElement(TipoCampo.Dat, "dPrevEntrega", Id = "B10a", Min = 10, Max = 10, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public DateTime? DPrevEntrega { get; set; }
 
         /// <summary>
         ///     B11 - Tipo do Documento Fiscal

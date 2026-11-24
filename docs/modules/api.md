@@ -84,6 +84,7 @@ Ou seja: `128` descreve o lote (mensagem `retEnvEvento`), enquanto `135` descrev
 ## Observações de contrato público
 
 - `CartaoCorrecao` foi renomeado para `CartaCorrecao` (quebra de compatibilidade).
+- `NFeIde.DPrevEntrega` passou de `DateTimeOffset?` para `DateTime?` (B10a é `TData`, AAAA-MM-DD). Corrige a falha ao carregar XML com `<dPrevEntrega>` (versões 1.1.46+); quem atribuía `DateTimeOffset` precisa usar `.Date`/`DateTime`.
 - **Preserve a assinatura dos métodos públicos e namespaces** — são o contrato consumido pelos clientes (ver `AGENTS.md`).
 - `NFeService` e `CFeService` são `sealed` e herdam `VipComponent`.
 - Mensagens de erro/validação em PT-BR.
