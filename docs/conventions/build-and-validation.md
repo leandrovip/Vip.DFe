@@ -19,9 +19,9 @@
 
 ### CI (Gitea Actions `ci.yml`, runner `vip-linux`)
 
-Em `push`/`pull_request` para `master`: `dotnet restore`/`build`/`test` do projeto de testes (que compila a lib). **A Demo não é compilada no CI** (exige Windows/MSBuild). Não publica nada.
+Em `push` para `master` (não roda em pull request): `dotnet restore`/`build`/`test` do projeto de testes (que compila a lib). **A Demo não é compilada no CI** (exige Windows/MSBuild). Não publica nada.
 
-> **Hipótese a validar**: os testes de DANFE geram PDF via `Vip.Pdf` → `System.Drawing.Common`, suportado só no Windows a partir do .NET 7. Se falharem no `vip-linux`, mover o `ci.yml` para `vip-windows`.
+> Testes que geram PDF do DANFE usam `[WindowsFact]` (`src/Vip.DFe.Tests/WindowsFactAttribute.cs`) e são **ignorados no Linux**: o `Vip.Pdf` usa `System.Drawing.Common`, que no .NET 7+ lança `PlatformNotSupportedException` fora do Windows (confirmado no `vip-linux`). Eles rodam localmente no Windows e no `nuget.yml` (`windows-latest`). O mesmo vale para quem consome a lib: **geração de PDF do DANFE só funciona no Windows**.
 
 ### Pipeline de publicação (GitHub Actions no mirror, `nuget.yml`, `windows-latest`, manual) — ordem de referência
 

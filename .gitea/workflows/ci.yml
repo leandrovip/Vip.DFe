@@ -2,11 +2,10 @@ name: CI
 
 # Gitea Actions (runner Linux "vip-linux"). Compila e testa apenas a lib e os testes;
 # a Demo (WinForms .NET Framework 4.8) exige Windows/MSBuild e não é compilada aqui.
+# Testes que geram PDF do DANFE ([WindowsFact]) são ignorados no Linux (System.Drawing.Common só roda no Windows).
 
 on:
   push:
-    branches: [master]
-  pull_request:
     branches: [master]
 
 jobs:

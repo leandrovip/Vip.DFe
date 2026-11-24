@@ -38,7 +38,7 @@ namespace Vip.DFe.Tests.Danfe
             Assert.Equal(100D, model.CalculoImposto.ValorTotalNota);
         }
 
-        [Fact]
+        [WindowsFact]
         public void DanfeService_Gerar_ComModeloEspelho_DeveConcluirSemErro()
         {
             var model = DanfeViewModel.CriarDoConteudoXml(ObterNFeXml());
