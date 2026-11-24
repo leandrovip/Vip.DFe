@@ -382,7 +382,7 @@ namespace Vip.DFe.Demo
 
             try
             {
-                var retorno = _service.CartaoCorrecao(_configuracao.EmitenteCnpj, txtParametro.Text, 1, "CARTA DE CORREÇÃO DA NOTA FISCAL ELETRONICA");
+                var retorno = _service.CartaCorrecao(_configuracao.EmitenteCnpj, txtParametro.Text, 1, "CARTA DE CORREÇÃO DA NOTA FISCAL ELETRONICA");
                 txtEnvio.Text = retorno.XmlEnvio.FormatarXml();
                 txtRetorno.Text = retorno.XmlRetorno.FormatarXml();
                 txtEnvelopSoap.Text = retorno.EnvelopeSoap.FormatarXml();

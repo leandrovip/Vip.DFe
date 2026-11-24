@@ -30,9 +30,9 @@
 
 ## Fluxo NFe — Eventos (cancelamento, cancelamento por substituição, CCe)
 
-- **Entrada**: `Cancelar(...)`, `CancelarSubstituicao(...)`, `CartaoCorrecao(...)`.
+- **Entrada**: `Cancelar(...)`, `CancelarSubstituicao(...)`, `CartaCorrecao(...)`.
 - **Passos**:
-  1. Validações `Guard.Against`: justificativa com no mínimo 15 caracteres em `Cancelar`, `CancelarSubstituicao` e `CartaoCorrecao`; o **limite máximo de 255 caracteres vale só em `CancelarSubstituicao`**; a CCe tem limite máximo de 1000 caracteres; `Cancelar` não valida tamanho máximo.
+  1. Validações `Guard.Against`: justificativa com no mínimo 15 caracteres em `Cancelar`, `CancelarSubstituicao` e `CartaCorrecao`; o **limite máximo de 255 caracteres vale só em `CancelarSubstituicao`**; a CCe tem limite máximo de 1000 caracteres; `Cancelar` não valida tamanho máximo.
   2. Monta `NFeEvento`/`NFeInfEvento`/`NFeDetEvento` conforme `TpEvento`.
   3. `NFeServRecepcaoEvento.RecepcaoEvento(evento)` (SOAP).
   4. `Resultado.CStat == 128` significa **lote de eventos processado** (`NFeService.cs:~555`); o status de cada evento vem em `Resultado.RetEvento[i].InfEvento.CStat` (ex.: `135` = evento registrado e vinculado à NFe; processados: 135, 136, 101, 151, 155 — `DFeConstantes.EventoProcessado`). Com `128`, monta `NFeProcEvento` (usa o primeiro `RetEvento`) e só grava `procEvento` se `Processado`; resultado disponível também como `ProcEvento`.

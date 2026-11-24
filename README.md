@@ -144,7 +144,7 @@ var inut = nfeService.Inutilizar(cnpj, "Justificativa com mais de 15 caracteres"
 // Eventos: Resultado.CStat 128 = lote de eventos processado.
 // O resultado de cada evento está em Resultado.RetEvento[i].InfEvento.CStat (135 = evento registrado).
 var cancelamento = nfeService.Cancelar(cnpj, chave, numeroProtocolo, 1, "Justificativa com mais de 15 caracteres");
-var cce = nfeService.CartaoCorrecao(cnpj, chave, 1, "Texto da correção com mais de 15 caracteres");
+var cce = nfeService.CartaCorrecao(cnpj, chave, 1, "Texto da correção com mais de 15 caracteres");
 
 if (cancelamento.Resultado.CStat == 128)
 {

@@ -12,6 +12,7 @@ using Vip.DFe.NFe.Configuration;
 using Vip.DFe.NFe.Enum;
 using Vip.DFe.NFe.Evento;
 using Vip.DFe.NFe.NotaFiscal;
+using Vip.DFe.NFe.Protocolo;
 using Vip.DFe.NFe.ServAutorizacao;
 using Vip.DFe.NFe.ServConsultaProtocolo;
 using Vip.DFe.NFe.ServInutilizacao;
@@ -86,31 +87,11 @@ namespace Vip.DFe.NFe
         /// </summary>
         public NFeAutorizacaoResposta AutorizacaoLote(string loteId = "")
         {
-            Configuracoes.Validar();
-
-            var oldProtocol = ServicePointManager.SecurityProtocol;
-            ServicePointManager.SecurityProtocol = _securityProtocol;
-            _certificado = Configuracoes.Certificado.ObterCertificado();
-
-            Assinar(_certificado);
-            Validar();
-
-            NFeAutorizacaoResposta autorizacao;
-
-            try
+            return Executar(NFeStatus.Autorizacao, certificado =>
             {
-                Status = NFeStatus.Autorizacao;
-                using var service = new NFeServAutorizacao(Configuracoes, _certificado);
-                autorizacao = service.AutorizacaoLote(Documentos.NFe, loteId);
-            }
-            finally
-            {
-                LiberarCacheCertificado();
-                ServicePointManager.SecurityProtocol = oldProtocol;
-                Status = NFeStatus.EmEspera;
-            }
-
-            return autorizacao;
+                using var service = new NFeServAutorizacao(Configuracoes, certificado);
+                return service.AutorizacaoLote(Documentos.NFe, loteId);
+            }, AssinarEValidar);
         }
 
         /// <summary>
@@ -118,29 +99,11 @@ namespace Vip.DFe.NFe
         /// </summary>
         public NFeAutorizacaoResposta Autorizacao()
         {
-            Configuracoes.Validar();
-
-            var oldProtocol = ServicePointManager.SecurityProtocol;
-            ServicePointManager.SecurityProtocol = _securityProtocol;
-            _certificado = Configuracoes.Certificado.ObterCertificado();
-
-            Assinar(_certificado);
-            Validar();
-
-            NFeAutorizacaoResposta autorizacao;
-
-            try
+            var autorizacao = Executar(NFeStatus.Autorizacao, certificado =>
             {
-                Status = NFeStatus.Autorizacao;
-                using var service = new NFeServAutorizacao(Configuracoes, _certificado);
-                autorizacao = service.Autorizacao(Documentos.NFe.FirstOrDefault());
-            }
-            finally
-            {
-                LiberarCacheCertificado();
-                ServicePointManager.SecurityProtocol = oldProtocol;
-                Status = NFeStatus.EmEspera;
-            }
+                using var service = new NFeServAutorizacao(Configuracoes, certificado);
+                return service.Autorizacao(Documentos.NFe.FirstOrDefault());
+            }, AssinarEValidar);
 
             if (Configuracoes.EnviarModoSincrono) GerarNFeProc(autorizacao);
             return autorizacao;
@@ -151,34 +114,22 @@ namespace Vip.DFe.NFe
         /// </summary>
         public NFeRetAutorizacaoResposta ConsultaAutorizacao(string recibo)
         {
-            Configuracoes.Validar();
-
-            var oldProtocol = ServicePointManager.SecurityProtocol;
-            ServicePointManager.SecurityProtocol = _securityProtocol;
-            _certificado = Configuracoes.Certificado.ObterCertificado();
-
-            NFeRetAutorizacaoResposta retAutorizacao;
-
-            try
+            var retAutorizacao = Executar(NFeStatus.RetAutorizacao, certificado =>
             {
-                Status = NFeStatus.RetAutorizacao;
-                using var service = new NFeServRetAutorizacao(Configuracoes, _certificado);
+                using var service = new NFeServRetAutorizacao(Configuracoes, certificado);
                 var tentativas = 0;
                 var intervaloTentativas = Math.Max(Configuracoes.Webservices.IntervaloTentativas, 1000);
+                NFeRetAutorizacaoResposta resposta;
 
                 do
                 {
-                    retAutorizacao = service.RetAutorizacao(recibo);
+                    resposta = service.RetAutorizacao(recibo);
                     tentativas++;
                     Thread.Sleep(intervaloTentativas);
-                } while (retAutorizacao.Resultado.CStat != 104 && tentativas < Configuracoes.Webservices.NumeroTentativas);
-            }
-            finally
-            {
-                LiberarCacheCertificado();
-                ServicePointManager.SecurityProtocol = oldProtocol;
-                Status = NFeStatus.EmEspera;
-            }
+                } while (resposta.Resultado.CStat != 104 && tentativas < Configuracoes.Webservices.NumeroTentativas);
+
+                return resposta;
+            });
 
             GerarNFeProc(retAutorizacao);
             return retAutorizacao;
@@ -189,24 +140,11 @@ namespace Vip.DFe.NFe
         /// </summary>
         public NFeStatusServicoResposta ConsultaSituacaoServico()
         {
-            Configuracoes.Validar();
-
-            var oldProtocol = ServicePointManager.SecurityProtocol;
-            ServicePointManager.SecurityProtocol = _securityProtocol;
-            _certificado = Configuracoes.Certificado.ObterCertificado();
-
-            try
+            return Executar(NFeStatus.StatusServico, certificado =>
             {
-                Status = NFeStatus.StatusServico;
-                using var service = new NFeServStatusServico(Configuracoes, _certificado);
+                using var service = new NFeServStatusServico(Configuracoes, certificado);
                 return service.StatusServico();
-            }
-            finally
-            {
-                LiberarCacheCertificado();
-                ServicePointManager.SecurityProtocol = oldProtocol;
-                Status = NFeStatus.EmEspera;
-            }
+            });
         }
 
         /// <summary>
@@ -217,28 +155,15 @@ namespace Vip.DFe.NFe
             chave = chave.OnlyNumbers();
             Guard.Against<ArgumentException>(chave.IsNullOrEmpty(), "ERRO: Nenhuma chave informada!");
 
-            Configuracoes.Validar();
-
-            var oldProtocol = ServicePointManager.SecurityProtocol;
-            ServicePointManager.SecurityProtocol = _securityProtocol;
-            _certificado = Configuracoes.Certificado.ObterCertificado();
-
-            try
+            return Executar(NFeStatus.Consulta, certificado =>
             {
-                Status = NFeStatus.Consulta;
-                using var service = new NFeServConsultaProtocolo(Configuracoes, _certificado);
+                using var service = new NFeServConsultaProtocolo(Configuracoes, certificado);
                 var retornoConsulta = service.Consulta(chave);
 
                 GerarNFeProc(retornoConsulta);
 
                 return retornoConsulta;
-            }
-            finally
-            {
-                LiberarCacheCertificado();
-                ServicePointManager.SecurityProtocol = oldProtocol;
-                Status = NFeStatus.EmEspera;
-            }
+            });
         }
 
         /// <summary>
@@ -246,24 +171,11 @@ namespace Vip.DFe.NFe
         /// </summary>
         public NFeInutilizacaoResposta Inutilizar(string cnpj, string justificativa, NFeModelo modelo, int serie, int numeroInicial, int numeroFinal)
         {
-            Configuracoes.Validar();
-
-            var oldProtocol = ServicePointManager.SecurityProtocol;
-            ServicePointManager.SecurityProtocol = _securityProtocol;
-            _certificado = Configuracoes.Certificado.ObterCertificado();
-
-            try
+            return Executar(NFeStatus.Inutilizacao, certificado =>
             {
-                Status = NFeStatus.Inutilizacao;
-                using var service = new NFeServInutilizacao(Configuracoes, _certificado);
+                using var service = new NFeServInutilizacao(Configuracoes, certificado);
                 return service.Inutilizar(cnpj, justificativa, modelo, serie, numeroInicial, numeroFinal);
-            }
-            finally
-            {
-                LiberarCacheCertificado();
-                ServicePointManager.SecurityProtocol = oldProtocol;
-                Status = NFeStatus.EmEspera;
-            }
+            });
         }
 
         /// <summary>
@@ -364,7 +276,7 @@ namespace Vip.DFe.NFe
         /// <summary>
         ///     Método para gerar um CCe
         /// </summary>
-        public NFeRecepcaoEventoResposta CartaoCorrecao(string cnpj, string chave, int sequencialEvento, string correcao)
+        public NFeRecepcaoEventoResposta CartaCorrecao(string cnpj, string chave, int sequencialEvento, string correcao)
         {
             #region Validação
 
@@ -373,9 +285,9 @@ namespace Vip.DFe.NFe
 
             Guard.Against<ArgumentException>(cnpj.IsNullOrEmpty(), "ERRO: Informe o CNPJ ou CPF");
             Guard.Against<ArgumentNullException>(chave.IsNullOrEmpty(), "ERRO: Informe a Chave");
-            Guard.Against<ArgumentNullException>(correcao.IsNullOrEmpty(), "ERRO: Informe a justificativa do cancelamento");
-            Guard.Against<ArgumentException>(correcao.Length < 15, "ERRO: Justificativa deve ter mais de 15 caracteres");
-            Guard.Against<ArgumentException>(correcao.Length > 1000, "ERRO: Justificativa deve ter menos de 1000 caracteres");
+            Guard.Against<ArgumentNullException>(correcao.IsNullOrEmpty(), "ERRO: Informe o texto da correção da CC-e");
+            Guard.Against<ArgumentException>(correcao.Length < 15, "ERRO: A correção da CC-e deve ter mais de 15 caracteres");
+            Guard.Against<ArgumentException>(correcao.Length > 1000, "ERRO: A correção da CC-e deve ter menos de 1000 caracteres");
 
             #endregion
 
@@ -395,7 +307,7 @@ namespace Vip.DFe.NFe
                     DetEvento = new NFeDetEvento
                     {
                         Versao = NFeVersao.v100,
-                        DescEvento = DFeConstantes.CartaoCorecao,
+                        DescEvento = DFeConstantes.CartaCorrecao,
                         XCorrecao = correcao.TrimVip(),
                         XCondUso = DFeConstantes.CondicaoUso
                     }
@@ -429,38 +341,26 @@ namespace Vip.DFe.NFe
         }
 
         /// <summary>
-        ///     Metodo para enviar eventos da NFe.
+        ///     Executa uma operação de serviço: valida configurações, ajusta o protocolo de segurança,
+        ///     obtém o certificado, altera o status e restaura tudo ao final.
         /// </summary>
-        private NFeRecepcaoEventoResposta RecepcaoEvento(NFeEvento evento)
+        /// <param name="status">Status a ser aplicado durante a operação (nulo mantém o atual).</param>
+        /// <param name="acao">Operação a ser executada com o certificado.</param>
+        /// <param name="preparar">Ação executada após obter o certificado e antes do bloco protegido.</param>
+        private T Executar<T>(NFeStatus? status, Func<X509Certificate2, T> acao, Action<X509Certificate2> preparar = null)
         {
-            Guard.Against<ArgumentNullException>(evento == null, "ERRO: Evento não informado. Por favor, tente novamente");
-
             Configuracoes.Validar();
 
             var oldProtocol = ServicePointManager.SecurityProtocol;
-
             ServicePointManager.SecurityProtocol = _securityProtocol;
             _certificado = Configuracoes.Certificado.ObterCertificado();
 
-            NFeRecepcaoEventoResposta recepcaoEventoResposta;
+            preparar?.Invoke(_certificado);
 
             try
             {
-                switch (evento.InfEvento.TpEvento)
-                {
-                    case NFeTipoEvento.Cancelamento:
-                        Status = NFeStatus.Cancelamento;
-                        break;
-                    case NFeTipoEvento.CancelamentoST:
-                        Status = NFeStatus.CancelamentoST;
-                        break;
-                    case NFeTipoEvento.CartaCorrecao:
-                        Status = NFeStatus.CCe;
-                        break;
-                }
-
-                using var service = new NFeServRecepcaoEvento(Configuracoes, _certificado);
-                recepcaoEventoResposta = service.RecepcaoEvento(evento);
+                if (status.HasValue) Status = status.Value;
+                return acao(_certificado);
             }
             finally
             {
@@ -468,6 +368,49 @@ namespace Vip.DFe.NFe
                 ServicePointManager.SecurityProtocol = oldProtocol;
                 Status = NFeStatus.EmEspera;
             }
+        }
+
+        private void AssinarEValidar(X509Certificate2 certificado)
+        {
+            Assinar(certificado);
+            Validar();
+        }
+
+        /// <summary>
+        ///     Confere o DigestValue do documento com o retornado no protocolo.
+        /// </summary>
+        private void ValidarDigest(NFeProtNFe protNFe, NotaFiscal.NFe nfe)
+        {
+            if (!Configuracoes.ValidarDigest) return;
+            Guard.Against<VipException>(protNFe.InfProt.DigVal.IsNotNullOrEmpty() && protNFe.InfProt.DigVal != nfe.Signature.SignedInfo.Reference.DigestValue, $"DigestValue do documento {nfe.InfNFe.Id} não confere.");
+        }
+
+        /// <summary>
+        ///     Metodo para enviar eventos da NFe.
+        /// </summary>
+        private NFeRecepcaoEventoResposta RecepcaoEvento(NFeEvento evento)
+        {
+            Guard.Against<ArgumentNullException>(evento == null, "ERRO: Evento não informado. Por favor, tente novamente");
+
+            NFeStatus? status = null;
+            switch (evento.InfEvento.TpEvento)
+            {
+                case NFeTipoEvento.Cancelamento:
+                    status = NFeStatus.Cancelamento;
+                    break;
+                case NFeTipoEvento.CancelamentoST:
+                    status = NFeStatus.CancelamentoST;
+                    break;
+                case NFeTipoEvento.CartaCorrecao:
+                    status = NFeStatus.CCe;
+                    break;
+            }
+
+            var recepcaoEventoResposta = Executar(status, certificado =>
+            {
+                using var service = new NFeServRecepcaoEvento(Configuracoes, certificado);
+                return service.RecepcaoEvento(evento);
+            });
 
             GerarProcEvento(recepcaoEventoResposta, evento);
             return recepcaoEventoResposta;
@@ -486,8 +429,7 @@ namespace Vip.DFe.NFe
                 var nfe = Documentos.NFe.SingleOrDefault(x => x.InfNFe.Id.Substring(3) == protNFe.InfProt.ChNFe);
                 if (nfe.IsNull()) continue;
 
-                if (Configuracoes.ValidarDigest)
-                    Guard.Against<VipException>(protNFe.InfProt.DigVal.IsNotNullOrEmpty() && protNFe.InfProt.DigVal != nfe.Signature.SignedInfo.Reference.DigestValue, $"DigestValue do documento {nfe.InfNFe.Id} não confere.");
+                ValidarDigest(protNFe, nfe);
 
                 var nfeProc = new NFeProc {Versao = nfe.InfNFe.Versao, NFe = nfe, ProtNFe = protNFe};
                 if (nfeProc.Processado)
@@ -512,8 +454,7 @@ namespace Vip.DFe.NFe
             var nfe = Documentos.NFe.FirstOrDefault();
             if (nfe.IsNull()) return;
 
-            if (Configuracoes.ValidarDigest)
-                Guard.Against<VipException>(protNFe.InfProt.DigVal.IsNotNullOrEmpty() && protNFe.InfProt.DigVal != nfe.Signature.SignedInfo.Reference.DigestValue, $"DigestValue do documento {nfe.InfNFe.Id} não confere.");
+            ValidarDigest(protNFe, nfe);
 
             var nfeProc = new NFeProc {Versao = nfe.InfNFe.Versao, NFe = nfe, ProtNFe = protNFe};
             if (nfeProc.Processado)
@@ -536,8 +477,7 @@ namespace Vip.DFe.NFe
             var nfe = Documentos.NFe.FirstOrDefault();
             if (nfe.IsNull()) return;
 
-            if (Configuracoes.ValidarDigest)
-                Guard.Against<VipException>(protNFe.InfProt.DigVal.IsNotNullOrEmpty() && protNFe.InfProt.DigVal != nfe.Signature.SignedInfo.Reference.DigestValue, $"DigestValue do documento {nfe.InfNFe.Id} não confere.");
+            ValidarDigest(protNFe, nfe);
 
             var nfeProc = new NFeProc {Versao = nfe.InfNFe.Versao, NFe = nfe, ProtNFe = protNFe};
             if (nfeProc.Processado)

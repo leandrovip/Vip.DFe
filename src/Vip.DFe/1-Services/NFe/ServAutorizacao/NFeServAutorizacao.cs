@@ -35,6 +35,20 @@ namespace Vip.DFe.NFe.ServAutorizacao
             Guard.Against<ArgumentException>(nfes.Length < 1, "Precisa de pelo menos 1 NFe por lote");
             Guard.Against<ArgumentException>(nfes.Length > 50, "É permitido somente 50 NFes por lote");
 
+            return EnviarLote(loteId, nfes);
+        }
+
+        public NFeAutorizacaoResposta Autorizacao(NotaFiscal.NFe nfe)
+        {
+            var loteId = ValidarNumeroLote("");
+
+            Guard.Against<ArgumentNullException>(nfe == null, "Nota fiscal inválida: objeto nulo");
+
+            return EnviarLote(loteId, nfe);
+        }
+
+        private NFeAutorizacaoResposta EnviarLote(string loteId, params NotaFiscal.NFe[] nfes)
+        {
             lock (serviceLock)
             {
                 var request = new StringBuilder();
@@ -51,43 +65,6 @@ namespace Vip.DFe.NFe.ServAutorizacao
                     GravarXmlAssinado(nfeXml, nfe.ObterNomeXml());
                     request.Append(nfeXml);
                 }
-
-                request.Append("</enviNFe>");
-
-                var dadosMsg = request.ToString();
-
-                Guard.Against<VipException>(dadosMsg.Length > 500 * 1024, $"Tamanho do XML de Dados superior a 500 Kbytes. Tamanho atual: {(dadosMsg.Length / 1024M).Trunc()} Kbytes");
-                ValidateMessage(dadosMsg);
-
-                var doc = new XmlDocument();
-                doc.LoadXml(dadosMsg);
-
-                var value = new AutorizacaoRequest(doc);
-                var returnValue = Channel.AutorizacaoLote(value);
-                var retorno = new NFeAutorizacaoResposta(dadosMsg, returnValue.Mensagem.OuterXml, EnvelopeSoap, RetornoWS);
-                return retorno;
-            }
-        }
-
-        public NFeAutorizacaoResposta Autorizacao(NotaFiscal.NFe nfe)
-        {
-            var loteId = ValidarNumeroLote("");
-
-            Guard.Against<ArgumentNullException>(nfe == null, "Nota fiscal inválida: objeto nulo");
-
-            lock (serviceLock)
-            {
-                var request = new StringBuilder();
-                request.Append($"<enviNFe xmlns=\"http://www.portalfiscal.inf.br/nfe\" versao=\"{Configuracoes.Versao.GetDescription()}\">");
-                request.Append($"<idLote>{loteId}</idLote>");
-
-                // 0 = Assincrono, 1 = Sincrono
-                var indiSinc = Configuracoes.EnviarModoSincrono ? "1" : "0";
-                request.Append($"<indSinc>{indiSinc}</indSinc>");
-
-                var nfeXml = nfe.Xml.IsNullOrEmpty() ? nfe.GetXml(Configuracoes.ObterOptions()) : nfe.Xml;
-                GravarXmlAssinado(nfeXml, nfe.ObterNomeXml());
-                request.Append(nfeXml);
 
                 request.Append("</enviNFe>");
 

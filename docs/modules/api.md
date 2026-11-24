@@ -36,7 +36,7 @@
 | Status do serviço | `ConsultaSituacaoServico()` | `NFeStatusServicoResposta` |
 | Cancelamento | `Cancelar(cnpj, chave, protocolo, seq, justificativa)` | `NFeRecepcaoEventoResposta` |
 | Cancelamento por substituição | `CancelarSubstituicao(...)` | `NFeRecepcaoEventoResposta` |
-| Carta de correção | `CartaoCorrecao(cnpj, chave, seq, correcao)` | `NFeRecepcaoEventoResposta` |
+| Carta de correção | `CartaCorrecao(cnpj, chave, seq, correcao)` | `NFeRecepcaoEventoResposta` |
 | Inutilização | `Inutilizar(cnpj, justificativa, modelo, serie, ini, fim)` | `NFeInutilizacaoResposta` |
 | Assinatura/validação | `Assinar(cert)`, `Validar()` | void |
 
@@ -74,7 +74,7 @@ Padrão nas respostas SEFAZ: objeto `XxxResposta` com propriedades `XmlEnvio`, `
 |---|---|---|
 | `104` | `Resultado.CStat` de autorização/`ConsultaAutorizacao` | Lote processado; cada nota traz protocolo próprio em `ProtNFe.InfProt` (`CStat` da nota: 100 autorizada, 110, 150, 301, 302, 303 = `NFeProcessada`) |
 | `100` / `150` | `Consultar(chave).Resultado.CStat` | Autorizada / autorizada fora do prazo — gera `procNFe` |
-| `128` | `Resultado.CStat` de `Cancelar`/`CancelarSubstituicao`/`CartaoCorrecao` | **Lote de eventos processado** (`NFeRecepcaoEventoResult`); gatilho para montar `NFeProcEvento` |
+| `128` | `Resultado.CStat` de `Cancelar`/`CancelarSubstituicao`/`CartaCorrecao` | **Lote de eventos processado** (`NFeRecepcaoEventoResult`); gatilho para montar `NFeProcEvento` |
 | `135` | `Resultado.RetEvento[i].InfEvento.CStat` | **Evento registrado e vinculado** à NFe (outros processados: 136, 101, 151, 155 — `DFeConstantes.EventoProcessado`) |
 
 Ou seja: `128` descreve o lote (mensagem `retEnvEvento`), enquanto `135` descreve o resultado de cada evento individual (`retEvento`); um lote pode ter `128` e o evento ser rejeitado, então confira ambos.
@@ -83,6 +83,7 @@ Ou seja: `128` descreve o lote (mensagem `retEnvEvento`), enquanto `135` descrev
 
 ## Observações de contrato público
 
+- `CartaoCorrecao` foi renomeado para `CartaCorrecao` (quebra de compatibilidade).
 - **Preserve a assinatura dos métodos públicos e namespaces** — são o contrato consumido pelos clientes (ver `AGENTS.md`).
 - `NFeService` e `CFeService` são `sealed` e herdam `VipComponent`.
 - Mensagens de erro/validação em PT-BR.
