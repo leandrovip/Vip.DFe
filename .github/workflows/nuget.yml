@@ -63,10 +63,11 @@ jobs:
         run: dotnet test src/Vip.DFe.Tests/Vip.DFe.Tests.csproj -c Release --no-build
 
       - name: "Pack"
-        run: >
-          dotnet pack src/Vip.DFe/Vip.DFe.csproj -c Release -o artifacts
-          -p:Version=${{ steps.envs.outputs.VERSION_PROJECT }}
-          -p:PackageVersion=${{ steps.envs.outputs.VERSION_PACKAGE }}
+        run: |
+          dotnet pack src/Vip.DFe/Vip.DFe.csproj -c Release -o "$env:GITHUB_WORKSPACE/artifacts" `
+            -p:Version=${{ steps.envs.outputs.VERSION_PROJECT }} `
+            -p:PackageVersion=${{ steps.envs.outputs.VERSION_PACKAGE }}
+          Get-ChildItem "$env:GITHUB_WORKSPACE/artifacts" | Format-Table Name, Length
 
       - name: "Login no nuget.org (Trusted Publishing)"
         id: login
@@ -75,8 +76,11 @@ jobs:
           user: ${{ secrets.NUGET_USER }}
 
       - name: "Publish"
-        run: >
-          dotnet nuget push "artifacts/*.nupkg"
-          --source https://api.nuget.org/v3/index.json
-          --api-key ${{ steps.login.outputs.NUGET_API_KEY }}
-          --skip-duplicate
+        # Caminho completo de cada pacote: o curinga "artifacts/*.nupkg" não é resolvido pelo dotnet nuget push no Windows.
+        run: |
+          $pacotes = Get-ChildItem "$env:GITHUB_WORKSPACE/artifacts" -Filter *.nupkg
+          if (-not $pacotes) { throw "Nenhum .nupkg encontrado em artifacts/ (verifique o passo Pack)." }
+          foreach ($pacote in $pacotes) {
+            dotnet nuget push $pacote.FullName --source https://api.nuget.org/v3/index.json --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --skip-duplicate
+            if ($LASTEXITCODE -ne 0) { throw "Falha ao publicar $($pacote.Name)." }
+          }
