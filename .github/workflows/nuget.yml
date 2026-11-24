@@ -13,13 +13,13 @@ jobs:
 
     steps:
       - name: "Checkout branch"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: "Set Variables"
         id: envs
         run: |
-          echo "::set-output name=VERSION_PROJECT::1.1.${{ github.run_number }}"
-          echo "::set-output name=VERSION_PACKAGE::1.1.${{ github.run_number }}${{ github.event.inputs.typeBuild }}"
+          "VERSION_PROJECT=1.1.${{ github.run_number }}" >> $env:GITHUB_OUTPUT
+          "VERSION_PACKAGE=1.1.${{ github.run_number }}${{ github.event.inputs.typeBuild }}" >> $env:GITHUB_OUTPUT
 
       - name: "Variables Test"
         run: |
@@ -32,13 +32,16 @@ jobs:
           name: "nuget.org"
           url: "https://api.nuget.org/v3/index.json"
 
-      - name: "Setup .NET Core"
-        uses: actions/setup-dotnet@v1
+      - name: "Setup .NET"
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "6.0.x"
+          dotnet-version: "8.0.x"
 
       - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
 
       - name: "Clean Solution"
         run: |
@@ -52,10 +55,10 @@ jobs:
         run: msbuild .\src\Vip.DFe.sln /p:Configuration=Release /p:Version=${{ steps.envs.outputs.VERSION_PROJECT }}
 
       - name: "Test Project"
-        run: dotnet vstest src\Vip.DFe.Tests\bin\Release\net6.0\Vip.DFe.Tests.dll
+        run: dotnet vstest src\Vip.DFe.Tests\bin\Release\net8.0\Vip.DFe.Tests.dll
 
       - name: "Create Package"
-        run: msbuild .\src\Vip.DFe\Vip.DFe.csproj /t:Pack /p:Configuration=Release /p:PackageVersion=${{ steps.envs.outputs.VERSION_PACKAGE }}
+        run: msbuild .\src\Vip.DFe\Vip.DFe.csproj /t:Pack /p:Configuration=Release /p:Version=${{ steps.envs.outputs.VERSION_PROJECT }} /p:PackageVersion=${{ steps.envs.outputs.VERSION_PACKAGE }}
 
       - name: "Publish Package"
         run: nuget push .\src\Vip.DFe\bin\Release\*.nupkg -Source https://api.nuget.org/v3/index.json -ApiKey ${{ secrets.NUGET_TOKEN }}

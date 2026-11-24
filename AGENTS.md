@@ -16,7 +16,7 @@ src/
 │   ├── 2-Core/     # atributos, DFeSerializer, SigningManager, DFeDocument, WCF, ChaveDFe, certificado
 │   └── 3-Infra/    # VipException/Guard, Gfx/Fonte, interops nativos, Writer
 ├── Vip.DFe.Demo/   # WinForms .NET Framework 4.8 (MSBuild legado, packages.config) — EXEMPLO, não lib
-├── Vip.DFe.Tests/  # xUnit net6.0 (cobertura mínima)
+├── Vip.DFe.Tests/  # xUnit net8.0 (cobertura mínima)
 └── Vip.DFe.sln
 schemas/            # XSDs NFe 4.00 / eventos 1.00 / xmldsig (validação em runtime)
 packages/           # dependências locais da Demo (nuget.config aponta para cá)

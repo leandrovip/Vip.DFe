@@ -1,30 +1,36 @@
 # Compilação e Validação
 
-> Fonte de verdade: arquivos `.csproj`, `.github/workflows/nuget.yml` e `src/nuget.config`. Itens incertos marcados como **Hipótese a validar**.
+> Fonte de verdade: arquivos `.csproj`, `.github/workflows/nuget.yml`, `.github/workflows/ci.yml` e `src/nuget.config`. Itens incertos marcados como **Hipótese a validar**.
 
 ## Requisitos
 
-- **Visual Studio 2022** (Windows) ou **.NET SDK 6.0.x** + **MSBuild** + **NuGet CLI** (usados pelo pipeline).
+- **Visual Studio 2022** (Windows) ou **.NET SDK 8.0.x** + **MSBuild** + **NuGet CLI** (usados pelo pipeline).
 - A Demo é projeto **.NET Framework 4.8 legado** (MSBuild não-SDK, `packages.config`) — precisa de `nuget restore` e `msbuild`; **não use `dotnet build` para ela** (não é projeto SDK).
 - Biblioteca e testes usam SDK style: `dotnet build`/`dotnet test` funcionam.
 
 ## Como compilar
 
-### Pipeline oficial (GitHub Actions `nuget.yml`) — ordem de referência
+### CI (GitHub Actions `ci.yml`)
+
+Em `push`/`pull_request` para `master`: `nuget restore`, `msbuild` Release da solução e `dotnet vstest` sobre `net8.0`. Não publica nada.
+
+### Pipeline de publicação (GitHub Actions `nuget.yml`) — ordem de referência
 
 ```bash
 msbuild .\src\Vip.DFe.sln /t:Clean /p:Configuration=Release
 nuget locals all -clear
 nuget restore .\src\Vip.DFe.sln
 msbuild .\src\Vip.DFe.sln /p:Configuration=Release /p:Version=<versão>        # build da solução
-dotnet vstest src\Vip.DFe.Tests\bin\Release\net6.0\Vip.DFe.Tests.dll          # testes
-msbuild .\src\Vip.DFe\Vip.DFe.csproj /t:Pack /p:Configuration=Release /p:PackageVersion=<versão>  # pacote
+dotnet vstest src\Vip.DFe.Tests\bin\Release\net8.0\Vip.DFe.Tests.dll          # testes
+msbuild .\src\Vip.DFe\Vip.DFe.csproj /t:Pack /p:Configuration=Release /p:Version=<versão> /p:PackageVersion=<versão>  # pacote (Version também no Pack: o assembly sai com a versão do workflow)
 nuget push .\src\Vip.DFe\bin\Release\*.nupkg -Source https://api.nuget.org/v3/index.json -ApiKey <token>
 ```
 
 > Versão publicada é definida no workflow (`1.1.<run_number>`), não no csproj (`1.0.21`). Não edite o csproj para "publicar versão" — `Hipótese a validar` se este comportamento deve mudar.
 >
-> O pipeline também **força a fonte `nuget.org`** (passo "Force nuget source", `fabriciomurta/ensure-nuget-source@v1`, `https://api.nuget.org/v3/index.json`) antes do restore, e roda os testes com `dotnet vstest` sobre `net6.0`.
+> O pipeline também **força a fonte `nuget.org`** (passo "Force nuget source", `fabriciomurta/ensure-nuget-source@v1`, `https://api.nuget.org/v3/index.json`) antes do restore, e roda os testes com `dotnet vstest` sobre `net8.0`.
+>
+> O pacote inclui `lib/netstandard2.0/Vip.DFe.xml` (`GenerateDocumentationFile`; `CS1591` suprimido) e não expõe `Fody`/`PropertyChanged.Fody`/`ExtraConstraints.Fody` como dependências (`PrivateAssets="all"`).
 
 ### Manual (desenvolvimento)
 
