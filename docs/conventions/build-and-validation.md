@@ -10,7 +10,7 @@
 
 ## Requisitos
 
-- **Visual Studio 2022** (Windows) ou **.NET SDK 8.0.x**; **MSBuild** + **NuGet CLI** só para a Demo.
+- **Visual Studio 2022** (Windows) ou **.NET SDK 10.0.x**; **MSBuild** + **NuGet CLI** só para a Demo.
 - A Demo é projeto **.NET Framework 4.8 legado** (MSBuild não-SDK, `packages.config`) — precisa de `nuget restore` e `msbuild`; **não use `dotnet build` para ela** (não é projeto SDK).
 - Biblioteca e testes usam SDK style: `dotnet build`/`dotnet test` funcionam.
 
@@ -20,7 +20,7 @@
 
 Em `push`/`pull_request` para `master`: `dotnet restore`/`build`/`test` do projeto de testes (que compila a lib). **A Demo não é compilada no CI** (exige Windows/MSBuild). Não publica nada.
 
-> **Hipótese a validar**: os testes de DANFE geram PDF via `Vip.Pdf` → `System.Drawing.Common`, suportado só no Windows no .NET 8. Se falharem no `vip-linux`, mover o `ci.yml` para `vip-windows`.
+> **Hipótese a validar**: os testes de DANFE geram PDF via `Vip.Pdf` → `System.Drawing.Common`, suportado só no Windows a partir do .NET 7. Se falharem no `vip-linux`, mover o `ci.yml` para `vip-windows`.
 
 ### Pipeline de publicação (Gitea Actions `nuget.yml`, runner `vip-windows`, manual) — ordem de referência
 

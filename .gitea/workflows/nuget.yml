@@ -1,6 +1,6 @@
 name: Publish NuGet.org
 
-# Gitea Actions (runner Windows "vip-windows": o DANFE usa System.Drawing.Common, suportado só no Windows no .NET 8).
+# Gitea Actions (runner Windows "vip-windows": o DANFE usa System.Drawing.Common, suportado só no Windows a partir do .NET 7).
 # Requer o secret NUGET_TOKEN no repositório.
 # Versão: 1.2.<run_number> (o contador do Gitea começa em 1; 1.1.x foi a série publicada pelo GitHub Actions).
 
@@ -37,7 +37,7 @@ jobs:
       - name: "Setup .NET"
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "8.0.x"
+          dotnet-version: "10.0.x"
 
       - name: "Restore"
         run: dotnet restore src/Vip.DFe.Tests/Vip.DFe.Tests.csproj
