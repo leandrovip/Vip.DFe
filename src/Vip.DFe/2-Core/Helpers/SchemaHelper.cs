@@ -30,23 +30,25 @@ namespace Vip.DFe.Helpers
 
             try
             {
-                var xmlSchema = XmlSchema.Read(new XmlTextReader(schema), (sender, args) =>
-                {
-                    switch (args.Severity)
+                XmlSchema xmlSchema;
+                using (var schemaReader = new XmlTextReader(schema))
+                    xmlSchema = XmlSchema.Read(schemaReader, (sender, args) =>
                     {
-                        case XmlSeverityType.Warning:
-                            avisosList.Add(args.Message);
-                            break;
+                        switch (args.Severity)
+                        {
+                            case XmlSeverityType.Warning:
+                                avisosList.Add(args.Message);
+                                break;
 
-                        case XmlSeverityType.Error:
-                            errorList.Add(args.Message);
-                            break;
-                    }
+                            case XmlSeverityType.Error:
+                                errorList.Add(args.Message);
+                                break;
+                        }
 
-                    // Erro na validação do schema XSD
-                    if (args.Exception != null)
-                        errorList.Add("\nErro: " + args.Exception.Message + "\nLinha " + args.Exception.LinePosition + " - Coluna " + args.Exception.LineNumber + "\nSource: " + args.Exception.SourceUri);
-                });
+                        // Erro na validação do schema XSD
+                        if (args.Exception != null)
+                            errorList.Add("\nErro: " + args.Exception.Message + "\nLinha " + args.Exception.LineNumber + " - Coluna " + args.Exception.LinePosition + "\nSource: " + args.Exception.SourceUri);
+                    });
 
                 var settings = new XmlReaderSettings {ValidationType = ValidationType.Schema, Schemas = {XmlResolver = new XmlUrlResolver()}};
                 settings.Schemas.Add(xmlSchema);

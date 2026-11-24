@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using Vip.DFe.Exception;
 using Vip.DFe.Extensions;
 using Vip.DFe.NFe.Configuration;
 using Vip.DFe.NFe.Enum;
@@ -14,7 +15,7 @@ namespace Vip.DFe.NFe.ServBase
         #region Constructors
 
         protected NFeServBase(NFeConfig config, NFeTipoServico service, X509Certificate2 certificado = null) :
-            base(config, config?.Webservices.Enderecos.FirstOrDefault(x => x.TipoServico == service).Url, certificado) { }
+            base(config, ObterUrl(config, service), certificado) { }
 
         #endregion Constructors
 
@@ -56,11 +57,21 @@ namespace Vip.DFe.NFe.ServBase
 
             if (Configuracoes.Arquivos.DiretorioAutorizadasBackup.IsNotNullOrEmpty())
             {
-                var nomeArquivoBackup = Path.Combine(Configuracoes.Arquivos.ObterCaminhoInutilizado(Configuracoes.Arquivos.DiretorioAutorizadasBackup), nomeArquivo);
+                var nomeArquivoBackup = Path.Combine(Configuracoes.Arquivos.ObterCaminhoInutilizado(Configuracoes.Arquivos.DiretorioAutorizadasBackup), Path.GetFileName(nomeArquivo));
                 File.WriteAllText(nomeArquivoBackup, conteudoArquivo, Encoding.UTF8);
             }
 
             #endregion
+        }
+
+        private static string ObterUrl(NFeConfig config, NFeTipoServico service)
+        {
+            if (config == null) return null;
+
+            var endereco = config.Webservices.Enderecos.FirstOrDefault(x => x.TipoServico == service);
+            if (endereco == null) throw new VipException($"Endereço do serviço {service} não encontrado para UF {config.Webservices.UF}, modelo {config.Modelo} e ambiente {config.Ambiente}.");
+
+            return endereco.Url;
         }
 
         #endregion Methods

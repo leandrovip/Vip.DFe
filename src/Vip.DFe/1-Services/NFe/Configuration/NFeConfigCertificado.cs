@@ -58,7 +58,7 @@ namespace Vip.DFe.NFe.Configuration
         {
             get
             {
-                if (dataVenc == DateTime.MinValue && !Certificado.IsNullOrEmpty() && !CertificadoBytes.IsNullOrEmpty()) GetCertificado();
+                if (dataVenc == DateTime.MinValue && (!Certificado.IsNullOrEmpty() || !CertificadoBytes.IsNullOrEmpty())) GetCertificado();
                 return dataVenc;
             }
         }
@@ -70,7 +70,7 @@ namespace Vip.DFe.NFe.Configuration
         {
             get
             {
-                if (subjectName.IsNullOrEmpty() && !Certificado.IsNullOrEmpty() && !CertificadoBytes.IsNullOrEmpty()) GetCertificado();
+                if (subjectName.IsNullOrEmpty() && (!Certificado.IsNullOrEmpty() || !CertificadoBytes.IsNullOrEmpty())) GetCertificado();
                 return subjectName;
             }
         }
@@ -82,7 +82,7 @@ namespace Vip.DFe.NFe.Configuration
         {
             get
             {
-                if (cnpj.IsNullOrEmpty() && !Certificado.IsNullOrEmpty() && !CertificadoBytes.IsNullOrEmpty()) GetCertificado();
+                if (cnpj.IsNullOrEmpty() && (!Certificado.IsNullOrEmpty() || !CertificadoBytes.IsNullOrEmpty())) GetCertificado();
                 return cnpj;
             }
         }
