@@ -333,3 +333,7 @@ ASALocalRun/
 
 # Claude Code
 .claude/settings.local.json
+
+# Segredos locais
+.env
+.env.*
