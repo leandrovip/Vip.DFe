@@ -372,6 +372,10 @@ Quando o escopo incluir testes, criar ou atualizar testes para:
 
 Se o projeto ainda não tiver testes equivalentes para o ponto alterado, informar isso e propor teste mínimo.
 
+### 11a. Atualizar o changelog de NTs
+
+Antes de começar, consulte `docs/notas-tecnicas.md` para ver o status atual da NT. Ao concluir, atualize a linha da NT (status, evidência arquivo:linha, versão da NT usada) e a tabela "Histórico de implementação" com o commit.
+
 ### 12. Verificação obrigatória
 
 Depois de editar código no `Vip.DFe`, executar pelo menos:

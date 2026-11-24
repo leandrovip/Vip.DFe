@@ -33,6 +33,7 @@ packages/           # dependências locais da Demo (nuget.config aponta para cá
 
 - `docs/architecture/*` → visão geral, camadas, projetos.
 - `docs/modules/*` → domínio, serviços, persistência, API, UI.
+- `docs/notas-tecnicas.md` → changelog das NTs NF-e/NFC-e: o que está implementado, parcial e pendente.
 - `docs/flows/*` → fluxos de negócio e integrações.
 - `docs/conventions/*` → nomenclatura/padrões e build.
 - Incertos estão marcados como **Hipótese a validar** — não trate como fato.
