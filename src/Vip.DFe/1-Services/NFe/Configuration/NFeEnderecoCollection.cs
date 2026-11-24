@@ -445,12 +445,12 @@ namespace Vip.DFe.NFe.Configuration
 
             #region RS
 
-            new NFeEndereco(NFeTipoServico.NfeStatusServico, NFeModelo.NFCe, "", NFeVersao.v400, TipoAmbiente.Homologacao, "https://nfce-homologacao.sefazrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico4.asmx"),
-            new NFeEndereco(NFeTipoServico.NfeConsultaProtocolo, NFeModelo.NFCe, "", NFeVersao.v400, TipoAmbiente.Homologacao, "https://nfce-homologacao.sefazrs.rs.gov.br/ws/NfeConsulta/NfeConsulta4.asmx"),
-            new NFeEndereco(NFeTipoServico.NfeInutilizacao, NFeModelo.NFCe, "", NFeVersao.v400, TipoAmbiente.Homologacao, "https://nfce-homologacao.sefazrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx"),
-            new NFeEndereco(NFeTipoServico.RecepcaoEvento, NFeModelo.NFCe, "", NFeVersao.v400, TipoAmbiente.Homologacao, "https://nfce-homologacao.sefazrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx"),
-            new NFeEndereco(NFeTipoServico.NFeAutorizacao, NFeModelo.NFCe, "", NFeVersao.v400, TipoAmbiente.Homologacao, "https://nfce-homologacao.sefazrs.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao4.asmx"),
-            new NFeEndereco(NFeTipoServico.NFeRetAutorizacao, NFeModelo.NFCe, "", NFeVersao.v400, TipoAmbiente.Homologacao, "https://nfce-homologacao.sefazrs.rs.gov.br/ws/NfeRetAutorizacao/NFeRetAutorizacao4.asmx"),
+            new NFeEndereco(NFeTipoServico.NfeStatusServico, NFeModelo.NFCe, "RS", NFeVersao.v400, TipoAmbiente.Homologacao, "https://nfce-homologacao.sefazrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico4.asmx"),
+            new NFeEndereco(NFeTipoServico.NfeConsultaProtocolo, NFeModelo.NFCe, "RS", NFeVersao.v400, TipoAmbiente.Homologacao, "https://nfce-homologacao.sefazrs.rs.gov.br/ws/NfeConsulta/NfeConsulta4.asmx"),
+            new NFeEndereco(NFeTipoServico.NfeInutilizacao, NFeModelo.NFCe, "RS", NFeVersao.v400, TipoAmbiente.Homologacao, "https://nfce-homologacao.sefazrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx"),
+            new NFeEndereco(NFeTipoServico.RecepcaoEvento, NFeModelo.NFCe, "RS", NFeVersao.v400, TipoAmbiente.Homologacao, "https://nfce-homologacao.sefazrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx"),
+            new NFeEndereco(NFeTipoServico.NFeAutorizacao, NFeModelo.NFCe, "RS", NFeVersao.v400, TipoAmbiente.Homologacao, "https://nfce-homologacao.sefazrs.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao4.asmx"),
+            new NFeEndereco(NFeTipoServico.NFeRetAutorizacao, NFeModelo.NFCe, "RS", NFeVersao.v400, TipoAmbiente.Homologacao, "https://nfce-homologacao.sefazrs.rs.gov.br/ws/NfeRetAutorizacao/NFeRetAutorizacao4.asmx"),
 
             #endregion
 

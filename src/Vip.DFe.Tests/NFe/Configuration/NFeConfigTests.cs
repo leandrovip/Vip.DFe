@@ -34,9 +34,6 @@ namespace Vip.DFe.Tests.NFe.Configuration
             foreach (var modelo in new[] {NFeModelo.NFe, NFeModelo.NFCe})
             foreach (var ambiente in new[] {TipoAmbiente.Homologacao, TipoAmbiente.Producao})
             {
-                // RS NFCe em homologacao nao possui enderecos de servico cadastrados (somente producao).
-                if (uf == CodigoUF.RS && modelo == NFeModelo.NFCe && ambiente == TipoAmbiente.Homologacao) continue;
-
                 yield return new object[] {uf, modelo, ambiente};
             }
         }
