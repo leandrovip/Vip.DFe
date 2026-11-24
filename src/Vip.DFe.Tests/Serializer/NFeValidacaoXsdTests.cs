@@ -67,6 +67,27 @@ namespace Vip.DFe.Tests.Serializer
             Assert.True(erros.Length == 0, string.Join(Environment.NewLine, erros));
         }
 
+        /// <summary>
+        ///     Regressão: após Assinar + ValidarAssinatura(gerarXml: true) (fluxo do NFeService), nfe.Xml passa a conter
+        ///     a declaração XML; o lote enviNFe deve ser montado com GetXml(opções sem declaração) e ser válido no XSD.
+        /// </summary>
+        [Fact]
+        public void EnviNFe_AposAssinarEValidarAssinatura_DeveSerValidoContraXsdSemDeclaracaoInterna()
+        {
+            var nfe = SerializerTestHelper.CarregarNFeModelo();
+            var opcoes = SaveOptions.DisableFormatting | SaveOptions.OmitDeclaration;
+            using var cert = CriarCertificadoAutoassinado();
+            nfe.Assinar(cert, opcoes);
+            Assert.True(nfe.ValidarAssinatura(true));
+
+            var nfeXml = nfe.GetXml(opcoes);
+            var lote = "<enviNFe xmlns=\"http://www.portalfiscal.inf.br/nfe\" versao=\"4.00\"><idLote>1</idLote><indSinc>1</indSinc>" + nfeXml + "</enviNFe>";
+
+            Assert.DoesNotContain("<?xml", nfeXml);
+            SchemaHelper.ValidarXml(lote, Path.Combine(SerializerTestHelper.CaminhoBase, "schemas", "enviNFe_v4.00.xsd"), out var erros, out _);
+            Assert.True(erros.Length == 0, string.Join(Environment.NewLine, erros));
+        }
+
         [Fact]
         public void NFe_SemAssinatura_DeveFalharNoXsdSomentePorCausaDaSignature()
         {

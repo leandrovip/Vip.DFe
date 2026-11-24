@@ -61,7 +61,9 @@ namespace Vip.DFe.NFe.ServAutorizacao
 
                 foreach (var nfe in nfes)
                 {
-                    var nfeXml = nfe.Xml.IsNullOrEmpty() ? nfe.GetXml(Configuracoes.ObterOptions()) : nfe.Xml;
+                    // Sempre regera com as opções da configuração: nfe.Xml pode estar desatualizado
+                    // (ex.: NFCe recebe infNFeSupl/QR Code após a assinatura) ou conter declaração XML.
+                    var nfeXml = nfe.GetXml(Configuracoes.ObterOptions());
                     GravarXmlAssinado(nfeXml, nfe.ObterNomeXml());
                     request.Append(nfeXml);
                 }
