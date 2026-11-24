@@ -1,4 +1,4 @@
-using System.ComponentModel;
+ï»¿using System.ComponentModel;
 using System.Linq;
 using Vip.DFe.Attributes;
 using Vip.DFe.Document;
@@ -8,7 +8,7 @@ using Vip.DFe.Serializer;
 namespace Vip.DFe.SAT.CupomFiscal
 {
     /// <summary>
-    ///     Grupo de Informações Adicionais
+    ///     Grupo de InformaÃ§Ãµes Adicionais
     /// </summary>
     public sealed class CFeInfAdic : DFeParentItem<CFeInfAdic, CFe>, INotifyPropertyChanged
     {
@@ -35,7 +35,7 @@ namespace Vip.DFe.SAT.CupomFiscal
         #region Propriedades
 
         /// <summary>
-        ///     Informações Complementares de interesse do Contribuinte
+        ///     InformaÃ§Ãµes Complementares de interesse do Contribuinte
         /// </summary>
         [DFeElement(TipoCampo.Str, "infCpl", Id = "Z02", Min = 1, Max = 5000, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string InfCpl { get; set; }

@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.Extensions;
@@ -7,7 +7,7 @@ using Vip.DFe.Serializer;
 namespace Vip.DFe.SAT.CupomFiscal
 {
     /// <summary>
-    ///     Classe CFeDest (dest). Grupo de identifica��o do Destinat�rio do CF-e
+    ///     Classe CFeDest (dest). Grupo de identificação do Destinatário do CF-e
     /// </summary>
     public sealed class CFeDest : GenericClone<CFeDest>, INotifyPropertyChanged
     {
@@ -20,19 +20,19 @@ namespace Vip.DFe.SAT.CupomFiscal
         #region Propriedades
 
         /// <summary>
-        ///     CPF do destinat�rio. Informar o CPF do destinat�rio, preenchendo os zeros n�o significativos.
+        ///     CPF do destinatário. Informar o CPF do destinatário, preenchendo os zeros não significativos.
         /// </summary>
         [DFeElement(TipoCampo.StrNumberFill, "CPF", Id = "E02", Min = 11, Max = 11, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string CPF { get; set; }
 
         /// <summary>
-        ///     CNPJ do destinat�rio. Informar o CNPJ do destinat�rio, preenchendo os zeros n�o significativos.
+        ///     CNPJ do destinatário. Informar o CNPJ do destinatário, preenchendo os zeros não significativos.
         /// </summary>
         [DFeElement(TipoCampo.StrNumberFill, "CNPJ", Id = "E03", Min = 14, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string CNPJ { get; set; }
 
         /// <summary>
-        ///     Raz�o Social ou Nome do destinat�rio
+        ///     Razão Social ou Nome do destinatário
         /// </summary>
         [DFeElement(TipoCampo.Str, "xNome", Id = "E04", Min = 1, Max = 60, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string Nome { get; set; }

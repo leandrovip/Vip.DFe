@@ -1,4 +1,4 @@
-using System.ComponentModel;
+ï»¿using System.ComponentModel;
 using System.Linq;
 using Vip.DFe.Attributes;
 using Vip.DFe.Document;
@@ -9,7 +9,7 @@ using Vip.DFe.Serializer;
 namespace Vip.DFe.SAT.CupomFiscal
 {
     /// <summary>
-    ///     Grupo das informações do CF-e
+    ///     Grupo das informaÃ§Ãµes do CF-e
     /// </summary>
     public sealed class InfCFe : DFeParentItem<InfCFe, CFe>, INotifyPropertyChanged
     {
@@ -60,51 +60,51 @@ namespace Vip.DFe.SAT.CupomFiscal
         public string Id { get; set; }
 
         /// <summary>
-        ///     Versão do leiaute do CF-e
+        ///     VersÃ£o do leiaute do CF-e
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeAttribute(TipoCampo.De2, "versao", Min = 4, Max = 9, Ocorrencia = Ocorrencia.MaiorQueZero)]
         public decimal Versao { get; set; }
 
         /// <summary>
-        ///     Versão do leiaute do arquivo de dados do AC
+        ///     VersÃ£o do leiaute do arquivo de dados do AC
         /// </summary>
         [DFeAttribute(TipoCampo.De2, "versaoDadosEnt", Min = 4, Max = 9, Ocorrencia = Ocorrencia.MaiorQueZero)]
         public decimal VersaoDadosEnt { get; set; }
 
         /// <summary>
-        ///     Versão do Software Básico do SAT
+        ///     VersÃ£o do Software BÃ¡sico do SAT
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeAttribute(TipoCampo.De2, "versaoSB", Ocorrencia = Ocorrencia.MaiorQueZero)]
         public decimal VersaoSb { get; set; }
 
         /// <summary>
-        ///     Grupo das informações de identificação do CF-e
+        ///     Grupo das informaÃ§Ãµes de identificaÃ§Ã£o do CF-e
         /// </summary>
         [DFeElement("ide", Id = "B01", Ocorrencia = Ocorrencia.Obrigatoria)]
         public CFeIde Ide { get; set; }
 
         /// <summary>
-        ///     Grupo de identificação do emitente do CF-e
+        ///     Grupo de identificaÃ§Ã£o do emitente do CF-e
         /// </summary>
         [DFeElement("emit", Id = "C01", Ocorrencia = Ocorrencia.Obrigatoria)]
         public CFeEmit Emit { get; set; }
 
         /// <summary>
-        ///     Grupo de identificação do Destinatário do CF-e
+        ///     Grupo de identificaÃ§Ã£o do DestinatÃ¡rio do CF-e
         /// </summary>
         [DFeElement("dest", Id = "E01", Ocorrencia = Ocorrencia.Obrigatoria)]
         public CFeDest Dest { get; set; }
 
         /// <summary>
-        ///     Grupo de identificação do Local de entrega
+        ///     Grupo de identificaÃ§Ã£o do Local de entrega
         /// </summary>
         [DFeElement("entrega", Id = "G01", Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public CFeEntrega Entrega { get; set; }
 
         /// <summary>
-        ///     Grupo do detalhamento de Produtos e Serviços do CF-e
+        ///     Grupo do detalhamento de Produtos e ServiÃ§os do CF-e
         /// </summary>
         [DFeCollection("det", Id = "H01", MinSize = 1, MaxSize = 500)]
         public CFeDetCollection Det
@@ -125,13 +125,13 @@ namespace Vip.DFe.SAT.CupomFiscal
         public CFeTotal Total { get; set; }
 
         /// <summary>
-        ///     Grupo de informações sobre Pagamento do CF-e
+        ///     Grupo de informaÃ§Ãµes sobre Pagamento do CF-e
         /// </summary>
         [DFeElement("pgto", Id = "WA01", Ocorrencia = Ocorrencia.Obrigatoria)]
         public CFePgto Pagto { get; set; }
 
         /// <summary>
-        ///     Grupo de Informações Adicionais
+        ///     Grupo de InformaÃ§Ãµes Adicionais
         /// </summary>
         [DFeElement("infAdic", Id = "Z01", Ocorrencia = Ocorrencia.Obrigatoria)]
         public CFeInfAdic InfAdic

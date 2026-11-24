@@ -1,4 +1,4 @@
-using System.ComponentModel;
+ï»¿using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.Serializer;
@@ -49,13 +49,13 @@ namespace Vip.DFe.SAT.CupomFiscal
         public CFeTotalIssqn ISSQNTot { get; set; }
 
         /// <summary>
-        ///     Grupo de valores de entrada de Desconto/Acréscimo sobre Subtotal
+        ///     Grupo de valores de entrada de Desconto/AcrÃ©scimo sobre Subtotal
         /// </summary>
         [DFeElement("DescAcrEntr", Id = "W19", Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public CFeTotalDescAcr DescAcrEntr { get; set; }
 
         /// <summary>
-        ///     Valor aproximado dos tributos do CFe-SAT – Lei 12741/12.
+        ///     Valor aproximado dos tributos do CFe-SAT â€“ Lei 12741/12.
         /// </summary>
         [DFeElement(TipoCampo.De2, "vCFeLei12741", Id = "W22", Min = 3, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
         public decimal VCFeLei12741 { get; set; }

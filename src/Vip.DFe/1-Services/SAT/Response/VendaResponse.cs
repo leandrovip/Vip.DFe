@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.IO;
 using System.Text;
 using Vip.DFe.Extensions;
@@ -25,9 +25,9 @@ namespace Vip.DFe.SAT.Response
 
             #region Comments
 
-            //O QRCode é montado a partir dos valores retornados pelo SAT
+            //O QRCode Ã© montado a partir dos valores retornados pelo SAT
 
-            //Posições dos campos de retorno
+            //PosiÃ§Ãµes dos campos de retorno
             //numeroSessao, EEEEE, CCCC, mensagem, cod, mensagemSEFAZ, base64, timeStamp, chaveConsulta, valorTotalCFe, CPFCNPJValue, assinaturaQRCOD
 
             //Cadeia para o QRCode
@@ -48,7 +48,7 @@ namespace Vip.DFe.SAT.Response
         public CFe Venda { get; private set; }
 
         /// <summary>
-        ///     Retorna o número do cumpo fiscal.
+        ///     Retorna o nÃºmero do cumpo fiscal.
         /// </summary>
         public int NumeroCupomFiscal => Venda?.InfCFe?.Ide?.NCFe ?? 0;
 

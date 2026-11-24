@@ -1,4 +1,4 @@
-using System.ComponentModel;
+ï»¿using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.Serializer;
@@ -26,7 +26,7 @@ namespace Vip.DFe.SAT.CupomFiscal
         public decimal VICMS { get; set; }
 
         /// <summary>
-        ///     Valor total dos produtos e serviços sujeitos ao ICMS.
+        ///     Valor total dos produtos e serviÃ§os sujeitos ao ICMS.
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.De2, "vProd", Id = "W04", Min = 3, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
@@ -68,7 +68,7 @@ namespace Vip.DFe.SAT.CupomFiscal
         public decimal VCOFINSST { get; set; }
 
         /// <summary>
-        ///     Valor Total de Outras Despesas acessórias sobre Item
+        ///     Valor Total de Outras Despesas acessÃ³rias sobre Item
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.De2, "vOutro", Id = "W10", Min = 3, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]

@@ -1,4 +1,4 @@
-using System.ComponentModel;
+ï»¿using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.Serializer;
@@ -6,7 +6,7 @@ using Vip.DFe.Serializer;
 namespace Vip.DFe.SAT.CupomFiscal
 {
     /// <summary>
-    ///     Grupo de valores de entrada de Desconto/Acréscimo sobre Subtotal (DescAcrEntr)
+    ///     Grupo de valores de entrada de Desconto/AcrÃ©scimo sobre Subtotal (DescAcrEntr)
     /// </summary>
     public sealed class CFeTotalDescAcr : GenericClone<CFeTotalDescAcr>, INotifyPropertyChanged
     {
@@ -25,7 +25,7 @@ namespace Vip.DFe.SAT.CupomFiscal
         public decimal VDescSubtot { get; set; }
 
         /// <summary>
-        ///     Valor de Entrada de Acréscimo sobre Subtotal
+        ///     Valor de Entrada de AcrÃ©scimo sobre Subtotal
         /// </summary>
         [DFeElement(TipoCampo.De2, "vAcresSubtot", Id = "W21", Min = 3, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
         public decimal VAcresSubtot { get; set; }

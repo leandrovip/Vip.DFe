@@ -1,4 +1,4 @@
-using System.ComponentModel;
+Ôªøusing System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.Serializer;
@@ -19,16 +19,16 @@ namespace Vip.DFe.SAT.CupomFiscal
         #region Properties
 
         /// <summary>
-        ///     IdentificaÁ„o do campo. No caso de combustÌveis, preencher com ìCod.Produto ANPî
+        ///     Identifica√ß√£o do campo. No caso de combust√≠veis, preencher com ‚ÄúCod.Produto ANP‚Äù
         /// </summary>
         [DFeAttribute("xCampoDet", Id = "I18A", Min = 1, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string XCampoDet { get; set; }
 
         /// <summary>
-        ///     Conte˙do do campo. No caso de combustÌveis e/ou lubrificantes, quando informado ìCFOP 5656 ñ Venda de combustÌvel
-        ///     ou lubrificante adquirido ou recebido de terceiros destinado a consumidor ou usu·rio finalî, informar cÛdigo de
-        ///     produto do Sistema de InformaÁıes de MovimentaÁ„o de produtos - SIMP (http://www.anp.gov.br/simp). Informar
-        ///     999999999 se o produto n„o possuir cÛdigo de produto ANP.
+        ///     Conte√∫do do campo. No caso de combust√≠veis e/ou lubrificantes, quando informado ‚ÄúCFOP 5656 ‚Äì Venda de combust√≠vel
+        ///     ou lubrificante adquirido ou recebido de terceiros destinado a consumidor ou usu√°rio final‚Äù, informar c√≥digo de
+        ///     produto do Sistema de Informa√ß√µes de Movimenta√ß√£o de produtos - SIMP (http://www.anp.gov.br/simp). Informar
+        ///     999999999 se o produto n√£o possuir c√≥digo de produto ANP.
         /// </summary>
         [DFeElement(TipoCampo.Str, "xTextoDet", Id = "I19", Min = 1, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string XTextoDet { get; set; }

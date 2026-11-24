@@ -1,4 +1,4 @@
-using System.ComponentModel;
+ï»¿using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.SAT.Interfaces;
@@ -27,7 +27,7 @@ namespace Vip.DFe.SAT.CupomFiscal.Imposto
         public OrigemMercadoria Orig { get; set; }
 
         /// <summary>
-        ///     Código de Situação da Operação – Simples Nacional (300, 400, 500)
+        ///     CÃ³digo de SituaÃ§Ã£o da OperaÃ§Ã£o â€“ Simples Nacional (300, 400, 500)
         /// </summary>
         [DFeElement(TipoCampo.Str, "CSOSN", Id = "N10", Min = 3, Max = 3, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string Csosn { get; set; }

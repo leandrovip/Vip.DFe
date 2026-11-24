@@ -1,4 +1,4 @@
-using System.ComponentModel;
+ï»¿using System.ComponentModel;
 
 namespace Vip.DFe.SAT.Enum
 {
@@ -7,7 +7,7 @@ namespace Vip.DFe.SAT.Enum
         [Description("Desbloqueado")] Desbloqueado = 0,
         [Description("Bloqueio SEFAZ")] BloqueioSEFAZ = 1,
         [Description("Bloqueio Contribuinte")] BloqueioContribuinte = 2,
-        [Description("Bloqueio Autônomo")] BloqueioAutonomo = 3,
-        [Description("Bloquio Desativação")] BloqueioDesativacao = 4
+        [Description("Bloqueio AutÃ´nomo")] BloqueioAutonomo = 3,
+        [Description("Bloquio DesativaÃ§Ã£o")] BloqueioDesativacao = 4
     }
 }

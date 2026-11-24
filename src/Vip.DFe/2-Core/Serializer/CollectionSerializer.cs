@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,7 +53,7 @@ namespace Vip.DFe.Serializer
             foreach (var value in values)
             {
                 var itemTag = itemTags.SingleOrDefault(x => x.Tipo == value.GetType());
-                Guard.Against<VipException>(itemTag == null, $"Item {value.GetType().Name} não presente na lista de itens.");
+                Guard.Against<VipException>(itemTag == null, $"Item {value.GetType().Name} nÃ£o presente na lista de itens.");
 
                 XElement childElement;
                 if (itemTag != null && itemTag.IsValue)
@@ -63,10 +63,10 @@ namespace Vip.DFe.Serializer
                         .OrderBy(x => x.GetAttribute<DFeBaseAttribute>()?.Ordem ?? 0).ToArray();
 
                     Guard.Against<VipException>(!properties.All(x => x.HasAttribute<DFeItemValueAttribute>() || x.HasAttribute<DFeAttributeAttribute>()),
-                        $"Item {value.GetType().Name} é do tipo [ItemValue] e so pode ter atributo do tipo [DFeAttributeAttribute] ou [DFeItemValueAttribute].");
+                        $"Item {value.GetType().Name} Ã© do tipo [ItemValue] e so pode ter atributo do tipo [DFeAttributeAttribute] ou [DFeItemValueAttribute].");
 
                     Guard.Against<VipException>(properties.Count(x => x.HasAttribute<DFeItemValueAttribute>()) != 1,
-                        $"Item {value.GetType().Name} é do tipo [ItemValue] e não tem presente o atributo [DFeItemValueAttribute] ou possui mais de um atributo.");
+                        $"Item {value.GetType().Name} Ã© do tipo [ItemValue] e nÃ£o tem presente o atributo [DFeItemValueAttribute] ou possui mais de um atributo.");
 
                     var valueProp = properties.SingleOrDefault(x => x.HasAttribute<DFeItemValueAttribute>());
                     var valueAtt = valueProp.GetAttribute<DFeItemValueAttribute>();
@@ -171,10 +171,10 @@ namespace Vip.DFe.Serializer
                             .OrderBy(x => x.GetAttribute<DFeBaseAttribute>()?.Ordem ?? 0).ToArray();
 
                         Guard.Against<VipException>(!properties.All(x => x.HasAttribute<DFeItemValueAttribute>() || x.HasAttribute<DFeAttributeAttribute>()),
-                            $"Item {itemTag.Tipo.Name} é do tipo [ItemValue] e so pode ter atributo do tipo [DFeAttributeAttribute] ou [DFeItemValueAttribute].");
+                            $"Item {itemTag.Tipo.Name} Ã© do tipo [ItemValue] e so pode ter atributo do tipo [DFeAttributeAttribute] ou [DFeItemValueAttribute].");
 
                         Guard.Against<VipException>(properties.Count(x => x.HasAttribute<DFeItemValueAttribute>()) != 1,
-                            $"Item {itemTag.Tipo.Name} é do tipo [ItemValue] e não tem presente o atributo [DFeItemValueAttribute] ou possui mais de um atributo.");
+                            $"Item {itemTag.Tipo.Name} Ã© do tipo [ItemValue] e nÃ£o tem presente o atributo [DFeItemValueAttribute] ou possui mais de um atributo.");
 
                         var valueProp = properties.SingleOrDefault(x => x.HasAttribute<DFeItemValueAttribute>());
                         var valueAtt = valueProp.GetAttribute<DFeItemValueAttribute>();

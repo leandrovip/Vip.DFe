@@ -1,4 +1,4 @@
-using System.ComponentModel;
+Ôªøusing System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.Serializer;
@@ -6,7 +6,7 @@ using Vip.DFe.Serializer;
 namespace Vip.DFe.SAT.CupomFiscal.Imposto
 {
     /// <summary>
-    ///     Grupo de COFINS SubstituiÁ„o Tribut·ria
+    ///     Grupo de COFINS Substitui√ß√£o Tribut√°ria
     /// </summary>
     public sealed class ImpostoCofinsSt : GenericClone<ImpostoCofinsSt>, INotifyPropertyChanged
     {
@@ -19,13 +19,13 @@ namespace Vip.DFe.SAT.CupomFiscal.Imposto
         #region Propriedades
 
         /// <summary>
-        ///     Valor da Base de C·lculo da COFINS
+        ///     Valor da Base de C√°lculo da COFINS
         /// </summary>
         [DFeElement(TipoCampo.De2, "vBC", Id = "T02", Min = 3, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal VBc { get; set; }
 
         /// <summary>
-        ///     AlÌquota da COFINS (em percentual)
+        ///     Al√≠quota da COFINS (em percentual)
         /// </summary>
         [DFeElement(TipoCampo.De4, "pCOFINS", Id = "T03", Min = 5, Max = 5, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal PCofins { get; set; }
@@ -37,7 +37,7 @@ namespace Vip.DFe.SAT.CupomFiscal.Imposto
         public decimal QBcProd { get; set; }
 
         /// <summary>
-        ///     AlÌquota da COFINS (em reais)
+        ///     Al√≠quota da COFINS (em reais)
         /// </summary>
         [DFeElement(TipoCampo.De4, "vAliqProd", Id = "T05", Min = 5, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
         public decimal VAliqProd { get; set; }

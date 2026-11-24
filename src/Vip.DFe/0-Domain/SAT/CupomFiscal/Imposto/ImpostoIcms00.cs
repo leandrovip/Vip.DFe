@@ -1,4 +1,4 @@
-using System.ComponentModel;
+ï»¿using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.SAT.Interfaces;
@@ -27,13 +27,13 @@ namespace Vip.DFe.SAT.CupomFiscal.Imposto
         public OrigemMercadoria Orig { get; set; }
 
         /// <summary>
-        ///     Tributação do ICMS = 00, 20, 90
+        ///     TributaÃ§Ã£o do ICMS = 00, 20, 90
         /// </summary>
         [DFeElement(TipoCampo.Str, "CST", Id = "N07", Min = 2, Max = 2, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string Cst { get; set; }
 
         /// <summary>
-        ///     Alíquota efetiva do imposto
+        ///     AlÃ­quota efetiva do imposto
         /// </summary>
         [DFeElement(TipoCampo.De2, "pICMS", Id = "N08", Min = 3, Max = 5, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal PIcms { get; set; }

@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,14 +14,14 @@ namespace Vip.DFe.Serializer
         #region Constantes
 
         /// <summary>
-        ///     Tamanho maior que o máximo permitido
+        ///     Tamanho maior que o mÃ¡ximo permitido
         /// </summary>
-        internal const string ErrMsgMaior = "Tamanho maior que o máximo permitido";
+        internal const string ErrMsgMaior = "Tamanho maior que o mÃ¡ximo permitido";
 
         /// <summary>
-        ///     Tamanho menor que o mínimo permitido
+        ///     Tamanho menor que o mÃ­nimo permitido
         /// </summary>
-        internal const string ErrMsgMenor = "Tamanho menor que o mínimo permitido";
+        internal const string ErrMsgMenor = "Tamanho menor que o mÃ­nimo permitido";
 
         /// <summary>
         ///     Nenhum valor informado
@@ -29,29 +29,29 @@ namespace Vip.DFe.Serializer
         internal const string ErrMsgVazio = "Nenhum valor informado";
 
         /// <summary>
-        ///     Conteúdo inválido
+        ///     ConteÃºdo invÃ¡lido
         /// </summary>
-        internal const string ErrMsgInvalido = "Conteúdo inválido";
+        internal const string ErrMsgInvalido = "ConteÃºdo invÃ¡lido";
 
         /// <summary>
-        ///     Numero máximo de casas decimais permitidas
+        ///     Numero mÃ¡ximo de casas decimais permitidas
         /// </summary>
-        internal const string ErrMsgMaximoDecimais = "Numero máximo de casas decimais permitidas";
+        internal const string ErrMsgMaximoDecimais = "Numero mÃ¡ximo de casas decimais permitidas";
 
         /// <summary>
-        ///     Número de ocorrências maior que o máximo permitido - Máximo
+        ///     NÃºmero de ocorrÃªncias maior que o mÃ¡ximo permitido - MÃ¡ximo
         /// </summary>
-        internal const string ErrMsgMaiorMaximo = "Número de ocorrências maior que o máximo permitido - Máximo";
+        internal const string ErrMsgMaiorMaximo = "NÃºmero de ocorrÃªncias maior que o mÃ¡ximo permitido - MÃ¡ximo";
 
         /// <summary>
-        ///     O numero final não pode ser menor que o inicial
+        ///     O numero final nÃ£o pode ser menor que o inicial
         /// </summary>
-        internal const string ErrMsgFinalMenorInicial = "O numero final não pode ser menor que o inicial";
+        internal const string ErrMsgFinalMenorInicial = "O numero final nÃ£o pode ser menor que o inicial";
 
         /// <summary>
-        ///     Arquivo não encontrado
+        ///     Arquivo nÃ£o encontrado
         /// </summary>
-        internal const string ErrMsgArquivoNaoEncontrado = "Arquivo não encontrado";
+        internal const string ErrMsgArquivoNaoEncontrado = "Arquivo nÃ£o encontrado";
 
         /// <summary>
         ///     Somente um campo deve ser preenchido
@@ -59,9 +59,9 @@ namespace Vip.DFe.Serializer
         internal const string ErrMsgSomenteUm = "Somente um campo deve ser preenchido";
 
         /// <summary>
-        ///     Número de ocorrências menor que o mínimo permitido - Mínimo
+        ///     NÃºmero de ocorrÃªncias menor que o mÃ­nimo permitido - MÃ­nimo
         /// </summary>
-        internal const string ErrMsgMenorMinimo = "Número de ocorrências menor que o mínimo permitido - Mínimo";
+        internal const string ErrMsgMenorMinimo = "NÃºmero de ocorrÃªncias menor que o mÃ­nimo permitido - MÃ­nimo";
 
         /// <summary>
         ///     CNPJ(MF)
@@ -88,7 +88,7 @@ namespace Vip.DFe.Serializer
         /// </summary>
         internal DFeSerializer(Type tipo)
         {
-            Guard.Against<ArgumentException>(!tipo.HasAttribute<DFeRootAttribute>(), "Não é uma classe DFe !");
+            Guard.Against<ArgumentException>(!tipo.HasAttribute<DFeRootAttribute>(), "NÃ£o Ã© uma classe DFe !");
 
             tipoDFe = tipo;
             Options = new SerializerOptions();
@@ -133,7 +133,7 @@ namespace Vip.DFe.Serializer
 
             if (item.IsNull())
             {
-                Options.ErrosAlertas.Add("O item é nulo !");
+                Options.ErrosAlertas.Add("O item Ã© nulo !");
                 return false;
             }
 
@@ -158,7 +158,7 @@ namespace Vip.DFe.Serializer
             Options.ErrosAlertas.Clear();
             if (item.IsNull())
             {
-                Options.ErrosAlertas.Add("O item é nulo !");
+                Options.ErrosAlertas.Add("O item Ã© nulo !");
                 return false;
             }
 

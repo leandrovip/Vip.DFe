@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
@@ -9,7 +9,7 @@ using Vip.DFe.Shared.Enum;
 namespace Vip.DFe.SAT.CupomFiscal
 {
     /// <summary>
-    ///     Grupo das informações de identificação do CF-e
+    ///     Grupo das informaÃ§Ãµes de identificaÃ§Ã£o do CF-e
     /// </summary>
     public sealed class CFeIde : GenericClone<CFeIde>, INotifyPropertyChanged
     {
@@ -32,35 +32,35 @@ namespace Vip.DFe.SAT.CupomFiscal
         #region Propriedades
 
         /// <summary>
-        ///     Código da UF do emitente do Documento Fiscal
+        ///     CÃ³digo da UF do emitente do Documento Fiscal
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.Enum, "cUF", Id = "B02", Min = 2, Max = 2, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public CodigoUF? UF { get; set; }
 
         /// <summary>
-        ///     Código Numérico que compõe a Chave de Acesso
+        ///     CÃ³digo NumÃ©rico que compÃµe a Chave de Acesso
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.Int, "cNF", Id = "B03", Min = 6, Max = 6, Ocorrencia = Ocorrencia.MaiorQueZero)]
         public int CNf { get; set; }
 
         /// <summary>
-        ///     Código do Modelo do Documento Fiscal
+        ///     CÃ³digo do Modelo do Documento Fiscal
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.Int, "mod", Id = "B04", Min = 2, Max = 2, Ocorrencia = Ocorrencia.MaiorQueZero)]
         public int Modelo { get; set; }
 
         /// <summary>
-        ///     Número de Série do equipamento SAT
+        ///     NÃºmero de SÃ©rie do equipamento SAT
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.Int, "nserieSAT", Id = "B05", Min = 9, Max = 9, Ocorrencia = Ocorrencia.MaiorQueZero)]
         public int NSerieSAT { get; set; }
 
         /// <summary>
-        ///     Número do Cupom Fiscal Eletronico
+        ///     NÃºmero do Cupom Fiscal Eletronico
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.Int, "nCFe", Id = "B06", Min = 6, Max = 6, Ocorrencia = Ocorrencia.MaiorQueZero)]
@@ -69,7 +69,7 @@ namespace Vip.DFe.SAT.CupomFiscal
         [DFeIgnore] public DateTime? DhEmissao { get; set; }
 
         /// <summary>
-        ///     Data de emissão do Cupom Fiscal
+        ///     Data de emissÃ£o do Cupom Fiscal
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.DatCFe, "dEmi", Id = "B07", Min = 8, Max = 8, Ocorrencia = Ocorrencia.NaoObrigatoria)]
@@ -80,7 +80,7 @@ namespace Vip.DFe.SAT.CupomFiscal
         }
 
         /// <summary>
-        ///     Hora de emissão do Cupom Fiscal
+        ///     Hora de emissÃ£o do Cupom Fiscal
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.HorCFe, "hEmi", Id = "B08", Min = 6, Max = 6, Ocorrencia = Ocorrencia.NaoObrigatoria)]
@@ -91,14 +91,14 @@ namespace Vip.DFe.SAT.CupomFiscal
         }
 
         /// <summary>
-        ///     Dígito Verificador da Chave de Acesso do CF-e
+        ///     DÃ­gito Verificador da Chave de Acesso do CF-e
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.Int, "cDV", Id = "B09", Min = 1, Max = 1, Ocorrencia = Ocorrencia.MaiorQueZero)]
         public int CDv { get; set; }
 
         /// <summary>
-        ///     Identificação do Ambiente
+        ///     IdentificaÃ§Ã£o do Ambiente
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.Enum, "tpAmb", Id = "B10", Min = 1, Max = 1, Ocorrencia = Ocorrencia.NaoObrigatoria)]
@@ -124,7 +124,7 @@ namespace Vip.DFe.SAT.CupomFiscal
         public string AssinaturaQrcode { get; set; }
 
         /// <summary>
-        ///     Número do Caixa ao qual o SAT está conectado
+        ///     NÃºmero do Caixa ao qual o SAT estÃ¡ conectado
         /// </summary>
         [DFeElement(TipoCampo.Int, "numeroCaixa", Id = "B14", Min = 3, Max = 3, Ocorrencia = Ocorrencia.Obrigatoria)]
         public int NumeroCaixa { get; set; }

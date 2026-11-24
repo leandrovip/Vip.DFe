@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using Vip.DFe.Serializer;
 
 namespace Vip.DFe.Attributes
@@ -47,7 +47,7 @@ namespace Vip.DFe.Attributes
         /// </summary>
         /// <param name="tipo">Tipo e estrutura do campo</param>
         /// <param name="name">Nome da tag</param>
-        /// <param name="asAttribute">Se o campo È um atributo ou n„o</param>
+        /// <param name="asAttribute">Se o campo √© um atributo ou n√£o</param>
         public DFeDictionaryKeyAttribute(TipoCampo tipo, string name, bool asAttribute) : this()
         {
             Tipo = tipo;

@@ -1,4 +1,4 @@
-using System.ComponentModel;
+ï»¿using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.SAT.Enum;
@@ -8,7 +8,7 @@ using Vip.DFe.Shared.Enum;
 namespace Vip.DFe.SAT.CupomFiscal
 {
     /// <summary>
-    ///     Grupo de informações dos Meios de Pagamento empregados na quitação do CF-e
+    ///     Grupo de informaÃ§Ãµes dos Meios de Pagamento empregados na quitaÃ§Ã£o do CF-e
     /// </summary>
     public sealed class CFePgtoMp : GenericClone<CFePgtoMp>, INotifyPropertyChanged
     {
@@ -21,19 +21,19 @@ namespace Vip.DFe.SAT.CupomFiscal
         #region Properties
 
         /// <summary>
-        ///     Código do Meio de Pagamento empregado para quitação do CF-e
+        ///     CÃ³digo do Meio de Pagamento empregado para quitaÃ§Ã£o do CF-e
         /// </summary>
         [DFeElement(TipoCampo.Enum, "cMP", Id = "WA04", Min = 2, Max = 2, Ocorrencia = Ocorrencia.Obrigatoria)]
         public MeioPagamento CMp { get; set; }
 
         /// <summary>
-        ///     Valor do Meio de Pagamento empregado para quitação do CF-e
+        ///     Valor do Meio de Pagamento empregado para quitaÃ§Ã£o do CF-e
         /// </summary>
         [DFeElement(TipoCampo.De2, "vMP", Id = "WA05", Min = 3, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal VMp { get; set; }
 
         /// <summary>
-        ///     Credenciadora de cartão de débito ou crédito
+        ///     Credenciadora de cartÃ£o de dÃ©bito ou crÃ©dito
         /// </summary>
         [DFeElement(TipoCampo.Int, "cAdmC", Id = "WA06", Min = 3, Max = 3, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public int? CAdmC { get; set; }

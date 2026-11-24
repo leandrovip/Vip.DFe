@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,15 +17,15 @@ namespace Vip.DFe.Serializer
 
         public static XObject[] Serialize(PropertyInfo prop, object parentObject, SerializerOptions options)
         {
-            Guard.Against<VipException>(!prop.HasAttribute<DFeDictionaryAttribute>(), $"Atributo necess·rio n„o encontrado [{nameof(DFeDictionaryAttribute)}]");
-            Guard.Against<VipException>(!prop.HasAttribute<DFeDictionaryKeyAttribute>(), $"Atributo necess·rio n„o encontrado [{nameof(DFeDictionaryKeyAttribute)}]");
-            Guard.Against<VipException>(!prop.HasAttribute<DFeDictionaryValueAttribute>(), $"Atributo necess·rio n„o encontrado [{nameof(DFeDictionaryValueAttribute)}]");
+            Guard.Against<VipException>(!prop.HasAttribute<DFeDictionaryAttribute>(), $"Atributo necess√°rio n√£o encontrado [{nameof(DFeDictionaryAttribute)}]");
+            Guard.Against<VipException>(!prop.HasAttribute<DFeDictionaryKeyAttribute>(), $"Atributo necess√°rio n√£o encontrado [{nameof(DFeDictionaryKeyAttribute)}]");
+            Guard.Against<VipException>(!prop.HasAttribute<DFeDictionaryValueAttribute>(), $"Atributo necess√°rio n√£o encontrado [{nameof(DFeDictionaryValueAttribute)}]");
 
             var tag = prop.GetAttribute<DFeDictionaryAttribute>();
             var keyAtt = prop.GetAttribute<DFeDictionaryKeyAttribute>();
             var valueAtt = prop.GetAttribute<DFeDictionaryValueAttribute>();
 
-            Guard.Against<ArgumentNullException>(!keyAtt.AsAttribute && tag.ItemName.IsNullOrEmpty(), "Se a Key n„o È um atributo È necessario informar o [ItemName]");
+            Guard.Against<ArgumentNullException>(!keyAtt.AsAttribute && tag.ItemName.IsNullOrEmpty(), "Se a Key n√£o √© um atributo √© necessario informar o [ItemName]");
 
             var dictionary = (IDictionary) prop.GetValue(parentObject, null);
             if (dictionary.Count < tag.MinSize || dictionary.Count > tag.MaxSize && tag.MaxSize > 0)
@@ -88,9 +88,9 @@ namespace Vip.DFe.Serializer
 
         public static object Deserialize(PropertyInfo prop, XElement parent, object parentItem, SerializerOptions options)
         {
-            Guard.Against<VipException>(!prop.HasAttribute<DFeDictionaryAttribute>(), $"Atributo necess·rio n„o encontrado [{nameof(DFeDictionaryAttribute)}]");
-            Guard.Against<VipException>(!prop.HasAttribute<DFeDictionaryKeyAttribute>(), $"Atributo necess·rio n„o encontrado [{nameof(DFeDictionaryKeyAttribute)}]");
-            Guard.Against<VipException>(!prop.HasAttribute<DFeDictionaryValueAttribute>(), $"Atributo necess·rio n„o encontrado [{nameof(DFeDictionaryValueAttribute)}]");
+            Guard.Against<VipException>(!prop.HasAttribute<DFeDictionaryAttribute>(), $"Atributo necess√°rio n√£o encontrado [{nameof(DFeDictionaryAttribute)}]");
+            Guard.Against<VipException>(!prop.HasAttribute<DFeDictionaryKeyAttribute>(), $"Atributo necess√°rio n√£o encontrado [{nameof(DFeDictionaryKeyAttribute)}]");
+            Guard.Against<VipException>(!prop.HasAttribute<DFeDictionaryValueAttribute>(), $"Atributo necess√°rio n√£o encontrado [{nameof(DFeDictionaryValueAttribute)}]");
 
             var tag = prop.GetAttribute<DFeDictionaryAttribute>();
             var keyAtt = prop.GetAttribute<DFeDictionaryKeyAttribute>();

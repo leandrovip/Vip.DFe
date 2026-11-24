@@ -1,4 +1,4 @@
-using System.ComponentModel;
+ï»¿using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.SAT.Interfaces;
@@ -8,7 +8,7 @@ using Vip.DFe.Shared.Enum;
 namespace Vip.DFe.SAT.CupomFiscal.Imposto
 {
     /// <summary>
-    ///     Campo cRegTrib=1 – Simples Nacional e CSOSN = 900
+    ///     Campo cRegTrib=1 â€“ Simples Nacional e CSOSN = 900
     /// </summary>
     public sealed class ImpostoIcmsSn900 : GenericClone<ImpostoIcmsSn900>, ICFeIcms
     {
@@ -27,13 +27,13 @@ namespace Vip.DFe.SAT.CupomFiscal.Imposto
         public OrigemMercadoria Orig { get; set; }
 
         /// <summary>
-        ///     Código de Situação da Operação – SIMPLES NACIONAL
+        ///     CÃ³digo de SituaÃ§Ã£o da OperaÃ§Ã£o â€“ SIMPLES NACIONAL
         /// </summary>
         [DFeElement(TipoCampo.Str, "CSOSN", Id = "N10", Min = 3, Max = 3, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string Csosn { get; set; }
 
         /// <summary>
-        ///     Alíquota efetiva do imposto
+        ///     AlÃ­quota efetiva do imposto
         /// </summary>
         [DFeElement(TipoCampo.De2, "pICMS", Id = "N08", Min = 3, Max = 5, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal PIcms { get; set; }

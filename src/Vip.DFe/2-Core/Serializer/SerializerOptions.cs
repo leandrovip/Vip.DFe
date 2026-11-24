@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using System.Text;
 
 namespace Vip.DFe.Serializer
@@ -47,7 +47,7 @@ namespace Vip.DFe.Serializer
             // %TAG%       : Representa a TAG; ex: <nLacre>
             // %ID%        : Representa a ID da TAG; ex X34
             // %MSG%       : Representa a mensagem de alerta
-            // %DESCRICAO% : Representa a Descrição da TAG
+            // %DESCRICAO% : Representa a DescriÃ§Ã£o da TAG
 
             var s = FormatoAlerta.Clone() as string;
             if (s == null)

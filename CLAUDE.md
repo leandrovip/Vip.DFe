@@ -11,7 +11,8 @@
 - Para qualquer mudança de leiaute XML/Nota Técnica, use a skill `.claude/skills/nfe-xml-nota-tecnica`.
 - Elementos opcionais não devem serializar vazios: use o padrão `private bool ShouldSerializeXxx()`.
 - Não altere `<Version>` do csproj: a versão vem do workflow `nuget.yml`.
-- Preserve o encoding dos `.cs` existentes: há arquivos ISO-8859/Windows-1252; não converta em edições pontuais.
+- Todos os `.cs` estão em UTF-8 com BOM e CRLF; mantenha esse padrão em arquivos novos e editados.
+- CFe-SAT é legado (substituído pela NFCe): mantido só para compatibilidade e leitura de XMLs antigos; não evolua.
 - Não quebre a API pública do NuGet: ao renomear, prefira `[Obsolete]` encaminhando para o novo membro.
 - Quando a mudança alterar comportamento documentado, atualize junto as docs em PT-BR em `docs/`.
 

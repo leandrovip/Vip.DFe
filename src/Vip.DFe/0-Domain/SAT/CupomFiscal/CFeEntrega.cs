@@ -1,4 +1,4 @@
-using System.ComponentModel;
+ï»¿using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.Serializer;
@@ -6,7 +6,7 @@ using Vip.DFe.Serializer;
 namespace Vip.DFe.SAT.CupomFiscal
 {
     /// <summary>
-    ///     Grupo de identificação do Local de entrega
+    ///     Grupo de identificaÃ§Ã£o do Local de entrega
     /// </summary>
     public sealed class CFeEntrega : GenericClone<CFeEntrega>, INotifyPropertyChanged
     {
@@ -25,7 +25,7 @@ namespace Vip.DFe.SAT.CupomFiscal
         public string XLgr { get; set; }
 
         /// <summary>
-        ///     Número
+        ///     NÃºmero
         /// </summary>
         [DFeElement(TipoCampo.Str, "nro", Id = "G03", Min = 1, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string Nro { get; set; }
@@ -43,7 +43,7 @@ namespace Vip.DFe.SAT.CupomFiscal
         public string XBairro { get; set; }
 
         /// <summary>
-        ///     Nome do município
+        ///     Nome do municÃ­pio
         /// </summary>
         [DFeElement(TipoCampo.Str, "xMun", Id = "G06", Min = 2, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string XMun { get; set; }

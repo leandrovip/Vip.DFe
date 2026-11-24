@@ -1,4 +1,4 @@
-using System.ComponentModel;
+ï»¿using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.Serializer;
@@ -6,7 +6,7 @@ using Vip.DFe.Serializer;
 namespace Vip.DFe.SAT.CupomFiscal
 {
     /// <summary>
-    ///     Grupo do Endereço do emitente
+    ///     Grupo do EndereÃ§o do emitente
     /// </summary>
     public sealed class CFeEnderEmit : GenericClone<CFeEnderEmit>, INotifyPropertyChanged
     {
@@ -26,7 +26,7 @@ namespace Vip.DFe.SAT.CupomFiscal
         public string XLgr { get; set; }
 
         /// <summary>
-        ///     Número
+        ///     NÃºmero
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.Str, "nro", Id = "C07", Min = 1, Max = 60, Ocorrencia = Ocorrencia.NaoObrigatoria)]
@@ -47,14 +47,14 @@ namespace Vip.DFe.SAT.CupomFiscal
         public string XBairro { get; set; }
 
         /// <summary>
-        ///     Nome do município
+        ///     Nome do municÃ­pio
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.Str, "xMun", Id = "C10", Min = 2, Max = 60, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string XMun { get; set; }
 
         /// <summary>
-        ///     Código do CEP
+        ///     CÃ³digo do CEP
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.StrNumberFill, "CEP", Id = "C11", Min = 8, Max = 8, Ocorrencia = Ocorrencia.NaoObrigatoria)]

@@ -1,4 +1,4 @@
-using System.ComponentModel;
+Ôªøusing System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.SAT.Interfaces;
@@ -20,7 +20,7 @@ namespace Vip.DFe.SAT.CupomFiscal.Imposto
         #region Propriedades
 
         /// <summary>
-        ///     CÛdigo de SituaÁ„o Tribut·ria da COFINS
+        ///     C√≥digo de Situa√ß√£o Tribut√°ria da COFINS
         /// </summary>
         [DFeElement(TipoCampo.Str, "CST", Id = "S07", Min = 2, Max = 2, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string Cst { get; set; }
@@ -32,7 +32,7 @@ namespace Vip.DFe.SAT.CupomFiscal.Imposto
         public decimal QBcProd { get; set; }
 
         /// <summary>
-        ///     AlÌquota da COFINS (em reais)
+        ///     Al√≠quota da COFINS (em reais)
         /// </summary>
         [DFeElement(TipoCampo.De4, "vAliqProd", Id = "S12", Min = 5, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal VAliqProd { get; set; }

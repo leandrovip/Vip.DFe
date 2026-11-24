@@ -1,10 +1,10 @@
-using System.ComponentModel;
+Ôªøusing System.ComponentModel;
 using Vip.DFe.Attributes;
 
 namespace Vip.DFe.Shared.Enum
 {
     /// <summary>
-    ///     CÛdigo do Meio de Pagamento
+    ///     C√≥digo do Meio de Pagamento
     /// </summary>
     public enum MeioPagamento
     {
@@ -14,37 +14,37 @@ namespace Vip.DFe.Shared.Enum
         [DFeEnum("02")] [Description("2 - Cheque")]
         Cheque = 2,
 
-        [DFeEnum("03")] [Description("3 - Cart„o de CrÈdito")]
+        [DFeEnum("03")] [Description("3 - Cart√£o de Cr√©dito")]
         CartaodeCredito = 3,
 
-        [DFeEnum("04")] [Description("4 - Cart„o de DÈbito")]
+        [DFeEnum("04")] [Description("4 - Cart√£o de D√©bito")]
         CartaodeDebito = 4,
 
-        [DFeEnum("05")] [Description("5 - CrÈdito Loja")]
+        [DFeEnum("05")] [Description("5 - Cr√©dito Loja")]
         CreditoLoja = 5,
 
-        [DFeEnum("10")] [Description("10 - Vale AlimentaÁ„o")]
+        [DFeEnum("10")] [Description("10 - Vale Alimenta√ß√£o")]
         ValeAlimentacao = 10,
 
-        [DFeEnum("11")] [Description("11 - Vale RefeiÁ„o")]
+        [DFeEnum("11")] [Description("11 - Vale Refei√ß√£o")]
         ValeRefeicao = 11,
 
         [DFeEnum("12")] [Description("12 - Vale Presente")]
         ValePresente = 12,
 
-        [DFeEnum("13")] [Description("13 - Vale CombustÌvel")]
+        [DFeEnum("13")] [Description("13 - Vale Combust√≠vel")]
         ValeCombustivel = 13,
 
-        [DFeEnum("15")] [Description("15 - Boleto Banc·rio")]
+        [DFeEnum("15")] [Description("15 - Boleto Banc√°rio")]
         BoletoBancario = 15,
 
-        [DFeEnum("16")] [Description("16 - DepÛsito Banc·rio")]
+        [DFeEnum("16")] [Description("16 - Dep√≥sito Banc√°rio")]
         DepositoBancario = 16,
 
-        [DFeEnum("17")] [Description("17 - Pagamento Instant‚neo (PIX)")]
+        [DFeEnum("17")] [Description("17 - Pagamento Instant√¢neo (PIX)")]
         PagamentoInstantaneo = 17,
 
-        [DFeEnum("18")] [Description("18 - TransferÍncia Banc·ria")]
+        [DFeEnum("18")] [Description("18 - Transfer√™ncia Banc√°ria")]
         TransferenciaBancaria = 18,
 
         [DFeEnum("19")] [Description("19 - Programa de Fidelidade")]

@@ -1,4 +1,4 @@
-using System.ComponentModel;
+Ôªøusing System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.Extensions;
@@ -9,7 +9,7 @@ using Vip.DFe.Shared.Enum;
 namespace Vip.DFe.SAT.CupomFiscal
 {
     /// <summary>
-    ///     Grupo de identificaÁ„o do emitente do CF-e (emit)
+    ///     Grupo de identifica√ß√£o do emitente do CF-e (emit)
     /// </summary>
     public sealed class CFeEmit : GenericClone<CFeEmit>, INotifyPropertyChanged
     {
@@ -37,7 +37,7 @@ namespace Vip.DFe.SAT.CupomFiscal
         public string CNPJ { get; set; }
 
         /// <summary>
-        ///     Raz„o Social do emitente.
+        ///     Raz√£o Social do emitente.
         ///     <para />
         ///     <b>Campo preenchido pelo SAT</b>
         /// </summary>
@@ -53,7 +53,7 @@ namespace Vip.DFe.SAT.CupomFiscal
         public string XFant { get; set; }
 
         /// <summary>
-        ///     Grupo do EndereÁo do emitente
+        ///     Grupo do Endere√ßo do emitente
         ///     <para />
         ///     <b>Campo preenchido pelo SAT</b>
         /// </summary>
@@ -61,40 +61,40 @@ namespace Vip.DFe.SAT.CupomFiscal
         public CFeEnderEmit EnderEmit { get; set; }
 
         /// <summary>
-        ///     InscriÁ„o Estadual
+        ///     Inscri√ß√£o Estadual
         /// </summary>
         [DFeElement(TipoCampo.Str, "IE", Id = "C12", Min = 2, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string IE { get; set; }
 
         /// <summary>
-        ///     InscriÁ„o Municipal. Este campo deve ser informado, quando ocorrer a emiss„o de CF-e conjugada, com prestaÁ„o de
-        ///     serviÁos sujeitos ao ISSQN e fornecimento de peÁas sujeitos ao ICMS.
+        ///     Inscri√ß√£o Municipal. Este campo deve ser informado, quando ocorrer a emiss√£o de CF-e conjugada, com presta√ß√£o de
+        ///     servi√ßos sujeitos ao ISSQN e fornecimento de pe√ßas sujeitos ao ICMS.
         /// </summary>
         [DFeElement(TipoCampo.Str, "IM", Id = "C13", Min = 1, Max = 15, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string IM { get; set; }
 
         /// <summary>
-        ///     Este campo ser· obrigatoriamente preenchido com:
-        ///     <para>1 ñ Simples Nacional</para>
-        ///     <para>3 ñ Regime Normal</para>
+        ///     Este campo ser√° obrigatoriamente preenchido com:
+        ///     <para>1 ‚Äì Simples Nacional</para>
+        ///     <para>3 ‚Äì Regime Normal</para>
         ///     <b>Campo preechido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.Enum, "cRegTrib", Id = "C14", Min = 1, Max = 1, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public RegimeTributario? CRegTrib { get; set; }
 
         /// <summary>
-        ///     Regime Especial de TributaÁ„o do ISSQN
+        ///     Regime Especial de Tributa√ß√£o do ISSQN
         ///     <br />1 - Microempresa Municipal
         ///     <br />2 - Estimativa
         ///     <br />3 - Sociedade de Profissionais
         ///     <br />4 - Cooperativa
-        ///     <br />5 - Microempres·rio Individual (MEI);
+        ///     <br />5 - Microempres√°rio Individual (MEI);
         /// </summary>
         [DFeElement(TipoCampo.Enum, "cRegTribISSQN", Id = "C15", Min = 1, Max = 1, Ocorrencia = Ocorrencia.Obrigatoria)]
         public RegTribIssqn CRegTribISSQN { get; set; }
 
         /// <summary>
-        ///     Indicador de rateio do Desconto sobre subtotal entre itens sujeitos ‡ tributaÁ„o pelo ISSQN.
+        ///     Indicador de rateio do Desconto sobre subtotal entre itens sujeitos √† tributa√ß√£o pelo ISSQN.
         /// </summary>
         [DFeElement(TipoCampo.Enum, "indRatISSQN", Id = "C16", Min = 1, Max = 1, Ocorrencia = Ocorrencia.Obrigatoria)]
         public RatIssqn IndRatISSQN { get; set; }

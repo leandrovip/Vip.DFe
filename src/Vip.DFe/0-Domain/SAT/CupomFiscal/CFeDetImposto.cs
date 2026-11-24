@@ -1,4 +1,4 @@
-using System.ComponentModel;
+Ôªøusing System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.SAT.CupomFiscal.Imposto;
@@ -8,7 +8,7 @@ using Vip.DFe.Serializer;
 namespace Vip.DFe.SAT.CupomFiscal
 {
     /// <summary>
-    ///     Grupo de Tributos incidentes no Produto ou ServiÁo (imposto)
+    ///     Grupo de Tributos incidentes no Produto ou Servi√ßo (imposto)
     /// </summary>
     public sealed class CFeDetImposto : GenericClone<CFeDetImposto>, INotifyPropertyChanged
     {
@@ -33,14 +33,14 @@ namespace Vip.DFe.SAT.CupomFiscal
         #region Propriedades
 
         /// <summary>
-        ///     Valor aproximado dos tributos do Produto ou serviÁo ñ Lei 12741/12. Valor deve ser maior ou igual a zero.
+        ///     Valor aproximado dos tributos do Produto ou servi√ßo ‚Äì Lei 12741/12. Valor deve ser maior ou igual a zero.
         /// </summary>
         [DFeElement(TipoCampo.De2, "vItem12741", Id = "M02", Min = 3, Max = 15, Ocorrencia = Ocorrencia.MaiorQueZero)]
         public decimal VItem12741 { get; set; }
 
         /// <summary>
-        ///     Grupo do ICMS da OperaÁ„o prÛpria e ST. O grupo ISSQN È mutuamente exclusivo com o grupo ICMS, isto È se ISSQN for
-        ///     informado o grupo ICMS n„o ser· informado e vice-versa.
+        ///     Grupo do ICMS da Opera√ß√£o pr√≥pria e ST. O grupo ISSQN √© mutuamente exclusivo com o grupo ICMS, isto √© se ISSQN for
+        ///     informado o grupo ICMS n√£o ser√° informado e vice-versa.
         /// </summary>
         [DFeItem(typeof(ImpostoIcms), "ICMS")]
         [DFeItem(typeof(ImpostoIssqn), "ISSQN")]
@@ -53,7 +53,7 @@ namespace Vip.DFe.SAT.CupomFiscal
         public ImpostoPIS Pis { get; set; }
 
         /// <summary>
-        ///     Grupo de PIS SubstituiÁ„o Tribut·ria
+        ///     Grupo de PIS Substitui√ß√£o Tribut√°ria
         /// </summary>
         [DFeElement("PISST", Id = "R01", Ocorrencia = Ocorrencia.Obrigatoria)]
         public ImpostoPisSt PisSt { get; set; }
@@ -65,7 +65,7 @@ namespace Vip.DFe.SAT.CupomFiscal
         public ImpostoCofins Cofins { get; set; }
 
         /// <summary>
-        ///     Grupo do COFINS SubstituiÁ„o Tribut·ria
+        ///     Grupo do COFINS Substitui√ß√£o Tribut√°ria
         /// </summary>
         [DFeElement("COFINSST", Id = "T01", Ocorrencia = Ocorrencia.Obrigatoria)]
         public ImpostoCofinsSt CofinsSt { get; set; }

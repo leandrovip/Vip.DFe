@@ -1,9 +1,9 @@
-using Vip.DFe.Attributes;
+Ôªøusing Vip.DFe.Attributes;
 
 namespace Vip.DFe.SAT.Enum
 {
     /// <summary>
-    ///     Indicador da regra de c·lculo utilizada para Valor Bruto dos Produtos e ServiÁos:
+    ///     Indicador da regra de c√°lculo utilizada para Valor Bruto dos Produtos e Servi√ßos:
     ///     <para>A - Arredondamento</para>
     ///     <para>T - Truncamento</para>
     /// </summary>

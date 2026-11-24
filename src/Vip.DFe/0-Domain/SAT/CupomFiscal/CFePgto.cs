@@ -1,4 +1,4 @@
-using System.ComponentModel;
+ï»¿using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Document;
 using Vip.DFe.Enum;
@@ -7,7 +7,7 @@ using Vip.DFe.Serializer;
 namespace Vip.DFe.SAT.CupomFiscal
 {
     /// <summary>
-    ///     Grupo de informações sobre Pagamento do CFe
+    ///     Grupo de informaÃ§Ãµes sobre Pagamento do CFe
     /// </summary>
     public sealed class CFePgto : GenericClone<CFePgto>, INotifyPropertyChanged
     {
@@ -29,7 +29,7 @@ namespace Vip.DFe.SAT.CupomFiscal
         #region Propriedades
 
         /// <summary>
-        ///     Grupo de  informações dos Meios de Pagamento empregados na quitação do CF-e
+        ///     Grupo de  informaÃ§Ãµes dos Meios de Pagamento empregados na quitaÃ§Ã£o do CF-e
         /// </summary>
         [DFeCollection("MP", Id = "WA02", MinSize = 1, MaxSize = 50, Ocorrencia = Ocorrencia.Obrigatoria)]
         public DFeCollection<CFePgtoMp> Pagamentos { get; set; }

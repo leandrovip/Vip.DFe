@@ -1,4 +1,4 @@
-using System.ComponentModel;
+ï»¿using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.Serializer;
@@ -20,14 +20,14 @@ namespace Vip.DFe.SAT.CupomFiscal
         #region Properties
 
         /// <summary>
-        ///     Identificação do campo
+        ///     IdentificaÃ§Ã£o do campo
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeAttribute("xCampo", Id = "Z04", Min = 1, Max = 20, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string XCampo { get; set; }
 
         /// <summary>
-        ///     Conteúdo do campo
+        ///     ConteÃºdo do campo
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.Str, "xTexto", Id = "Z05", Min = 1, Max = 60, Ocorrencia = Ocorrencia.Obrigatoria)]

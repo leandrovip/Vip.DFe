@@ -1,4 +1,4 @@
-using Vip.DFe.Attributes;
+﻿using Vip.DFe.Attributes;
 using Vip.DFe.Cryptography.Models;
 using Vip.DFe.Document;
 using Vip.DFe.Enum;
@@ -52,7 +52,7 @@ namespace Vip.DFe.SAT.Eventos
         /// <summary>
         ///     Retorna o valor do QrCode
         /// </summary>
-        /// <returns>C�digo QrCode</returns>
+        /// <returns>Código QrCode</returns>
         public string GetQRCode()
         {
             var documento = InfCFe.Dest.CNPJ.IsNullOrEmpty() ? InfCFe.Dest.CPF.OnlyNumbers() : InfCFe.Dest.CNPJ.OnlyNumbers();

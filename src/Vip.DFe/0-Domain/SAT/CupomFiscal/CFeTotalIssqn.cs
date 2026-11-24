@@ -1,4 +1,4 @@
-using System.ComponentModel;
+ï»¿using System.ComponentModel;
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.Serializer;
@@ -19,7 +19,7 @@ namespace Vip.DFe.SAT.CupomFiscal
         #region Properties
 
         /// <summary>
-        ///     Valor Total da Base de Cálculo do ISSQN
+        ///     Valor Total da Base de CÃ¡lculo do ISSQN
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.De2, "vBC", Id = "W13", Min = 3, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
@@ -33,28 +33,28 @@ namespace Vip.DFe.SAT.CupomFiscal
         public decimal VISS { get; set; }
 
         /// <summary>
-        ///     Valor Total do PIS sobre serviços
+        ///     Valor Total do PIS sobre serviÃ§os
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.De2, "vPIS", Id = "W15", Min = 3, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal VPIS { get; set; }
 
         /// <summary>
-        ///     Valor Total do COFINS sobre serviços
+        ///     Valor Total do COFINS sobre serviÃ§os
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.De2, "vCOFINS", Id = "W16", Min = 3, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal VCOFINS { get; set; }
 
         /// <summary>
-        ///     Valor Total do PISST sobre serviços
+        ///     Valor Total do PISST sobre serviÃ§os
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.De2, "vPISST", Id = "W17", Min = 3, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal VPISST { get; set; }
 
         /// <summary>
-        ///     Valor Total do COFINS-ST sobre serviços
+        ///     Valor Total do COFINS-ST sobre serviÃ§os
         ///     <br /><b>Campo preenchido pelo SAT</b>
         /// </summary>
         [DFeElement(TipoCampo.De2, "vCOFINSST", Id = "W18", Min = 3, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]

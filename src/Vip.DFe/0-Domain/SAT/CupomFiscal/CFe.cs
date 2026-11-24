@@ -1,4 +1,4 @@
-using System.ComponentModel;
+ï»¿using System.ComponentModel;
 using System.Globalization;
 using Vip.DFe.Attributes;
 using Vip.DFe.Cryptography.Models;
@@ -58,7 +58,7 @@ namespace Vip.DFe.SAT.CupomFiscal
         /// <summary>
         ///     Retorna o valor do QrCode
         /// </summary>
-        /// <returns>Código QrCode</returns>
+        /// <returns>CÃ³digo QrCode</returns>
         public string GetQRCode()
         {
             var documento = InfCFe.Dest.CNPJ.IsNullOrEmpty() ? InfCFe.Dest.CPF.OnlyNumbers() : InfCFe.Dest.CNPJ.OnlyNumbers();
@@ -66,7 +66,7 @@ namespace Vip.DFe.SAT.CupomFiscal
         }
 
         /// <summary>
-        ///     Função para preencher o número do item da lista de itens da CFe.
+        ///     FunÃ§Ã£o para preencher o nÃºmero do item da lista de itens da CFe.
         /// </summary>
         public void PreencherNItem()
         {

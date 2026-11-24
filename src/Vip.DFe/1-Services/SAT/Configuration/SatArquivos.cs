@@ -1,4 +1,4 @@
-using System.ComponentModel;
+ï»¿using System.ComponentModel;
 using System.Reflection;
 using Vip.DFe.Conveter;
 using Vip.DFe.Extensions;
@@ -6,7 +6,7 @@ using Vip.DFe.Extensions;
 namespace Vip.DFe.SAT.Configuration
 {
     /// <summary>
-    ///     Classe de configuração de salvamento dos arquivos CFe
+    ///     Classe de configuraÃ§Ã£o de salvamento dos arquivos CFe
     /// </summary>
     [TypeConverter(typeof(VipExpandableObjectConverter))]
     public sealed class SatArquivos
@@ -51,7 +51,7 @@ namespace Vip.DFe.SAT.Configuration
         public bool SepararPorCNPJ { get; set; }
 
         /// <summary>
-        ///     Se salva os arquivos separados por Mês
+        ///     Se salva os arquivos separados por MÃªs
         /// </summary>
         public bool SepararPorMes { get; set; }
 
