@@ -127,7 +127,7 @@ Procurar nos schemas locais antes de decidir onde implementar:
 ```text
 schemas/leiauteNFe_v4.00.xsd
 schemas/DFeTiposBasicos_v1.00.xsd
-schemas/prod_leiauteNFe_v4.00.xsd
+schemas/tiposBasico_v4.00.xsd
 ```
 
 Buscar por:

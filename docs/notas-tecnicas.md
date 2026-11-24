@@ -106,4 +106,4 @@ O `leiauteNFe_v4.00.xsd` local já contém estes elementos, mas o domínio não.
 6. Restante do ICMS monofásico (NT 2023.001), agropecuário (NT 2024.003), campos sem modelo e eventos pós-autorização conforme demanda do VipERP.
 7. Analisar NTs 2022.002, 2022.003 e 2026.005–2026.008.
 
-> Observação: `schemas/prod_leiauteNFe_v4.00.xsd` é uma cópia antiga do leiaute (comentários até a NT 2018.005), não usada pelo código nem por outros schemas (só citada na skill como consulta) — candidato a remoção; a referência atual é `leiauteNFe_v4.00.xsd`.
+> Observação: `schemas/prod_leiauteNFe_v4.00.xsd` (cópia antiga do leiaute, até a NT 2018.005, sem uso) foi removido em 2026-11-24; a referência é `leiauteNFe_v4.00.xsd`.
