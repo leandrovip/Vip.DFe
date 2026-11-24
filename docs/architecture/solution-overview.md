@@ -17,7 +17,7 @@ Biblioteca .NET para emissão e gestão de Documentos Fiscais Eletrônicos (DFe)
 | Biblioteca | `Vip.DFe` — `netstandard2.0`, `LangVersion latest`, versão csproj `1.0.21`, MIT |
 | Demo | `Vip.DFe.Demo` — WinForms .NET Framework 4.8 (projeto MSBuild legado, `packages.config`) |
 | Testes | `Vip.DFe.Tests` — xUnit `net6.0` |
-| Publicação | NuGet (`Vip.DFe`), pipeline GitHub Actions em `.github/workflows/nuget.yml` |
+| Publicação | NuGet (`Vip.DFe`), pipeline Gitea Actions em `.gitea/workflows/nuget.yml` (repositório de origem no Gitea; GitHub é mirror) |
 | Idiomas | Mensagens de erro/validação em PT-BR |
 
 ## Projetos
@@ -54,7 +54,7 @@ Ponto de entrada da API: os 4 orquestradores de `1-Services` (ver `docs/modules/
 
 ## Fatos confirmados no código
 
-- **Versão publicada diverge da versão do csproj**: o csproj marca `1.0.21`, mas o workflow `nuget.yml` publica `1.1.<run_number>` (e `-beta` opcional no pacote). A versão real no NuGet é a do workflow.
+- **Versão publicada diverge da versão do csproj**: o csproj marca `1.0.21`, mas o workflow `nuget.yml` publica `1.2.<run_number>` (série `1.1.x` até `1.1.46` veio do antigo GitHub Actions) (e `-beta` opcional no pacote). A versão real no NuGet é a do workflow.
 - **`3-Infra/Notification`**: está excluído do csproj (`Compile Remove`/`EmbeddedResource Remove`/`None Remove`) e a pasta não existe em disco — resíduo de configuração a limpar.
 - **Assinatura com SHA-1 explícito**: `NFe.Assinar` e `NFeEvento` chamam `AssinarDocumento(..., SignDigest.SHA1)` (`NFe.cs:~100`, `NFeEvento.cs:~63`); `SigningManager` também usa `SignDigest.SHA1` como default.
 - **Cobertura de testes mínima**: apenas 4 arquivos de teste (ChaveDFe, DigitoVerificador, NFeConfig, DanfeViewModelCreator).
