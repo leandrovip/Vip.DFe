@@ -23,6 +23,8 @@ nuget push .\src\Vip.DFe\bin\Release\*.nupkg -Source https://api.nuget.org/v3/in
 ```
 
 > Versão publicada é definida no workflow (`1.1.<run_number>`), não no csproj (`1.0.21`). Não edite o csproj para "publicar versão" — `Hipótese a validar` se este comportamento deve mudar.
+>
+> O pipeline também **força a fonte `nuget.org`** (passo "Force nuget source", `fabriciomurta/ensure-nuget-source@v1`, `https://api.nuget.org/v3/index.json`) antes do restore, e roda os testes com `dotnet vstest` sobre `net6.0`.
 
 ### Manual (desenvolvimento)
 
@@ -64,7 +66,7 @@ dotnet test .\src\Vip.DFe.Tests\Vip.DFe.Tests.csproj
 ## Incertezas
 
 - **Instalação do .NET Framework 4.8 targeting pack / VS Build Tools** pode ser exigida para compilar a Demo em máquinas sem VS 2022 completo.
-- **`dotnet run` para a Demo** (README) não funciona — projeto legado; usar MSBuild.
+- **`dotnet run` para a Demo** não funciona — projeto legado; usar `nuget restore` + `msbuild` (é o que o `README.md` da raiz descreve).
 - **Cobertura de testes é mínima** (4 arquivos); não espere regressão garantida fora das áreas cobertas.
 - **Restore offline**: `src/nuget.config` define apenas `repositoryPath = ..\packages`; as fontes do NuGet são as padrão — a Demo depende de `packages/` local restaurado.
-- **`.gitignore` contém marcadores de merge não resolvidos** (`<<<<<<< HEAD`) — o arquivo é válido, mas está bagunçado; `Hipótese a validar` antes de editar regras de ignore.
+- **`.gitignore`**: os conflitos de merge (`<<<<<<< HEAD`) que existiam foram **resolvidos** (não há mais marcadores no arquivo).

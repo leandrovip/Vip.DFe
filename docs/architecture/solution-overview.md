@@ -6,7 +6,7 @@
 
 Biblioteca .NET para emissão e gestão de Documentos Fiscais Eletrônicos (DFe) brasileiros:
 
-- **NFe / NFCe** — montagem, assinatura, envio/consulta/cancelamento via webservices SEFAZ e geração de DANFE.
+- **NFe / NFCe** — montagem, assinatura, envio/consulta/cancelamento via webservices SEFAZ e geração de DANFE (o DANFE suporta somente NFe modelo 55; NFCe lança `NotSupportedException` em `DanfeViewModelCreator`).
 - **CFe-SAT** — comunicação com o SAT (DLL nativa) para emissão/cancelamento de cupons e gestão do equipamento.
 
 ## Stack
@@ -52,11 +52,16 @@ Ponto de entrada da API: os 4 orquestradores de `1-Services` (ver `docs/modules/
 6. **Compilar/validar** → `docs/conventions/build-and-validation.md`.
 7. **Operar com a Demo** → `docs/modules/ui-winforms.md`.
 
+## Fatos confirmados no código
+
+- **Versão publicada diverge da versão do csproj**: o csproj marca `1.0.21`, mas o workflow `nuget.yml` publica `1.1.<run_number>` (e `-beta` opcional no pacote). A versão real no NuGet é a do workflow.
+- **`3-Infra/Notification`**: está excluído do csproj (`Compile Remove`/`EmbeddedResource Remove`/`None Remove`) e a pasta não existe em disco — resíduo de configuração a limpar.
+- **Assinatura com SHA-1 explícito**: `NFe.Assinar` e `NFeEvento` chamam `AssinarDocumento(..., SignDigest.SHA1)` (`NFe.cs:~100`, `NFeEvento.cs:~63`); `SigningManager` também usa `SignDigest.SHA1` como default.
+- **Cobertura de testes mínima**: apenas 4 arquivos de teste (ChaveDFe, DigitoVerificador, NFeConfig, DanfeViewModelCreator).
+- **DANFE**: somente NFe modelo 55; NFCe lança `NotSupportedException` (`DanfeViewModelCreator.cs:~125`).
+
 ## Hipóteses a validar
 
-- **Versão publicada vs. versão do código**: csproj marca `1.0.21`, mas o workflow `nuget.yml` publica `1.1.<run_number>`. A versão real no NuGet pode divergir do csproj.
 - **Vip.Pdf / PDFClown**: `Vip.Pdf` (NuGet, MIT do projeto) empacota `org.pdfclown`; origem/licença do PDFClown embutido a confirmar.
 - **Cobertura de endpoints SEFAZ**: `NFeEnderecoCollection.cs` cobre os 27 estados + SVAN/SVRS/SVC (homologação e produção), mas a efetividade operacional de cada endpoint precisa ser validada em ambiente real.
-- **`3-Infra/Notification`**: removido do csproj e sem pasta no disco — é legado a limpar.
-- **Assinatura padrão SHA-1**: `SigningManager` usa `SignDigest.SHA1` como default (`Hipótese a validar` se é adequado à legislação/SEFAZ atual).
-- **Cobertura de testes mínima**: apenas 4 arquivos de teste (ChaveDFe, DigitoVerificador, NFeConfig, DanfeViewModelCreator).
+- **Adequação do SHA-1** à legislação/SEFAZ atual (o código usa SHA-1 por padrão; `SignDigest` tem outras opções).

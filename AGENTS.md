@@ -25,6 +25,7 @@ packages/           # dependências locais da Demo (nuget.config aponta para cá
 - Pasta numerada = camada; namespace espelha a pasta.
 - Entidades de domínio = POCOs com `[DFeRoot]`/`[DFeElement]` (Id/Ocorrencia/Ordem/Min/Max) + `INotifyPropertyChanged` via Fody.
 - API pública = `NFeService`, `CFeService`, `DanfeService`, `DanfeEventoService` + modelos `DFeDocument<T>`.
+- Elementos opcionais usam `private bool ShouldSerializeXxx()` para não emitir tags vazias.
 - Sem banco: persistência em XML no disco (NFe/SAT) e JSON na Demo.
 - Sem Web API; integração SEFAZ via SOAP/WCF; SAT via DLL nativa; PDF via Vip.Pdf.
 
@@ -43,13 +44,14 @@ packages/           # dependências locais da Demo (nuget.config aponta para cá
 - **Alterações mínimas**: não faça refatorações amplas; faça a mudança mais local possível.
 - **Preserve contratos públicos**: assinaturas e namespaces de métodos públicos são consumidos por clientes do NuGet; não quebre sem necessidade explícita.
 - Se algo estiver incerto no código, marque como `Hipótese a validar` na documentação, não invente.
-- Para alterações de leiaute XML de NF-e/NFC-e/SAT/eventos baseadas em Nota Técnica, schemas ou especificação de campos, use a skill `nfe-xml-nota-tecnica` antes de implementar.
+- Para alterações de leiaute XML de NF-e/NFC-e/SAT/eventos baseadas em Nota Técnica, schemas ou especificação de campos, use a skill `nfe-xml-nota-tecnica` (`.claude/skills/nfe-xml-nota-tecnica/SKILL.md`) antes de implementar.
 
 ## Tarefas multi-camada (exemplos)
 
 | Mudança | Onde mexer |
 |---|---|
 | Campo novo no leiaute NFe | Modelo em `0-Domain/NFe/NotaFiscal/...` + atributos; validar XSD em `schemas/`; testes |
+| Reforma tributária (IBS/CBS/IS) | Item em `0-Domain/NFe/NotaFiscal/Detalhe/Imposto/IbsCbs` + totais em `0-Domain/NFe/NotaFiscal/Total/` (`NFeIbsCbsTot`, IS) + skill NT |
 | Nova operação SEFAZ | Serviço em `1-Services/NFe/Serv*` (Request/Response/Resposta + interface `INFeXxx`) + endpoint em `NFeEnderecoCollection` + método em `NFeService` |
 | Mudança em serialização/assinatura | `2-Core/Serializer` / `2-Core/Cryptography` — impacto em toda a lib |
 | DANFE | `0-Domain/Danfe` (Modelo/Blocos/Elementos) + `1-Services/Danfe` |
@@ -72,10 +74,10 @@ dotnet build .\src\Vip.DFe\Vip.DFe.csproj               # só a lib
 
 - `bin/`, `obj/`, `packages/`, `.vs/`, `.user`, `.DotSettings.user`, artefatos de build.
 - Documentação temporária/gerada não solicitada — não crie `.md` além do necessário.
-- `3-Infra/Notification` está excluído do csproj — não restaure/reintroduza sem aval.
+- `3-Infra/Notification` foi removido; o csproj ainda tem `Remove` residual — não reintroduza.
 
 ## Observações WinForms/API
 
-- `Vip.DFe.Demo` é WinForms .NET Framework 4.8 legado (packages.config, MSBuild antigo); usa `Vip.Fiscal`/`Vip.Extensions` — modelos de imposto duplicam os da lib.
+- `Vip.DFe.Demo` é WinForms .NET Framework 4.8 legado (packages.config, MSBuild antigo); usa `Vip.Fiscal` (1.2.7-beta) apenas para CALCULAR tributação (ICMS/IBS/CBS) via `Services/TributacaoDemoService.cs` e preenche as classes da própria lib (`NFeDetImposto`, IBS/CBS, `IbsCbsTot`); `Vip.Extensions` é dependência transitiva.
 - `NFeService`/`CFeService` são `sealed`, herdam `VipComponent` (configurações/documentos/eventos), mensagens PT-BR, `Guard.Against<VipException>`.
 - Respostas SEFAZ seguem o padrão `XxxResposta` com `XmlEnvio`/`XmlRetorno`/`EnvelopeSoap`/`RetornoWS`/`Resultado`.

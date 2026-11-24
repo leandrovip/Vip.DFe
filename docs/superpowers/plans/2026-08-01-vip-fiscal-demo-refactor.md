@@ -1,5 +1,11 @@
 # Vip Fiscal Demo Refactor Implementation Plan
 
+> **Status: concluído (commit 13e783b).** Os arquivos `Models/ItemTributavelDemo.cs`, `Services/ResultadoTributacaoDemo.cs` e `Services/TributacaoDemoService.cs` existem em `src/Vip.DFe.Demo` e estão no csproj; `frmPrincipal.cs` usa `TributacaoDemoService`, `GerarIbsCbs` e `GerarIbsCbsTotal`. Os passos de implementação estão marcados `[x]`; os passos "Build check"/"Build Demo" e a geração manual de XML (Task 6, Step 3) permanecem `[ ]` porque a execução não foi reverificada nesta revisão.
+>
+> **Divergências em relação ao plano**: o código final chama `new TributacaoProduto(entidade, crt, tipoOperacao, TipoPessoa.Juridica).Calcular()` (4 argumentos), diferente do trecho original do plano.
+>
+> **Pendência**: `CClassTrib = "000001"` (e `Cst = "000"`) em `GerarIbsCbs` (`src/Vip.DFe.Demo/frmPrincipal.cs:~1384`) é um valor provisório de demonstração; substituir por classificação fiscal validada antes de qualquer uso real.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Refatorar o `Vip.DFe.Demo` para consumir a API nova do `Vip.Fiscal` com `IEntidadeProduto`, `TributacaoProduto`/`TributacaoService`, e preencher as tags/propriedades IBS/CBS na NF-e/NFC-e gerada.
@@ -47,7 +53,7 @@ Limitation: The Demo is WinForms and certificate/service operations are interact
 - Create: `src/Vip.DFe.Demo/Models/ItemTributavelDemo.cs`
 - Modify: `src/Vip.DFe.Demo/Vip.DFe.Demo.csproj`
 
-- [ ] **Step 1: Create adapter file**
+- [x] **Step 1: Create adapter file**
 
 Create `src/Vip.DFe.Demo/Models/ItemTributavelDemo.cs`:
 
@@ -154,7 +160,7 @@ namespace Vip.DFe.Demo.Models
 }
 ```
 
-- [ ] **Step 2: Include adapter in csproj**
+- [x] **Step 2: Include adapter in csproj**
 
 In `src/Vip.DFe.Demo/Vip.DFe.Demo.csproj`, add the compile item near the other `Models` entries:
 
@@ -181,7 +187,7 @@ Expected: build succeeds, or only existing environment/dependency errors unrelat
 - Create: `src/Vip.DFe.Demo/Services/TributacaoDemoService.cs`
 - Modify: `src/Vip.DFe.Demo/Vip.DFe.Demo.csproj`
 
-- [ ] **Step 1: Create result DTO**
+- [x] **Step 1: Create result DTO**
 
 Create `src/Vip.DFe.Demo/Services/ResultadoTributacaoDemo.cs`:
 
@@ -209,7 +215,7 @@ namespace Vip.DFe.Demo.Services
 }
 ```
 
-- [ ] **Step 2: Create service**
+- [x] **Step 2: Create service**
 
 Create `src/Vip.DFe.Demo/Services/TributacaoDemoService.cs`:
 
@@ -253,7 +259,7 @@ namespace Vip.DFe.Demo.Services
 }
 ```
 
-- [ ] **Step 3: Include service files in csproj**
+- [x] **Step 3: Include service files in csproj**
 
 In `src/Vip.DFe.Demo/Vip.DFe.Demo.csproj`, add:
 
@@ -279,7 +285,7 @@ Expected: build succeeds. If `NFeDestinoOperacao.Interestadual` has a different 
 **Files:**
 - Modify: `src/Vip.DFe.Demo/frmPrincipal.cs`
 
-- [ ] **Step 1: Adjust usings**
+- [x] **Step 1: Adjust usings**
 
 At the top of `frmPrincipal.cs`:
 
@@ -295,7 +301,7 @@ Add:
 using Vip.DFe.Demo.Services;
 ```
 
-- [ ] **Step 2: Add service field and initialize it**
+- [x] **Step 2: Add service field and initialize it**
 
 Near existing fields:
 
@@ -309,7 +315,7 @@ In the constructor after `_configuracao = _serviceConfiguracao.Obter();`:
 _tributacaoDemoService = new TributacaoDemoService();
 ```
 
-- [ ] **Step 3: Calculate taxation once per item**
+- [x] **Step 3: Calculate taxation once per item**
 
 In `ObterDocumento()`, inside the item loop before creating `NFeDetalhe`, add:
 
@@ -329,7 +335,7 @@ To:
 Imposto = GerarImposto(tributacao),
 ```
 
-- [ ] **Step 4: Replace GerarIcms signature and implementation**
+- [x] **Step 4: Replace GerarIcms signature and implementation**
 
 Replace:
 
@@ -362,7 +368,7 @@ case "00":
 
 Keep the Simples Nacional branch as `IcmsSn102` for minimum scope.
 
-- [ ] **Step 5: Replace GerarImposto signature**
+- [x] **Step 5: Replace GerarImposto signature**
 
 Find `GerarImposto(Item item)` and change to:
 
@@ -379,7 +385,7 @@ private NFeDetImposto GerarImposto(ResultadoTributacaoDemo tributacao)
 }
 ```
 
-- [ ] **Step 6: Replace PIS/COFINS helpers**
+- [x] **Step 6: Replace PIS/COFINS helpers**
 
 Replace current `GerarPis()` with:
 
@@ -432,7 +438,7 @@ Expected: build succeeds. If `PisAliq`/`CofinsAliq` names differ, inspect `src/V
 **Files:**
 - Modify: `src/Vip.DFe.Demo/frmPrincipal.cs`
 
-- [ ] **Step 1: Add IBS/CBS domain using**
+- [x] **Step 1: Add IBS/CBS domain using**
 
 At the top of `frmPrincipal.cs`, add:
 
@@ -440,7 +446,7 @@ At the top of `frmPrincipal.cs`, add:
 using Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs;
 ```
 
-- [ ] **Step 2: Add detail mapper helper**
+- [x] **Step 2: Add detail mapper helper**
 
 Near the other tax helper methods, add:
 
@@ -492,7 +498,7 @@ Expected: build succeeds and `NFeDetImposto.ShouldSerializeIbsCbs()` will serial
 **Files:**
 - Modify: `src/Vip.DFe.Demo/frmPrincipal.cs`
 
-- [ ] **Step 1: Preserve per-item taxation results**
+- [x] **Step 1: Preserve per-item taxation results**
 
 Before the item loop in `ObterDocumento()`, add:
 
@@ -506,7 +512,7 @@ After calculating `tributacao` inside the loop, add:
 tributacoes.Add(tributacao);
 ```
 
-- [ ] **Step 2: Add total using**
+- [x] **Step 2: Add total using**
 
 At the top of `frmPrincipal.cs`, ensure this namespace is already present:
 
@@ -516,7 +522,7 @@ using Vip.DFe.NFe.NotaFiscal.Total;
 
 It is already used by `NFeIcmsTot`; do not add a duplicate if present.
 
-- [ ] **Step 3: Create IBS/CBS total after ICMS total**
+- [x] **Step 3: Create IBS/CBS total after ICMS total**
 
 After `var total = new NFeTotal {IcmsTot = icmsTot};`, add:
 
@@ -524,7 +530,7 @@ After `var total = new NFeTotal {IcmsTot = icmsTot};`, add:
 total.IbsCbsTot = GerarIbsCbsTotal(tributacoes);
 ```
 
-- [ ] **Step 4: Add total helper**
+- [x] **Step 4: Add total helper**
 
 Near tax helper methods, add:
 
@@ -583,7 +589,7 @@ msbuild .\src\Vip.DFe.Demo\Vip.DFe.Demo.csproj /p:Configuration=Debug
 
 Expected: success.
 
-- [ ] **Step 2: Source search**
+- [x] **Step 2: Source search**
 
 Run:
 

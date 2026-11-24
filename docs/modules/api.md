@@ -47,18 +47,39 @@
 ### DANFE
 
 ```text
-DanfeViewModel.CriarDeArquivoXml/CriarDoConteudoXml (ou CriarDeArquivoXml(Stream))
+DanfeViewModelCreator.CriarDeArquivoXml(string caminho | Stream) / CriarDeStringXml(string) / CreateFromXml(NFeProc)
   → new DanfeService(viewModel) → Gerar() → Salvar(path/stream)/ObterPdfBytes(stream)
 
 DanfeEventoViewModel.CriarDeArquivoXml/CriarDoConteudoXml
   → new DanfeEventoService(viewModel) → Gerar() → Salvar(...)
 ```
 
+`DanfeViewModelCreator` (`Vip.DFe.Danfe.Modelo`, classe estática):
+
+| Método | Entrada | Observação |
+|---|---|---|
+| `CriarDeArquivoXml(string caminho)` | caminho de arquivo XML | Raiz `nfeProc` ou `NFe` |
+| `CriarDeArquivoXml(Stream stream)` | stream com o XML | Sobrecarga existente **somente no creator** (`DanfeViewModel.CriarDeArquivoXml` só aceita `string path`) |
+| `CriarDeStringXml(string str)` | conteúdo XML | Equivale a `DanfeViewModel.CriarDoConteudoXml(xml)`; raiz diferente de `nfeProc`/`NFe` gera `System.Exception` com a mensagem "Documento raiz '...' não suportado para geração da DANFE." (coberto em `DanfeViewModelCreatorTests`) |
+| `CreateFromXml(NFeProc procNfe)` | objeto já carregado | Usa `ProtNFe.InfProt`; a sobrecarga que recebe `NFe` é `internal` |
+
+- **`DanfeViewModel.ModoEspelho`**: `true` quando o XML não traz protocolo (`NFe` sem `protNFe`). Nesse modo `ProtocoloAutorizacao`, `CodigoStatusReposta` e `DescricaoStatusReposta` ficam nulos e o `DanfeService` imprime "DANFE SEM VALOR FISCAL" / "SEM AUTORIZAÇÃO DE USO" (pré-visualização).
+- **Somente modelo 55**: `ide.Modelo != NFeModelo.NFe` lança `NotSupportedException` ("Somente o mod==55 está implementado."); `tpEmis` fora de Normal/SVC-AN/SVC-RS também lança `NotSupportedException`.
+
 ## Contratos de resposta
 
-Padrão nas respostas SEFAZ: objeto `XxxResposta` com propriedades `XmlEnvio`, `XmlRetorno`, `EnvelopeSoap`, `RetornoWS` e `Resultado` (com `CStat`/`XMotivo` e dados específicos). Verifique `CStat` para decidir o desfecho (ex.: `100` autorizada, `104` lote em processamento, `135` evento registrado, `128`... — validar códigos no domínio `NFe/Enum/NFeStatus.cs`/`Response`).
+Padrão nas respostas SEFAZ: objeto `XxxResposta` com propriedades `XmlEnvio`, `XmlRetorno`, `EnvelopeSoap`, `RetornoWS` e `Resultado` (com `CStat`/`Motivo` e dados específicos). Verifique `CStat` para decidir o desfecho. Códigos tratados diretamente no código:
 
-> Exemplos de uso completos: `src/README.md` (autorização NFe, SAT, DANFE).
+| `CStat` | Onde | Significado |
+|---|---|---|
+| `104` | `Resultado.CStat` de autorização/`ConsultaAutorizacao` | Lote processado; cada nota traz protocolo próprio em `ProtNFe.InfProt` (`CStat` da nota: 100 autorizada, 110, 150, 301, 302, 303 = `NFeProcessada`) |
+| `100` / `150` | `Consultar(chave).Resultado.CStat` | Autorizada / autorizada fora do prazo — gera `procNFe` |
+| `128` | `Resultado.CStat` de `Cancelar`/`CancelarSubstituicao`/`CartaoCorrecao` | **Lote de eventos processado** (`NFeRecepcaoEventoResult`); gatilho para montar `NFeProcEvento` |
+| `135` | `Resultado.RetEvento[i].InfEvento.CStat` | **Evento registrado e vinculado** à NFe (outros processados: 136, 101, 151, 155 — `DFeConstantes.EventoProcessado`) |
+
+Ou seja: `128` descreve o lote (mensagem `retEnvEvento`), enquanto `135` descreve o resultado de cada evento individual (`retEvento`); um lote pode ter `128` e o evento ser rejeitado, então confira ambos.
+
+> Exemplos de uso mínimos: `README.md` (raiz) — configuração, autorização, eventos, SAT e DANFE.
 
 ## Observações de contrato público
 

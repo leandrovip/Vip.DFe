@@ -16,17 +16,21 @@
 `NFeConfigArquivo` (`1-Services/NFe/Configuration/NFeConfigArquivo.cs`) monta caminhos no padrão:
 
 ```
-<Diretorio>/<CNPJ>/<Modelo>/<Fase>/<yyyyMM>/
+<Diretorio>/<CNPJ>/<Modelo>/<Fase>[/<yyyyMM>]/
 ```
 
 - Fases: `Enviado`, `Assinado`, `Retorno`, `Autorizado`, `Inutilizado` (métodos `ObterCaminhoEnviado/Assinado/Retorno/Autorizado/Inutilizado`).
-- `Diretorio` default: `<BaseDirectory>\NFe`; `DiretorioSchemas` default: `<BaseDirectory>\NFe\Schemas`; `DiretorioAutorizadasBackup` opcional.
-- Separação por CNPJ e mês é automática no padrão de caminho (a Demo/SAT também suporta flags `SepararPorCNPJ`/`SepararPorMes` — `SatArquivos`).
+- **A subpasta `yyyyMM` existe apenas na fase `Autorizado`** (`ObterCaminhoAutorizado(DateTime data, ...)` passa a data; as demais fases chamam `ObterCaminho` sem data — `NFeConfigArquivo.cs:~43-67` e `:97`). `procNFe`/`procEvento` usam a data de emissão (`DhEmi`) / de registro do evento (`DhRegEvento`).
+- `CNPJ` (de `NFeConfig.CNPJ`) e `Modelo` (descrição de `NFeModelo`) entram no caminho quando não vazios; os diretórios são criados se não existirem.
+- `Diretorio` default: `<pasta do assembly>\NFe` (`Assembly.GetExecutingAssembly().GetPath()` + `\NFe`); `DiretorioSchemas` default: `<pasta do assembly>\NFe\Schemas`. Se `Diretorio` ficar vazio, `ObterCaminho` usa `AppDomain.CurrentDomain.BaseDirectory\NFe`.
+- `DiretorioAutorizadasBackup` é opcional: quando preenchido, cópia do `procNFe`/`procEvento` (e do XML de inutilização) é gravada no mesmo padrão sob esse diretório. No `NFeProc.Gravar` a cópia só ocorre se o diretório de backup já existir (`Directory.Exists`).
+- Separação por CNPJ/mês no SAT é configurada em `SatArquivos` (flags `SepararPorCNPJ`/`SepararPorMes`).
 
 ### Fluxo de gravação
 
-- Antes do envio: documentos assinados são gravados pelo `NFeService`/modelos via `DFeDocument<T>.Save`/`GetXml`.
-- Após sucesso (SEFAZ): `NFeService.GerarNFeProc` monta `NFeProc` e chama `NFeProc.Gravar(config)`; eventos montam `NFeProcEvento` e gravam via `procEvento.Gravar(config)`. Exemplos de arquivos gerados: `procNFe`, `procEvento`.
+- Antes do envio: o XML assinado é gravado em `Assinado` por `NFeServBase.GravarXmlAssinado` (`NFeServBase.cs:~47`), se `Arquivos.Salvar`.
+- Durante a chamada SOAP: `ServiceClient.GravarSoap` (`ServiceClient.cs:~94-112`) grava o envelope enviado em `Enviado` e a resposta em `Retorno` (nome `yyyyMMddHHmmssfff-<ArquivoEnvio|ArquivoResposta>.xml`), se `Arquivos.Salvar`.
+- Após sucesso (SEFAZ): `NFeService.GerarNFeProc` monta `NFeProc` e chama `NFeProc.Gravar(config)` (pasta `Autorizado`); eventos montam `NFeProcEvento` e gravam via `procEvento.Gravar(config)`. A inutilização é gravada em `Inutilizado` por `GravarXmlInutilizacao`. Exemplos de arquivos gerados: `procNFe`, `procEvento`.
 - SAT: `SatArquivos` define pastas de venda/cancelamento e prefixos dos arquivos gravados pelo `CFeService`.
 
 ### Schemas
@@ -52,4 +56,4 @@
 - **Ausência de camada de persistência abstraída**: mudanças em caminhos/padrões de arquivo impactam serviços e domínio.
 - **Sem transação/rollback** entre "gravar envio" e "gravar procNFe"; recuperação depende do operador.
 - **Schemas apontados para disco do executável**: `DiretorioSchemas` default aponta para a pasta do assembly; em deploy, os XSDs precisam acompanhar o produto.
-- **Criptografia/senha**: `configuracao.json` da Demo armazena dados de certificado sem criptografia aparente (`Hipótese a validar`).
+- **Criptografia/senha**: `configuracao.json` da Demo armazena `CertificadoSenha` em texto puro (`Configuracao.cs`; `JsonRepository<T>` apenas serializa com `Newtonsoft.Json`, sem criptografia) — fato confirmado; não reutilize essa abordagem em produção.

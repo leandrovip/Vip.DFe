@@ -12,13 +12,14 @@
 | Serialização XML + XSD | Modelos `0-Domain` ↔ XML | `Vip.DFe` (`2-Core/Serializer`, `schemas/`) | Montar/validar XMLs fiscais (leiaute 4.00, eventos 1.00) | Desalinhamento com leiaute; validação por XSD exige XSDs disponíveis em runtime |
 | PDF — DANFE/DANFE de evento | `DanfeService`/`DanfeEventoService` → PDF | `Vip.DFe` (`1-Services/Danfe`, `0-Domain/Danfe`), `Vip.Pdf` (`org.pdfclown`) | Documento auxiliar de impressão | `Vip.Pdf`/PDFClown: origem/licença a validar; fidelidade visual do leiaute |
 | Arquivos XML em disco | `NFeService`/`CFeService` → filesystem | `Vip.DFe` (`NFeConfigArquivo`, `SatArquivos`) | Persistência de envio/retorno/procNFe/procEvento | Sem transação; caminhos por CNPJ/mês; ver `docs/modules/persistence.md` |
-| JSON de configuração | Demo ↔ `configuracao.json` | `Vip.DFe.Demo` (`Data/JsonRepository.cs`) | Persistência da configuração da UI | Dados de certificado sem criptografia aparente (`Hipótese a validar`) |
+| JSON de configuração | Demo ↔ `configuracao.json` | `Vip.DFe.Demo` (`Data/JsonRepository.cs`) | Persistência da configuração da UI | Senha do certificado (`Configuracao.CertificadoSenha`) persistida em texto puro no JSON (confirmado, `Configuracao.cs:~33`) |
 
 ## Detalhes relevantes
 
 ### SEFAZ (SOAP/WCF)
 
-- Base: `ServiceClientBase<T>` (`2-Core/Service`) herda de WCF `ClientBase<T>` com `BasicHttpBinding`; `HTTPS → Security.Mode.Transport` e certificado de cliente (`HttpClientCredentialType.Certificate`).
+- Base: `ServiceClientBase<T>` (`2-Core/Service`) herda de WCF `ClientBase<T>` e parte de um `BasicHttpBinding`; `HTTPS → Security.Mode.Transport` e certificado de cliente (`HttpClientCredentialType.Certificate`).
+- O binding efetivo é um **`CustomBinding` SOAP 1.2**: `Soap12ServiceClientBase<T>` cria `new CustomBinding(Endpoint.Binding)` e ajusta `MessageVersion` do `TextMessageEncodingBindingElement` para `Soap12` (`Soap12ServiceClientBase.cs:~20-24`). Todos os servs NFe passam por `ServiceClient` → `Soap12ServiceClientBase`.
 - `InspectorBehavior`/`MessageInspector` capturam mensagens de requisição/resposta (expostos como `XmlEnvio`/`XmlRetorno`/`EnvelopeSoap`/`RetornoWS` nas respostas).
 - Endpoints: `NFeEnderecoCollection` (27 UFs + SVAN/SVRS/SVC, homologação e produção) por serviço × modelo × versão × ambiente. **Hipótese a validar**: efetividade de todas as URLs.
 - TLS: `NFeService` força `Tls11 | Tls12` globalmente durante a operação.

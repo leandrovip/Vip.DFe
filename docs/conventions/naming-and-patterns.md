@@ -15,7 +15,9 @@
 
 ## Serviços
 
-- Orquestradores: `XxxService` (`NFeService`, `CFeService`, `DanfeService`, `DanfeEventoService`), `sealed`, herdam `VipComponent` (com `Configuracoes`/`Documentos`/eventos `On*`/`StatusChanged`).
+- Orquestradores: `XxxService`.
+  - `NFeService` e `CFeService`: `sealed`, herdam `VipComponent` (com `Configuracoes`/`Documentos`/eventos `On*`/`StatusChanged`).
+  - `DanfeService` e `DanfeEventoService`: `public class ... : IDisposable` (não são `sealed` e não herdam `VipComponent`; ver `DanfeService.cs:18` e `DanfeEventoService.cs:16`).
 - Serviços SEFAZ: `ServXxx` (`NFeServAutorizacao`, `NFeServRetAutorizacao`, `NFeServConsultaProtocolo`, `NFeServStatusServico`, `NFeServInutilizacao`, `NFeServRecepcaoEvento`) + interfaces `INFeXxx`.
 - SAT: `SatManager`, `SatLibrary`, `SatCdecl`/`SatStdCall` + `ISatLibrary`.
 
@@ -37,6 +39,12 @@ XxxServXxx                 → serviço que executa a operação
 - `XxxConfig` por domínio (`NFeConfig`, `SatConfig`), com sub-objetos `Webservices`, `Arquivos`, `Certificado` (NFe) e `SatArquivos` (SAT).
 - Construtores `internal XxxConfig(parent)`; propriedades públicas; `TypeConverter` para uso em designer (`VipExpandableObjectConverter`).
 
+## Elementos opcionais na serialização
+
+- Elementos opcionais usam o padrão `ShouldSerializeXxx()` (método `bool` na própria classe, normalmente `private`, às vezes `public`), consumido pelo serializador para decidir se a tag é emitida. Exemplos em `NFeIde.cs`: `ShouldSerializeCMunFGIBS()`, `ShouldSerializeTpNFDebito()`, `ShouldSerializeGCompraGov()`; em `infNFe.cs`: `ShouldSerializeAvulsa()`.
+- **Regra**: não emitir tags opcionais vazias. Se o grupo/campo não tem conteúdo (ou a condição de negócio não se aplica), `ShouldSerializeXxx()` deve retornar `false`.
+- Commit de referência: `fix(nfe): Corrige serialização XML de elementos opcionais na NFe`.
+
 ## Núcleo
 
 - `DFeSerializer`/`DFeSerializer<T>` (opções em `SerializerOptions`; `SaveOptions` flags).
@@ -56,4 +64,4 @@ XxxServXxx                 → serviço que executa a operação
 - **`propertyChanged` via Fody** mas comentários/`[DesignerSerializationVisibility]` manuais em propriedades — sem padrão único documentado.
 - **`XxxResposta.Resultado` vs `XxxResponse`**: nomes próximos para conceitos diferentes (resultado de alto nível vs mensagem) — `Hipótese a validar` se a distinção está clara para consumidores.
 - **Arquivos de teste com sufixo `Tests` e pastas espelhando namespace** (`Core/`, `NFe/`, `Danfe/`) — padrão ok, mas cobertura mínima.
-- **Tabs como indentação** no csproj; código usa espaços — `Hipótese a validar` se há stylecop/editorconfig (não encontrado).
+- **Tabs como indentação** no csproj; código usa espaços. Não existe `.editorconfig` no repositório (fato) e não há StyleCop configurado.
