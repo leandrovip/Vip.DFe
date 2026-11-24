@@ -32,8 +32,8 @@
 | 2021.002 (v1.12) | Nota Fiscal Fácil – NFF | **Parcial** | `tpEmis = 3` existe no XSD; faltam `infSolicNFF/xSolic`, `infProdNFF` (`cProdFisco`, `cOperNFF`) e `infProdEmb` (`xEmb`, `qVolEmb`, `uEmb`). Baixa prioridade (uso por app NFF) |
 | 2021.004 (v1.30) | Prazos de implantação | **N/A** | — |
 | 2022.001 | Consulta GTIN | **N/A** | Serviço externo; não há cliente na lib |
-| 2022.002 (v1.30) | Equiparação à exportação e outras alterações | **A analisar** | — |
-| 2022.003 (v1.10) | Novos campos e regras | **A analisar** | — |
+| 2022.002 (v1.30a) | Equiparação à exportação (Conv. ICMS 55/2021), Ajuste SINIEF 40/25 (PcD) | **N/A** | Só regras SEFAZ (X04-10: CFOP 7667 com UF "EX"/equiparada; E03a-10, E12-10, E14-10, E16a-20 flexibilizadas p/ CFOP 7501). Sem tag nova no XML |
+| 2022.003 (v1.10/1.11) | Referência com código numérico zerado (`refNFeSig`) + regras BA02* | **Implementado** | `refNFeSig` em `NFeNfRef.cs` e no XSD local; demais itens são regras SEFAZ (BA02-60/70/80, BA02a-74/90/110) |
 | 2022.004 / 2022.005 | Regras ISSQN / DIFAL | **N/A** | Regras; grupo `ICMSUFDest` já existe (`NFeDetImposto.cs:94`) |
 | 2023.001 (v1.5x) | ICMS monofásico combustíveis (ICMS02/15/53/61, `vICMSMono*`) | **Parcial** | Grupos `Icms02/15/53/61` e totais `qBCMono*`/`vICMSMono*` presentes (`NFeIcmsTot.cs:90-120`); faltam `pRedAdRem`/`motRedAdRem` (ICMS15) e `vICMSMonoOp` (ICMS53) |
 | 2023.002 (v1.02) | Fim do envio assíncrono / inutilização em AC, BA, SP | **Parcial** | Lib suporta síncrono (`NFeConfig.EnviarModoSincrono`), mas o **padrão é `false`** (`NFeConfig.cs:28`) |
@@ -48,10 +48,10 @@
 | 2026.001 (v1.02b) | Provedor de Assinatura e Autorização – PAA | **Pendente** | Falta `infPAA/CNPJPAA` (no XSD local). Baixa prioridade |
 | 2026.002 / 2026.003 | DANFE simplificado tipo 2 | **Pendente** | DANFE atual não tem layout simplificado |
 | 2026.004 (v1.01) | **CNPJ alfanumérico** | **Parcial** | XSD local já aceita `[0-9A-Z]{12}[0-9]{2}` (`tiposBasico_v4.00.xsd:96`), mas **`DigitoVerificador.Obter` remove letras** (`OnlyNumbers()`, `2-Core/DigitoVerificador.cs:16`) → chave de acesso com CNPJ alfanumérico falha. Revisar também `ChaveDFe`, validações e campos CNPJ tipados como numéricos |
-| 2026.005 (v1.00) | RTC: Simples Nacional | **A analisar** | — |
-| 2026.006 (v1.01) | RTC: vinculação de pagamento (split payment) | **A analisar** | — |
-| 2026.007 (v1.11) | Emissão por contribuinte sem IE (LCC-RFB/CCC) | **A analisar** | — |
-| 2026.008 (v1.01) | Valor líquido do produto (novos campos) | **A analisar** | — |
+| 2026.005 (v1.00) | RTC: Simples Nacional (IBS/CBS no SN) | **Pendente** | Nenhuma tag no XSD local nem no domínio: `tpRegimeIBSCBS` (1-4), `cAtivSN` (01-04, 90) por item, grupo `gTribSN` com `gIBSSN` (`pIBSSN`, `vIBSSN`) e `gCBSSN` (`pCBSSN`, `vCBSSN`), totais SN. Regras: gTribSN p/ CRT 1 sem regime regular; CRT 2 c/ excesso de sublimite usa IBS/CBS regular + CBS SN; **CRT 4 (MEI) não informa IBSCBS**; CST 620 usa `gIBSCBSMono`; rej. 1275/1276/1277/1284. Produção NF-e prevista **14/12/2026** (aviso de 12/11/2026). Evento fiscal 412140 (gerado pelo Fisco). **Exige novo pacote de schemas** |
+| 2026.006 (v1.01) | RTC: vinculação de pagamento (split payment) | **Pendente** | Grupo `gPgtoVinc` (YC01) / `gPgto` 1-99 (YC02) com atributos `nPag`, `idTransacao`, e `tpMeioPgto`, `CNPJReceb`, `CNPJBasePSP`; evento **110300** (cancelamento via 110001). Ausente no XSD local e no domínio. Facultativo; split payment previsto para 2027. Pacote PL_010g/PL_010h (divergente entre fontes) |
+| 2026.007 (v1.11) | Emissão por contribuinte sem IE (exclusivo IBS/CBS); validações LCC-RFB e CCC | **Pendente** | Sem tags novas, mas exige `emit/IE` opcional: hoje é obrigatório no XSD local (`leiauteNFe_v4.00.xsd:564`) e no domínio (`NFeEmit.cs:74`). Facultativa; só NF-e na SVRS (NFC-e vedada, rej. 156). Sem IE: CNPJ obrigatório, `IEST` proibido, grupo ICMS proibido (salvo exceções), IBSCBS obrigatório (rej. 157-163). Demais regras (LCC-RFB/CCC, rej. 164, 170, 178-188) são da SEFAZ |
+| 2026.008 (v1.01) | Valor líquido do produto; ICMS previsto (pagamento antecipado) | **Pendente** | Ausentes no XSD local e no domínio: `vUnComLiq` (I11b, até 10 decimais) e `vProdLiq` (I11c) em `prod` (pai a confirmar), `vProdLiqTot` (W01a) nos totais, grupo `ICMSPrevisto…`/`vICMSPrevisto` (NB01, só mod. 55). Campos opcionais por ora; regra I11c-20 (rej. 1279: vProdLiq = vUnComLiq × qCom ± 0,01); NB01-30 (grupo obrigatório se `tpNFDebito = 06` ou `tpOperGov = 4`) em homologação 01/02/2027 e produção 01/03/2027. Produção dos campos: **14/12/2026** |
 | 2026.009 (v1.00) | Correção de regra de validação | **N/A** | — |
 | 2026.010 (v1.00) | DANFE com tributos da RTC | **Pendente** | DANFE não imprime IBS/CBS/IS (sem referência em `0-Domain/Danfe` / `1-Services/Danfe`) |
 
@@ -96,14 +96,21 @@ O `leiauteNFe_v4.00.xsd` local já contém estes elementos, mas o domínio não.
 | 2026-08-07 | `aaa6093` | Serialização de opcionais (`ShouldSerialize*`) da RTC |
 | 2026-11-24 | `42b41fc` | `dPrevEntrega` como `DateTime?` (TData) |
 
+## Pacote de schemas
+
+Os XSD em `schemas/` **não contêm** nenhuma tag das NTs 2026.005, 2026.006 e 2026.008 e mantêm `emit/IE` obrigatório (NT 2026.007). O pacote de liberação local é, portanto, anterior a esses ajustes (fontes citam PL_010g/PL_010h para eles — **confirmar no Portal**). Antes de implementar qualquer uma dessas NTs, atualizar `schemas/` a partir do pacote oficial, conferindo as diferenças com `git diff`.
+
+> As informações das NTs 2022.002, 2022.003 e 2026.005–2026.008 vieram de **resumos de fornecedores** (os PDFs oficiais não abriram na pesquisa). Ids, tipos, tamanhos e elemento pai **devem ser confirmados no PDF/XSD oficial** antes da implementação.
+
 ## Prioridades sugeridas
 
 1. **NT 2026.004 – CNPJ alfanumérico**: corrigir cálculo do DV/chave e validações (quebra emissão para emitentes com CNPJ novo).
-2. **NT 2025.002-RTC v1.53**: diff com a versão implementada; atualizar XSD e regras de referência em devolução/complemento.
-3. **NT 2025.001**: QR Code v3 da NFC-e e avaliar `EnviarModoSincrono = true` como padrão.
-4. **NT 2023.004**: campos `dPag`, `CNPJPag`, `UFPag`, `CNPJReceb`, `idTermPag` (+ evento ECONF, se usado).
-5. **NT 2026.010 / 2026.002-003**: DANFE com tributos RTC e DANFE simplificado.
-6. Restante do ICMS monofásico (NT 2023.001), agropecuário (NT 2024.003), campos sem modelo e eventos pós-autorização conforme demanda do VipERP.
-7. Analisar NTs 2022.002, 2022.003 e 2026.005–2026.008.
+2. **Atualizar o pacote de schemas** e implementar a **NT 2026.005 (Simples Nacional na RTC)** — produção prevista para 14/12/2026 e afeta emitentes CRT 1/2/4; junto, os campos opcionais da **NT 2026.008** (`vUnComLiq`, `vProdLiq`, `vProdLiqTot`).
+3. **NT 2025.002-RTC v1.53**: diff com a versão implementada; regras de referência em devolução/complemento.
+4. **NT 2025.001**: QR Code v3 da NFC-e e avaliar `EnviarModoSincrono = true` como padrão.
+5. **NT 2023.004**: campos `dPag`, `CNPJPag`, `UFPag`, `CNPJReceb`, `idTermPag` (+ evento ECONF, se usado).
+6. **NT 2026.010 / 2026.002-003**: DANFE com tributos RTC e DANFE simplificado.
+7. Facultativas/futuras: **NT 2026.007** (emitente sem IE, só se houver cliente exclusivo de IBS/CBS), **NT 2026.006** (split payment, 2027).
+8. Restante do ICMS monofásico (NT 2023.001), agropecuário (NT 2024.003), campos sem modelo e eventos pós-autorização conforme demanda do VipERP.
 
 > Observação: `schemas/prod_leiauteNFe_v4.00.xsd` (cópia antiga do leiaute, até a NT 2018.005, sem uso) foi removido em 2026-11-24; a referência é `leiauteNFe_v4.00.xsd`.
