@@ -6,19 +6,6 @@ namespace Vip.DFe.Extensions
 {
     internal static class AttributeExtensions
     {
-        public static TValue GetAttributeValue<TAttribute, TValue>(
-            this ICustomAttributeProvider type,
-            Func<TAttribute, TValue> valueSelector)
-            where TAttribute : Attribute
-        {
-            var att = type.GetCustomAttributes(
-                    typeof(TAttribute), true
-                )
-                .FirstOrDefault() as TAttribute;
-
-            return att != null ? valueSelector(att) : default;
-        }
-
         public static TAttribute GetAttribute<TAttribute>(this ICustomAttributeProvider provider) where TAttribute : Attribute
         {
             var att = provider.GetCustomAttributes(typeof(TAttribute), true).FirstOrDefault() as TAttribute;

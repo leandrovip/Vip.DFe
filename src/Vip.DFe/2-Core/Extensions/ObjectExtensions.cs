@@ -44,45 +44,6 @@ namespace Vip.DFe.Extensions
         }
 
         /// <summary>
-        ///     Determina se um evento esta setado ou não
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="classe">Classe</param>
-        /// <param name="evento">Nome do evento</param>
-        /// <returns><c>true</c> se o evento foi setado, <c>false</c> Senão.</returns>
-        public static bool EventAssigned<T>(this T classe, string evento) where T : class
-        {
-            var fieldInfo = typeof(T).GetField(evento, BindingFlags.NonPublic | BindingFlags.Instance);
-
-            if (!(fieldInfo?.GetValue(classe) is Delegate handler)) return false;
-            var subscribers = handler.GetInvocationList();
-            return subscribers.Length != 0;
-        }
-
-        /// <summary>
-        ///     Dispara <exception cref="System.ArgumentNullException">ArgumentNullException</exception> se o objeto for nulo.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="data">O item para checar se é nulo.</param>
-        /// <param name="name">O nome para lançar se na exception, se necessário</param>
-        /// <exception cref="System.ArgumentNullException"></exception>
-        public static void ThrowIfNull<T>(this T data, string name) where T : IComparable<T>
-        {
-            Guard.Against<ArgumentNullException>(data == null, name);
-        }
-
-        /// <summary>
-        ///     Dispara <exception cref="System.ArgumentNullException">ArgumentNullException</exception> se o objeto for nulo.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="data">O item para checar se é nulo.</param>
-        /// <exception cref="System.ArgumentNullException"></exception>
-        public static void ThrowIfNull<T>(this T data) where T : IComparable<T>
-        {
-            Guard.Against<ArgumentNullException>(data == null, nameof(data));
-        }
-
-        /// <summary>
         ///     Determina se o valor é nulo ou não.
         /// </summary>
         /// <typeparam name="T"></typeparam>

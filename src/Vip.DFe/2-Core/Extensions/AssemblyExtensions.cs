@@ -5,9 +5,9 @@ using System.Reflection;
 namespace Vip.DFe.Extensions
 {
     /// <summary>
-    ///     Classe AssemblyExtenssions.
+    ///     Classe AssemblyExtensions.
     /// </summary>
-    internal static class AssemblyExtenssions
+    internal static class AssemblyExtensions
     {
         /// <summary>
         ///     Gets the path.

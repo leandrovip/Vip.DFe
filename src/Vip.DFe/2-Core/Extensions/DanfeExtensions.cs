@@ -52,7 +52,7 @@ namespace Vip.DFe.Extensions
         /// <returns></returns>
         public static double ToMm(this double point) => point / PointFactor;
 
-        public static RectangleF InflatedRetangle(this RectangleF rect, float top, float button, float horizontal) => new RectangleF(rect.X + horizontal, rect.Y + top, rect.Width - 2 * horizontal, rect.Height - top - button);
+        public static RectangleF InflatedRetangle(this RectangleF rect, float top, float bottom, float horizontal) => new RectangleF(rect.X + horizontal, rect.Y + top, rect.Width - 2 * horizontal, rect.Height - top - bottom);
 
         public static RectangleF InflatedRetangle(this RectangleF rect, float value) => rect.InflatedRetangle(value, value, value);
 

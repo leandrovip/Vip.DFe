@@ -9,21 +9,6 @@ namespace Vip.DFe.Extensions
     internal static class EnumerableExtensions
     {
         /// <summary>
-        ///     Transforma uma lista em uma BindingList.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="list">A lista</param>
-        /// <returns>BindingList</returns>
-        public static BindingList<T> ToBindingList<T>(this IEnumerable<T> list)
-        {
-            var ret = new BindingList<T>();
-
-            foreach (var item in list) ret.Add(item);
-
-            return ret;
-        }
-
-        /// <summary>
         ///     Transforma uma lista de string em uma unica string.
         /// </summary>
         /// <param name="array">The array.</param>

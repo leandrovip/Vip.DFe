@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -13,6 +14,9 @@ namespace Vip.DFe.Serializer
 {
     internal class ObjectSerializer
     {
+        private static readonly ConcurrentDictionary<Type, PropertyInfo[]> SerializeProps = new ConcurrentDictionary<Type, PropertyInfo[]>();
+        private static readonly ConcurrentDictionary<Type, PropertyInfo[]> DeserializeProps = new ConcurrentDictionary<Type, PropertyInfo[]>();
+
         #region Serialize
 
         public static XElement Serialize(object value, Type tipo, string name, string nameSpace, SerializerOptions options)
@@ -22,13 +26,13 @@ namespace Vip.DFe.Serializer
                 XNamespace aw = nameSpace ?? string.Empty;
                 var objectElement = new XElement(aw + name);
 
-                var properties = tipo.GetProperties()
-                    .Where(x => !x.ShouldIgnoreProperty() && x.ShouldSerializeProperty(value))
-                    .OrderBy(x => x.GetAttribute<DFeBaseAttribute>()?.Ordem ?? 0).ToArray();
+                var properties = SerializeProps.GetOrAdd(tipo, t => t.GetProperties()
+                    .Where(x => !x.ShouldIgnoreProperty())
+                    .OrderBy(x => x.GetAttribute<DFeBaseAttribute>()?.Ordem ?? 0).ToArray());
 
                 foreach (var prop in properties)
                 {
-                    if (prop.ShouldIgnoreProperty() || !prop.ShouldSerializeProperty(value)) continue;
+                    if (!prop.ShouldSerializeProperty(value)) continue;
 
                     var elements = Serialize(prop, value, options);
                     if (elements == null) continue;
@@ -118,11 +122,9 @@ namespace Vip.DFe.Serializer
 
                 if (element == null) return ret;
 
-                var properties = type.GetProperties();
+                var properties = DeserializeProps.GetOrAdd(type, t => t.GetProperties().Where(x => !x.ShouldIgnoreProperty()).ToArray());
                 foreach (var prop in properties)
                 {
-                    if (prop.ShouldIgnoreProperty()) continue;
-
                     var value = Deserialize(prop, element, ret, options);
                     prop.SetValue(ret, value, null);
                 }

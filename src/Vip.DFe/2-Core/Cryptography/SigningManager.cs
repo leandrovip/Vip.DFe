@@ -61,6 +61,7 @@ namespace Vip.DFe.Cryptography
         /// <param name="digest">Algoritmo usando para gerar o hash por padrão SHA1.</param>
         /// <returns>System.String.</returns>
         /// <exception cref="VipException">Erro ao efetuar assinatura digital.</exception>
+        [Obsolete("Sem uso na biblioteca; será removido em versão futura.")]
         public static string AssinarXmlTodos(string xml, string docElement, string infoElement, X509Certificate2 certificado, bool comments = false, bool identado = false, bool showDeclaration = false, SignDigest digest = SignDigest.SHA1)
         {
             try
@@ -187,6 +188,7 @@ namespace Vip.DFe.Cryptography
             return signedDocument.GetXml();
         }
 
+        [Obsolete("Sem uso na biblioteca; será removido em versão futura.")]
         public static RSACryptoServiceProvider LerDispositivo(RSACryptoServiceProvider key, string PIN)
         {
             CspParameters csp = new CspParameters(key.CspKeyContainerInfo.ProviderType, key.CspKeyContainerInfo.ProviderName);

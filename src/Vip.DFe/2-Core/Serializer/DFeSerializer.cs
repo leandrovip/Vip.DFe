@@ -127,8 +127,6 @@ namespace Vip.DFe.Serializer
         /// <param name="path">The xml.</param>
         public bool Serialize(object item, string path)
         {
-            Guard.Against<ArgumentException>(item.GetType() != tipoDFe, "Tipo diferente do informado");
-
             Options.ErrosAlertas.Clear();
 
             if (item.IsNull())
@@ -136,6 +134,8 @@ namespace Vip.DFe.Serializer
                 Options.ErrosAlertas.Add("O item é nulo !");
                 return false;
             }
+
+            Guard.Against<ArgumentException>(item.GetType() != tipoDFe, "Tipo diferente do informado");
 
             var xmldoc = Serialize(item);
             var ret = !Options.ErrosAlertas.Any();
@@ -153,14 +153,15 @@ namespace Vip.DFe.Serializer
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public bool Serialize(object item, Stream stream)
         {
-            Guard.Against<ArgumentException>(item.GetType() != tipoDFe, "Tipo diferente do informado");
-
             Options.ErrosAlertas.Clear();
+
             if (item.IsNull())
             {
                 Options.ErrosAlertas.Add("O item é nulo !");
                 return false;
             }
+
+            Guard.Against<ArgumentException>(item.GetType() != tipoDFe, "Tipo diferente do informado");
 
             var xmldoc = Serialize(item);
             var ret = !Options.ErrosAlertas.Any();

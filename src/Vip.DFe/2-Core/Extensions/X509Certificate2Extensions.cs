@@ -44,16 +44,5 @@ namespace Vip.DFe.Extensions
 
             return cnpj;
         }
-
-        /// <summary>
-        ///     Verifica se o certificado digital esta dentro da validade.
-        ///     <para>Verificar validade do certificado digital, se vencido dispara ArgumentException</para>
-        /// </summary>
-        /// <param name="certificado"></param>
-        public static bool IsValid(this X509Certificate2 certificado)
-        {
-            var dataExpiracao = Convert.ToDateTime(certificado.GetExpirationDateString());
-            return dataExpiracao <= DateTime.Now;
-        }
     }
 }

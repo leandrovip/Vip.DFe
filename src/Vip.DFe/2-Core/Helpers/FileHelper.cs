@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace Vip.DFe.Helpers
 {
+    [Obsolete("Sem uso na biblioteca; será removido em versão futura.")]
     public static class FileHelper
     {
         /// <summary>

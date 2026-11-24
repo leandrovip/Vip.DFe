@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.ServiceModel.Channels;
 using System.Xml;
 using Vip.DFe.Writer;
@@ -38,12 +39,14 @@ namespace Vip.DFe.Helpers
             return messageXml;
         }
 
+        [Obsolete("Sem uso na biblioteca; será removido em versão futura.")]
         public static void SaveXml(ref Message message, string file)
         {
             using (var fs = new FileStream(file, FileMode.CreateNew))
                 SaveXml(ref message, fs);
         }
 
+        [Obsolete("Sem uso na biblioteca; será removido em versão futura.")]
         public static void SaveXml(ref Message message, Stream stream)
         {
             var buffer = message.CreateBufferedCopy(int.MaxValue);

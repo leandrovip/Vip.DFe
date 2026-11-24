@@ -89,15 +89,5 @@ namespace Vip.DFe.Extensions
         {
             return source.Elements().SingleOrDefault(e => e.Name.LocalName == name);
         }
-
-        public static XmlDocument ToXmlDocument(this XDocument document)
-        {
-            using (var reader = document.CreateReader())
-            {
-                var xmlDocument = new XmlDocument();
-                xmlDocument.Load(reader);
-                return xmlDocument;
-            }
-        }
     }
 }

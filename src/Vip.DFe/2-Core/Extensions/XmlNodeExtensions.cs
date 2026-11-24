@@ -49,17 +49,6 @@ namespace Vip.DFe.Extensions
         }
 
         /// <summary>
-        ///     Adiciona varias tag ao documento ignorando os elementos nulos.
-        /// </summary>
-        /// <param name="xmlDoc">The XML document.</param>
-        /// <param name="tags">The tags.</param>
-        public static void AddTag(this XmlNode xmlDoc, params XmlNode[] tags)
-        {
-            if (tags.Length < 1) return;
-            foreach (var tag in tags.Where(tag => tag != null)) xmlDoc.AppendChild(tag);
-        }
-
-        /// <summary>
         ///     Gets the value.
         /// </summary>
         /// <typeparam name="TType"></typeparam>

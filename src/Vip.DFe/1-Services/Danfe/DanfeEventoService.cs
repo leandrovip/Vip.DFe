@@ -118,9 +118,9 @@ namespace Vip.DFe.Danfe
         public byte[] ObterPdfBytes(Stream stream)
         {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
-            var pdfStrean = new org.pdfclown.bytes.Stream(stream);
-            _file.Save(pdfStrean, SerializationModeEnum.Incremental);
-            return pdfStrean.ToByteArray();
+            var pdfStream = new org.pdfclown.bytes.Stream(stream);
+            _file.Save(pdfStream, SerializationModeEnum.Incremental);
+            return pdfStream.ToByteArray();
         }
 
         #endregion
