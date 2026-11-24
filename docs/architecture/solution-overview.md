@@ -17,7 +17,7 @@ Biblioteca .NET para emissão e gestão de Documentos Fiscais Eletrônicos (DFe)
 | Biblioteca | `Vip.DFe` — `netstandard2.0`, `LangVersion latest`, versão csproj `1.0.21`, MIT |
 | Demo | `Vip.DFe.Demo` — WinForms .NET Framework 4.8 (projeto MSBuild legado, `packages.config`) |
 | Testes | `Vip.DFe.Tests` — xUnit `net6.0` |
-| Publicação | NuGet (`Vip.DFe`), pipeline Gitea Actions em `.gitea/workflows/nuget.yml` (repositório de origem no Gitea; GitHub é mirror) |
+| Publicação | NuGet (`Vip.DFe`), manual via GitHub Actions no mirror (`.github/workflows/nuget.yml`, Trusted Publishing); CI no Gitea (`.gitea/workflows/ci.yml`) |
 | Idiomas | Mensagens de erro/validação em PT-BR |
 
 ## Projetos

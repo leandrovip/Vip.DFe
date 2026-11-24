@@ -10,7 +10,7 @@
   - `msbuild .\src\Vip.DFe.sln /p:Configuration=Debug` — solução completa, incluindo a Demo (a Demo NÃO roda com `dotnet run`).
 - Para qualquer mudança de leiaute XML/Nota Técnica, use a skill `.claude/skills/nfe-xml-nota-tecnica`.
 - Elementos opcionais não devem serializar vazios: use o padrão `private bool ShouldSerializeXxx()`.
-- Não altere `<Version>` do csproj: a versão vem do workflow `.gitea/workflows/nuget.yml`.
+- Não altere `<Version>` do csproj: a versão vem do workflow `.github/workflows/nuget.yml` (publicação manual no mirror GitHub com Trusted Publishing; CI em `.gitea/workflows/ci.yml`).
 - `origin` é o Gitea; o GitHub é mirror (não faça push direto nele).
 - Todos os `.cs` estão em UTF-8 com BOM e CRLF; mantenha esse padrão em arquivos novos e editados.
 - CFe-SAT é legado (substituído pela NFCe): mantido só para compatibilidade e leitura de XMLs antigos; não evolua.

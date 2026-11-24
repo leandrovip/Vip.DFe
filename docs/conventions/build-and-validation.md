@@ -1,12 +1,13 @@
 # Compilação e Validação
 
-> Fonte de verdade: arquivos `.csproj`, `.gitea/workflows/nuget.yml`, `.gitea/workflows/ci.yml` e `src/nuget.config`. Itens incertos marcados como **Hipótese a validar**.
+> Fonte de verdade: arquivos `.csproj`, `.gitea/workflows/ci.yml`, `.github/workflows/nuget.yml` e `src/nuget.config`. Itens incertos marcados como **Hipótese a validar**.
 
 ## Repositório e CI
 
-- **Origem**: Gitea `ssh://git@dev.vipsolucoes.com:3022/vipsolucoes/vip-dfe.git` (remote `origin`). Pushes, PRs e Actions acontecem aqui.
+- **Origem**: Gitea `ssh://git@dev.vipsolucoes.com:3022/vipsolucoes/vip-dfe.git` (remote `origin`). Pushes, PRs e CI acontecem aqui.
 - **GitHub** (`github.com/leandrovip/Vip.DFe`) é **mirror** público (push mirror configurado no Gitea). Não faça push direto nele. URLs públicas (README, `PackageProjectUrl`/`RepositoryUrl` do csproj) continuam apontando para o GitHub.
-- **Gitea Actions** com runners próprios: `vip-linux` (CI) e `vip-windows` (publicação). Os workflows ficam em `.gitea/workflows/`.
+- **CI**: Gitea Actions, `.gitea/workflows/ci.yml`, runner `vip-linux`. O Gitea lê só `.gitea/workflows/` (ignora `.github/workflows/` quando aquela existe).
+- **Publicação**: GitHub Actions **no mirror**, `.github/workflows/nuget.yml`, **somente manual** (`workflow_dispatch`), com **Trusted Publishing** do nuget.org (OIDC, sem API key). Motivo: o Trusted Publishing só aceita GitHub Actions e GitLab CI, não Gitea.
 
 ## Requisitos
 
@@ -22,19 +23,20 @@ Em `push`/`pull_request` para `master`: `dotnet restore`/`build`/`test` do proje
 
 > **Hipótese a validar**: os testes de DANFE geram PDF via `Vip.Pdf` → `System.Drawing.Common`, suportado só no Windows a partir do .NET 7. Se falharem no `vip-linux`, mover o `ci.yml` para `vip-windows`.
 
-### Pipeline de publicação (Gitea Actions `nuget.yml`, runner `vip-windows`, manual) — ordem de referência
+### Pipeline de publicação (GitHub Actions no mirror, `nuget.yml`, `windows-latest`, manual) — ordem de referência
 
 ```bash
 dotnet restore src/Vip.DFe.Tests/Vip.DFe.Tests.csproj
 dotnet build src/Vip.DFe.Tests/Vip.DFe.Tests.csproj -c Release --no-restore -p:Version=<versão>
 dotnet test src/Vip.DFe.Tests/Vip.DFe.Tests.csproj -c Release --no-build
 dotnet pack src/Vip.DFe/Vip.DFe.csproj -c Release -o artifacts -p:Version=<versão> -p:PackageVersion=<versão[-beta]>
-dotnet nuget push "artifacts/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key <NUGET_TOKEN> --skip-duplicate
+# NuGet/login@v1 troca o token OIDC do GitHub por uma API key temporária (~1 h)
+dotnet nuget push "artifacts/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key <chave temporária do NuGet/login> --skip-duplicate
 ```
 
-> Versão publicada é definida no workflow (`1.2.<run_number>`, sufixo `-beta` opcional via input `typeBuild`), não no csproj (`1.0.21`). A série `1.1.x` (até `1.1.46`) foi publicada pelo antigo GitHub Actions; a `1.2` começou com a migração para o Gitea (contador de runs zerado) e com a quebra `CartaoCorrecao` → `CartaCorrecao`. Não edite o csproj para "publicar versão".
+> Versão publicada é definida no workflow (`1.2.<run_number>`, sufixo `-beta` opcional via input `typeBuild`), não no csproj (`1.0.21`). O `run_number` do `nuget.yml` no GitHub continua a contagem da série `1.1.x` (até `1.1.46`); a `1.2` marca as quebras `CartaoCorrecao` → `CartaCorrecao` e `DPrevEntrega` → `DateTime?`. Não edite o csproj para "publicar versão".
 >
-> Requer o secret `NUGET_TOKEN` configurado no repositório do Gitea.
+> Pré-requisitos: política de **Trusted Publishing** no nuget.org (Owner `leandrovip`, Repository `Vip.DFe`, Workflow File `nuget.yml`) e secret `NUGET_USER` (nome do perfil nuget.org) no repositório GitHub. O `workflow_dispatch` só fica disponível quando o arquivo está na branch padrão (`master`) do GitHub.
 >
 > O pacote inclui `lib/netstandard2.0/Vip.DFe.xml` (`GenerateDocumentationFile`; `CS1591` suprimido) e não expõe `Fody`/`PropertyChanged.Fody`/`ExtraConstraints.Fody` como dependências (`PrivateAssets="all"`).
 

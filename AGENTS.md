@@ -69,8 +69,9 @@ dotnet build .\src\Vip.DFe\Vip.DFe.csproj               # só a lib
 ```
 
 - Compile os projetos impactados primeiro; rode testes ao tocar em `0-Domain`, `2-Core`, DANFE ou testes.
-- Não altere a versão no csproj: a versão publicada é definida pelo workflow `.gitea/workflows/nuget.yml` (`1.2.<run_number>`).
-- Repositório de origem: Gitea (`origin`, `ssh://git@dev.vipsolucoes.com:3022/vipsolucoes/vip-dfe.git`). O GitHub é mirror — não faça push direto nele. CI/publicação via Gitea Actions (runners `vip-linux` e `vip-windows`).
+- Não altere a versão no csproj: a versão publicada é definida pelo workflow `.github/workflows/nuget.yml` (`1.2.<run_number>`).
+- Repositório de origem: Gitea (`origin`, `ssh://git@dev.vipsolucoes.com:3022/vipsolucoes/vip-dfe.git`). O GitHub é mirror — não faça push direto nele.
+- CI: Gitea Actions (`.gitea/workflows/ci.yml`, runner `vip-linux`). Publicação NuGet: manual, GitHub Actions no mirror (`.github/workflows/nuget.yml`) com Trusted Publishing — o nuget.org não aceita OIDC do Gitea.
 
 ## Ignorar
 
