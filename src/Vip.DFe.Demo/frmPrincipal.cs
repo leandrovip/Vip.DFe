@@ -271,6 +271,7 @@ namespace Vip.DFe.Demo
         private void FuncaoGerarXml()
         {
             var documento = ObterDocumento();
+            _service.Documentos.Clear();
             _service.Documentos.Add(documento);
             _service.Documentos.Assinar();
 
@@ -285,6 +286,7 @@ namespace Vip.DFe.Demo
 
             var documento = gerarNovoXml ? ObterDocumento() : NFe.NotaFiscal.NFe.Load(txtXml.Text);
 
+            _service.Documentos.Clear();
             _service.Documentos.Add(documento);
             txtXml.Text = _service.Documentos.IsEmpty() ? "" : _service.Documentos.NFe.FirstOrDefault().GetXml().FormatarXml();
 
@@ -574,6 +576,7 @@ namespace Vip.DFe.Demo
         {
             var documento = ObterDocumento();
 
+            _service.Documentos.Clear();
             _service.Documentos.Add(documento);
             txtXml.Text = _service.Documentos.IsEmpty() ? "" : _service.Documentos.NFe.FirstOrDefault().Xml.FormatarXml();
 
