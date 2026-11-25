@@ -41,6 +41,7 @@ packages/           # dependências locais da Demo (nuget.config aponta para cá
 
 ## Antes de editar
 
+- **Commit/push somente com confirmação explícita do usuário**: deixe as alterações no working tree, apresente o resumo e aguarde a revisão do diff. Cada confirmação vale só para aquele commit.
 - **Mapeie o fluxo**: identifique pontos de entrada (serviços), camadas envolvidas e onde o XML/arquivos são gerados.
 - **Alterações mínimas**: não faça refatorações amplas; faça a mudança mais local possível.
 - **Preserve contratos públicos**: assinaturas e namespaces de métodos públicos são consumidos por clientes do NuGet; não quebre sem necessidade explícita.
