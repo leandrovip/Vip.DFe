@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using NFeDoc = Vip.DFe.NFe.NotaFiscal.NFe;
 using Vip.DFe.Enum;
 using Vip.DFe.Helpers;
 using Vip.DFe.NFe.NotaFiscal.Total;
@@ -15,7 +14,8 @@ namespace Vip.DFe.Tests.Serializer
         private static string CaminhoSchema => Path.Combine(SerializerTestHelper.CaminhoBase, "schemas", "nfe_v4.00.xsd");
 
         /// <summary>Certificado autoassinado gerado em memoria (RSA 2048 / SHA-256), sem acesso ao repositorio de certificados.</summary>
-        private static X509Certificate2 CriarCertificadoAutoassinado()
+        [Obsolete("Obsolete")]
+        internal static X509Certificate2 CriarCertificadoAutoassinado()
         {
             using var rsa = RSA.Create(2048);
             var req = new CertificateRequest("CN=Vip.DFe Teste", rsa, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
@@ -30,6 +30,7 @@ namespace Vip.DFe.Tests.Serializer
         }
 
         [Fact]
+        [Obsolete("Obsolete")]
         public void NFe_Assinar_ComCertificadoAutoassinado_DeveGerarAssinaturaValida()
         {
             var nfe = SerializerTestHelper.CarregarNFeModelo();
@@ -43,6 +44,7 @@ namespace Vip.DFe.Tests.Serializer
         }
 
         [Fact]
+        [Obsolete("Obsolete")]
         public void NFe_Assinada_DeveSerValidaContraXsdNfe400()
         {
             var nfe = SerializerTestHelper.CarregarNFeModelo();
@@ -55,6 +57,7 @@ namespace Vip.DFe.Tests.Serializer
         }
 
         [Fact]
+        [Obsolete("Obsolete")]
         public void NFe_AssinadaComIssqnTotEDCompet_DeveSerValidaContraXsdNfe400()
         {
             var nfe = SerializerTestHelper.CarregarNFeModelo();
@@ -72,13 +75,14 @@ namespace Vip.DFe.Tests.Serializer
         ///     a declaração XML; o lote enviNFe deve ser montado com GetXml(opções sem declaração) e ser válido no XSD.
         /// </summary>
         [Fact]
+        [Obsolete("Obsolete")]
         public void EnviNFe_AposAssinarEValidarAssinatura_DeveSerValidoContraXsdSemDeclaracaoInterna()
         {
             var nfe = SerializerTestHelper.CarregarNFeModelo();
             var opcoes = SaveOptions.DisableFormatting | SaveOptions.OmitDeclaration;
             using var cert = CriarCertificadoAutoassinado();
             nfe.Assinar(cert, opcoes);
-            Assert.True(nfe.ValidarAssinatura(true));
+            Assert.True(nfe.ValidarAssinatura());
 
             var nfeXml = nfe.GetXml(opcoes);
             var lote = "<enviNFe xmlns=\"http://www.portalfiscal.inf.br/nfe\" versao=\"4.00\"><idLote>1</idLote><indSinc>1</indSinc>" + nfeXml + "</enviNFe>";
