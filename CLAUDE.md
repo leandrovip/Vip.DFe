@@ -5,7 +5,7 @@
 ## Específico do Claude Code
 
 - **Commit e push só com confirmação explícita do usuário.** Ao terminar uma alteração, deixe-a no working tree (sem `git add`/`commit`/`push`), apresente o resumo do que mudou e aguarde o usuário revisar o diff e dizer para commitar. Vale também para commits pequenos (docs, `.gitignore`) e para cada novo commit — uma confirmação não autoriza os seguintes.
-- **Push de branch que não seja a `master`**: junto com o resultado do push, entregue o texto do PR (título + descrição em Markdown, pronto para colar no Gitea) com o link de criação do PR.
+- **Push de branch que não seja a `master`**: junto com o resultado do push, entregue **sempre em Markdown** o texto do PR (título + descrição, pronto para colar no Gitea) com o link de criação do PR.
 
 - Comandos essenciais:
   - `dotnet build .\src\Vip.DFe\Vip.DFe.csproj` — compila a lib.
