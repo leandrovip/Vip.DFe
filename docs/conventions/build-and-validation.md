@@ -8,6 +8,7 @@
 - **GitHub** (`github.com/leandrovip/Vip.DFe`) é **mirror** público (push mirror configurado no Gitea). Não faça push direto nele. URLs públicas (README, `PackageProjectUrl`/`RepositoryUrl` do csproj) continuam apontando para o GitHub.
 - **CI**: Gitea Actions, `.gitea/workflows/ci.yml`, runner `vip-linux`. O Gitea lê só `.gitea/workflows/` (ignora `.github/workflows/` quando aquela existe).
 - **Publicação**: GitHub Actions **no mirror**, `.github/workflows/nuget.yml`, **somente manual** (`workflow_dispatch`), com **Trusted Publishing** do nuget.org (OIDC, sem API key). Motivo: o Trusted Publishing só aceita GitHub Actions e GitLab CI, não Gitea.
+- **Submódulo `referencias/`**: repo privado `ssh://git@dev.vipsolucoes.com:3022/vipsolucoes/dfe-referencia.git` (NTs e schemas oficiais, ver skill `nt-referencias`). Clone com `git clone --recurse-submodules` ou rode `git submodule update --init referencias`. **Não é necessário para compilar**: `ci.yml` e `nuget.yml` usam `actions/checkout@v4` sem `submodules`, então não o baixam (no mirror público do GitHub o link do submódulo aparece, mas é inacessível).
 
 ## Requisitos
 

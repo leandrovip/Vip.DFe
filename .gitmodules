@@ -1,0 +1,3 @@
+[submodule "referencias"]
+	path = referencias
+	url = ssh://git@dev.vipsolucoes.com:3022/vipsolucoes/dfe-referencia.git

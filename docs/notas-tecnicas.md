@@ -5,7 +5,7 @@
 >
 > **Fontes**: lista de NTs do espelho oficial SVRS (`dfe-portal.svrs.rs.gov.br/Nfe/Documentos`) e PDFs do Portal Nacional quando acessíveis; versões/datas **não foram conferidas PDF a PDF** — confirme no [Portal Nacional da NF-e](https://www.nfe.fazenda.gov.br/portal/listaConteudo.aspx?tipoConteudo=04BIflQt1aY=) antes de planejar.
 > **Evidência de código**: schemas em `schemas/` e modelos em `src/Vip.DFe/0-Domain/NFe` (busca pelo nome da tag nos atributos `[DFeElement]`/`[DFeCollection]`).
-> Para implementar uma NT use a skill [`.claude/skills/nfe-xml-nota-tecnica`](../.claude/skills/nfe-xml-nota-tecnica/SKILL.md).
+> Para implementar uma NT use a skill [`.claude/skills/nfe-xml-nota-tecnica`](../.claude/skills/nfe-xml-nota-tecnica/SKILL.md); para baixar/triar NTs e schemas novos, a skill [`.claude/skills/nt-referencias`](../.claude/skills/nt-referencias/SKILL.md). Datas de homologação/produção: [`cronograma-nt.md`](cronograma-nt.md).
 
 ## Legenda
 
@@ -98,7 +98,11 @@ O `leiauteNFe_v4.00.xsd` local já contém estes elementos, mas o domínio não.
 
 ## Pacote de schemas
 
-Os XSD em `schemas/` **não contêm** nenhuma tag das NTs 2026.005, 2026.006 e 2026.008 e mantêm `emit/IE` obrigatório (NT 2026.007). O pacote de liberação local é, portanto, anterior a esses ajustes (fontes citam PL_010g/PL_010h para eles — **confirmar no Portal**). Antes de implementar qualquer uma dessas NTs, atualizar `schemas/` a partir do pacote oficial, conferindo as diferenças com `git diff`.
+Os XSD em `schemas/` **não contêm** nenhuma tag das NTs 2026.005, 2026.006 e 2026.008 e mantêm `emit/IE` obrigatório (NT 2026.007). O pacote de liberação local é, portanto, anterior a esses ajustes. Confirmado no Portal Nacional (2026-11-26): o **PL_010h v1.03** (13/11/2026) cobre as NTs 2026.005 v1.00, 2026.006 v1.00 e 2026.008 v1.01; o PL_010f v1.04 cobre a 2026.007. Lista completa em [`cronograma-nt.md`](cronograma-nt.md#pacotes-de-schema-publicados).
+
+Antes de implementar qualquer uma dessas NTs, baixe o pacote com `referencias/tools/Baixar-Referencias.ps1` (submódulo `dfe-referencia`, skill `nt-referencias`), compare `referencias/schemas/PL_xxx/` com `schemas/` e só então atualize `schemas/`.
+
+> O espelho SVRS não tem todos os pacotes (parava no PL_010c em 2026-11-26); use o Portal Nacional como fonte.
 
 > As informações das NTs 2022.002, 2022.003 e 2026.005–2026.008 vieram de **resumos de fornecedores** (os PDFs oficiais não abriram na pesquisa). Ids, tipos, tamanhos e elemento pai **devem ser confirmados no PDF/XSD oficial** antes da implementação.
 

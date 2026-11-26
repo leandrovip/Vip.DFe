@@ -19,6 +19,7 @@ src/
 ├── Vip.DFe.Tests/  # xUnit net10.0 (cobertura mínima)
 └── Vip.DFe.sln
 schemas/            # XSDs NFe 4.00 / eventos 1.00 / xmldsig (validação em runtime)
+referencias/        # SUBMÓDULO git (repo dfe-referencia): NTs em .md, XSD dos pacotes oficiais, manifesto.json e tools/Baixar-Referencias.ps1
 packages/           # dependências locais da Demo (nuget.config aponta para cá)
 ```
 
@@ -34,6 +35,8 @@ packages/           # dependências locais da Demo (nuget.config aponta para cá
 - `docs/architecture/*` → visão geral, camadas, projetos.
 - `docs/modules/*` → domínio, serviços, persistência, API, UI.
 - `docs/notas-tecnicas.md` → changelog das NTs NF-e/NFC-e: o que está implementado, parcial e pendente.
+- `docs/cronograma-nt.md` → datas de homologação/produção das NTs e pacotes de schema publicados.
+- `referencias/` → submódulo `dfe-referencia` com as fontes oficiais (texto das NTs, XSD dos pacotes PL_xxx, `manifesto.json`). Fonte primária: Portal Nacional da NF-e (o espelho SVRS é incompleto). Se a pasta estiver vazia: `git submodule update --init referencias`. O CI não baixa o submódulo.
 - `docs/flows/*` → fluxos de negócio e integrações.
 - `docs/conventions/*` → nomenclatura/padrões e build.
 - Incertos estão marcados como **Hipótese a validar** — não trate como fato.
@@ -48,6 +51,7 @@ packages/           # dependências locais da Demo (nuget.config aponta para cá
 - **Preserve contratos públicos**: assinaturas e namespaces de métodos públicos são consumidos por clientes do NuGet; não quebre sem necessidade explícita.
 - Se algo estiver incerto no código, marque como `Hipótese a validar` na documentação, não invente.
 - Para alterações de leiaute XML de NF-e/NFC-e/SAT/eventos baseadas em Nota Técnica, schemas ou especificação de campos, use a skill `nfe-xml-nota-tecnica` (`.claude/skills/nfe-xml-nota-tecnica/SKILL.md`) antes de implementar.
+- Para verificar/baixar NTs e pacotes de schema novos e atualizar `docs/notas-tecnicas.md`/`docs/cronograma-nt.md`, use a skill `nt-referencias` (`.claude/skills/nt-referencias/SKILL.md`), que roda `referencias/tools/Baixar-Referencias.ps1`. Não copie XSD de `referencias/schemas/` para `schemas/` fora de uma implementação. Mudanças no submódulo exigem dois commits (no `dfe-referencia` e o ponteiro no Vip.DFe), cada um com confirmação do usuário.
 
 ## Tarefas multi-camada (exemplos)
 
