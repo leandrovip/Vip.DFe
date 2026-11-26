@@ -46,6 +46,12 @@ namespace Vip.DFe.NFe.NotaFiscal.Total
         [DFeElement("gEstornoCred", Id = "W59e", Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public NFeEstornoCreditoTot EstornoCredito { get; set; }
 
+        /// <summary>
+        ///     W59h - Grupo de totais da composição do valor do IBS e da CBS para o Simples Nacional (NT 2026.005)
+        /// </summary>
+        [DFeElement("gTribSN", Id = "W59h", Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public NFeTribSnTot TribSN { get; set; }
+
         #endregion
 
         #region Methods
@@ -57,6 +63,8 @@ namespace Vip.DFe.NFe.NotaFiscal.Total
         private bool ShouldSerializeMono() => Mono.IsNotNull() && (Mono.VCbsMono != 0 || Mono.VCbsMonoRet != 0 || Mono.VCbsMonoReten != 0 || Mono.VIbsMono != 0 || Mono.VIbsMonoRet != 0 || Mono.VIbsMonoReten != 0);
 
         private bool ShouldSerializeEstornoCredito() => EstornoCredito.IsNotNull() && (EstornoCredito.VCbsEstCred != 0 || EstornoCredito.VIbsEstCred != 0);
+
+        private bool ShouldSerializeTribSN() => TribSN.IsNotNull() && (TribSN.VIbsSN != 0 || TribSN.VCbsSN != 0);
 
         #endregion
     }

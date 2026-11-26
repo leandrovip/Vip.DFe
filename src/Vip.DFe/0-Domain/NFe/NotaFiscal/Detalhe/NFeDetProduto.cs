@@ -151,6 +151,20 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         public decimal VProd { get; set; }
 
         /// <summary>
+        ///     I11b - Valor Líquido Unitário do Produto ou Serviço (sem tributos) (NT 2026.008).
+        ///     <br /> Informar em conjunto com <see cref="VProdLiq" />: se apenas um deles for informado, nenhum é gerado.
+        /// </summary>
+        [DFeElement(TipoCampo.De10, "vUnComLiq", Id = "I11b", Ocorrencia = Ocorrencia.Obrigatoria)]
+        public decimal? VUnComLiq { get; set; }
+
+        /// <summary>
+        ///     I11c - Valor Líquido do Produto ou Serviço (sem tributos) (NT 2026.008).
+        ///     <br /> Informar em conjunto com <see cref="VUnComLiq" />: se apenas um deles for informado, nenhum é gerado.
+        /// </summary>
+        [DFeElement(TipoCampo.De2, "vProdLiq", Id = "I11c", Min = 3, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
+        public decimal? VProdLiq { get; set; }
+
+        /// <summary>
         ///     I12 - GTIN (Global Trade Item Number) do produto, antigo código EAN ou código de barras
         /// </summary>
         [DFeElement(TipoCampo.Custom, "cEANTrib", Id = "I12", Min = 0, Max = 14, Ocorrencia = Ocorrencia.Obrigatoria)]
@@ -209,6 +223,13 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         /// </summary>
         [DFeElement(TipoCampo.Int, "indBemMovelUsado", Id = "I17c", Min = 1, Max = 1, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public int IndBemMovelUsado { get; set; }
+
+        /// <summary>
+        ///     I17d - Código de atividade do Simples Nacional (NT 2026.005).
+        ///     <br /> Informar somente quando o emitente for optante do Simples Nacional ou estiver com opção pendente.
+        /// </summary>
+        [DFeElement(TipoCampo.Enum, "cAtivSN", Id = "I17d", Min = 2, Max = 2, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public CodigoAtividadeSimplesNacional? CAtivSN { get; set; }
 
         /// <summary>
         ///     I18 - Declaração de Importação
@@ -309,6 +330,22 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         private bool ShouldSerializeIndBemMovelUsado()
         {
             return IndBemMovelUsado != 0;
+        }
+
+        // vUnComLiq e vProdLiq formam uma sequence opcional no XSD: só são gerados quando ambos estão informados.
+        private bool ShouldSerializeVUnComLiq()
+        {
+            return VUnComLiq.HasValue && VProdLiq.HasValue;
+        }
+
+        private bool ShouldSerializeVProdLiq()
+        {
+            return VUnComLiq.HasValue && VProdLiq.HasValue;
+        }
+
+        private bool ShouldSerializeCAtivSN()
+        {
+            return CAtivSN.HasValue;
         }
 
         private string SerializeCEAN()

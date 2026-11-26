@@ -42,6 +42,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
         ///     <para>N10f (ICMSSN202) - Grupo CRT=1 – Simples Nacional e CSOSN=202 ou 203</para>
         ///     <para>N10g (ICMSSN500) - Grupo CRT=1 – Simples Nacional e CSOSN = 500</para>
         ///     <para>N10h (ICMSSN900) - Grupo CRT=1 – Simples Nacional e CSOSN=900</para>
+        ///     <para>NB01 (ICMSPrevistoPagtoAntecip) - Grupo do ICMS Previsto no Pagamento Antecipado</para>
         /// </summary>
         [DFeItem(typeof(Icms00), "ICMS00")]
         [DFeItem(typeof(Icms02), "ICMS02")]
@@ -64,6 +65,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
         [DFeItem(typeof(IcmsSn202), "ICMSSN202")]
         [DFeItem(typeof(IcmsSn500), "ICMSSN500")]
         [DFeItem(typeof(IcmsSn900), "ICMSSN900")]
+        [DFeItem(typeof(IcmsPrevistoPagtoAntecip), "ICMSPrevistoPagtoAntecip")]
         public INFeIcms Tipo { get; set; }
 
         #endregion

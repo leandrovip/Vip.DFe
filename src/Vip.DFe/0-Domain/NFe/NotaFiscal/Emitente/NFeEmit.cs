@@ -2,6 +2,7 @@
 using Vip.DFe.Attributes;
 using Vip.DFe.Enum;
 using Vip.DFe.Extensions;
+using Vip.DFe.NFe.Enum;
 using Vip.DFe.Serializer;
 using Vip.DFe.Shared.Enum;
 
@@ -104,6 +105,12 @@ namespace Vip.DFe.NFe.NotaFiscal.Emitente
         [DFeElement(TipoCampo.Enum, "CRT", Id = "C21", Min = 1, Max = 1, Ocorrencia = Ocorrencia.Obrigatoria)]
         public RegimeTributario CRT { get; set; }
 
+        /// <summary>
+        ///     C21a - Tipo de Regime de Apuração do IBS e da CBS (NT 2026.005)
+        /// </summary>
+        [DFeElement(TipoCampo.Enum, "tpRegimeIBSCBS", Id = "C21a", Min = 1, Max = 1, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public TipoRegimeIbsCbs? TpRegimeIbsCbs { get; set; }
+
         #endregion
 
         #region Methods
@@ -142,6 +149,11 @@ namespace Vip.DFe.NFe.NotaFiscal.Emitente
         private bool ShouldSerializeCNAE()
         {
             return IM.IsNotNullOrEmpty() && CNAE != 0;
+        }
+
+        private bool ShouldSerializeTpRegimeIbsCbs()
+        {
+            return TpRegimeIbsCbs.HasValue;
         }
 
         #endregion

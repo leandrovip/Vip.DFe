@@ -62,6 +62,12 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs
         public AjusteCompetencia AjusteCompetencia { get; set; }
 
         /// <summary>
+        ///     UB115a - Grupo de informações da composição do valor do IBS e da CBS para o Simples Nacional (NT 2026.005)
+        /// </summary>
+        [DFeElement("gTribSN", Id = "UB115a", Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public TributacaoSimplesNacional TributacaoSimplesNacional { get; set; }
+
+        /// <summary>
         ///     UB116 - Grupo do Estorno de Crédito
         ///     <br /> Informado conforme indicador no cClassTrib
         /// </summary>
@@ -99,6 +105,8 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs
         private bool ShouldSerializeTransferenciaCredito() => TransferenciaCredito.IsNotNull() && (TransferenciaCredito.VCbs != 0 || TransferenciaCredito.VIbs != 0);
 
         private bool ShouldSerializeAjusteCompetencia() => AjusteCompetencia.IsNotNull() && (AjusteCompetencia.VIbs != 0 || AjusteCompetencia.VCbs != 0);
+
+        private bool ShouldSerializeTributacaoSimplesNacional() => TributacaoSimplesNacional.IsNotNull() && (TributacaoSimplesNacional.PossuiIbsSN || TributacaoSimplesNacional.PossuiCbsSN);
 
         private bool ShouldSerializeEstornoCredito() => EstornoCredito.IsNotNull() && (EstornoCredito.VCbsEstCred != 0 || EstornoCredito.VIbsEstCred != 0);
 

@@ -1,8 +1,7 @@
-using NFeDoc = Vip.DFe.NFe.NotaFiscal.NFe;
 using Vip.DFe.NFe.Enum;
+using Vip.DFe.NFe.NotaFiscal.Detalhe;
 using Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs;
 using Vip.DFe.NFe.NotaFiscal.Identificacao;
-using Vip.DFe.NFe.NotaFiscal.Detalhe;
 using Vip.DFe.NFe.NotaFiscal.Total;
 using Xunit;
 
@@ -22,6 +21,12 @@ namespace Vip.DFe.Tests.Serializer
         [InlineData("gTransfCred")]
         [InlineData("gAjusteCompet")]
         [InlineData("gEstornoCred")]
+        [InlineData("tpRegimeIBSCBS")]
+        [InlineData("vUnComLiq")]
+        [InlineData("vProdLiq")]
+        [InlineData("cAtivSN")]
+        [InlineData("gTribSN")]
+        [InlineData("vProdLiqTot")]
         [InlineData("gCredPresOper")]
         [InlineData("gCredPresIBSZFM")]
         [InlineData("gTribRegular")]

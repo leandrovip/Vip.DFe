@@ -30,6 +30,13 @@ namespace Vip.DFe.NFe.NotaFiscal.Total
         #region Properties
 
         /// <summary>
+        ///     W01a - Valor Total Líquido dos Produtos ou Serviços (NT 2026.008).
+        ///     <br /> Emitido sempre que informado (inclusive 0.00).
+        /// </summary>
+        [DFeElement(TipoCampo.De2, "vProdLiqTot", Id = "W01a", Min = 3, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
+        public decimal? VProdLiqTot { get; set; }
+
+        /// <summary>
         ///     W02 - Grupo Totais referentes ao ICMS
         /// </summary>
         [DFeElement("ICMSTot", Id = "W02", Ocorrencia = Ocorrencia.Obrigatoria)]
@@ -69,6 +76,11 @@ namespace Vip.DFe.NFe.NotaFiscal.Total
 
         #region Methods
 
+        private bool ShouldSerializeVProdLiqTot()
+        {
+            return VProdLiqTot.HasValue;
+        }
+
         private bool ShouldSerializeIssqnTot()
         {
             return IssqnTot.VServ > 0 || IssqnTot.VBc > 0;
@@ -86,7 +98,8 @@ namespace Vip.DFe.NFe.NotaFiscal.Total
 
         private bool ShouldSerializeIbsCbsTot()
         {
-            return IbsCbsTot != null && IbsCbsTot.VBcIbsCbs > 0;
+            // NT 2026.005 (rej. 1275): o total gTribSN é obrigatório se algum item tem gTribSN, mesmo com vBCIBSCBS zerado.
+            return IbsCbsTot != null && (IbsCbsTot.VBcIbsCbs > 0 || (IbsCbsTot.TribSN != null && (IbsCbsTot.TribSN.VIbsSN != 0 || IbsCbsTot.TribSN.VCbsSN != 0)));
         }
 
         private bool ShouldSerializeVNfTot()
