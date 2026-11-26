@@ -93,7 +93,7 @@ namespace Vip.DFe.NFe.Evento
         /// <summary>
         ///     HP31 - Chave de Acesso da NF-e substituta da NFe a ser cancelada (Nota gerada em contingencia)
         /// </summary>
-        [DFeElement(TipoCampo.StrNumber, "chNFeRef", Id = "HP31", Min = 44, Max = 44, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.StrAlfaNumFill, "chNFeRef", Id = "HP31", Min = 44, Max = 44, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string ChaveRef { get; set; }
 
         #endregion

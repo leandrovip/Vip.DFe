@@ -96,7 +96,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         ///     Versão 4.00
         ///     CNPJ do Fabricante da Mercadoria, obrigatório para produto em escala NÃO relevante.
         /// </summary>
-        [DFeElement(TipoCampo.StrNumberFill, "CNPJFab", Id = "I05e", Min = 14, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.StrAlfaNumFill, "CNPJFab", Id = "I05e", Min = 14, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string CNPJFab { get; set; }
 
         /// <summary>

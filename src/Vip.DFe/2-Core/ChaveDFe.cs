@@ -23,7 +23,7 @@ namespace Vip.DFe
 
             chave.Append(ufEmitente.GetDFeValue())
                 .Append(dataEmissao.ToString("yyMM"))
-                .Append(cnpjEmitente)
+                .Append(cnpjEmitente.SomenteAlfanumerico())
                 .Append(modelo.ToString("D2"))
                 .Append(serie.ToString("D3"))
                 .Append(numero.ToString("D9"))
@@ -73,6 +73,7 @@ namespace Vip.DFe
             if (chave.Trim().Length != 44) return false;
 
             var digitoVerificador = chave.Substring(43, 1).ToInt32();
+            if (!char.IsDigit(chave[43])) return false;
             var digitoEsperado = DigitoVerificador.Obter(chave.Substring(0, 43));
             return digitoVerificador == digitoEsperado;
         }

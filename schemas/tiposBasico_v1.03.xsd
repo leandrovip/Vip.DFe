@@ -59,7 +59,8 @@
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
-      <xs:pattern value="(1[1-7]|2[1-9]|3[1,2,3,5]|4[1-3]|5[0-3])(0[6-9]|[1-9][\d])(0[1-9]|1[0-2])([\d]{14})([\d]{5})([\d]{9})([\d]{10})"/>
+      <!-- Vip.DFe: padrão alfanumérico do tiposBasico_v1.03 oficial (PL_010d/PL_010h, NT 2026.004 / NTCJ 2025.001) -->
+      <xs:pattern value="[0-9]{6}[0-9A-Z]{12}[0-9]{26}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TProt">
@@ -95,7 +96,8 @@
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
-			<xs:pattern value="[0-9]{14}"/>
+			<!-- Vip.DFe: CNPJ alfanumérico (NT 2026.004 / NTCJ 2025.001) -->
+			<xs:pattern value="[0-9A-Z]{12}[0-9]{2}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TCnpjVar">
@@ -114,7 +116,8 @@
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
 			<xs:maxLength value="14"/>
-			<xs:pattern value="[0-9]{0}|[0-9]{14}"/>
+			<!-- Vip.DFe: CNPJ alfanumérico (NT 2026.004 / NTCJ 2025.001) -->
+			<xs:pattern value="[0-9]{0}|[0-9A-Z]{12}[0-9]{2}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TCpf">

@@ -22,6 +22,12 @@ namespace Vip.DFe.Serializer
         DatCFe = 13,
         HorCFe = 14,
         Enum = 15,
-        Custom = 16
+        Custom = 16,
+
+        /// <summary>
+        ///     Texto alfanumérico [0-9A-Z]: remove máscara, converte para maiúsculas e preenche com zeros à esquerda até o Min.
+        ///     Usado em CNPJ e chave de acesso.
+        /// </summary>
+        StrAlfaNumFill = 18
     }
 }

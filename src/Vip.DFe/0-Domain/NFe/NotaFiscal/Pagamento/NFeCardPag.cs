@@ -25,7 +25,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Pagamento
         /// <summary>
         ///     YA05 - CNPJ da instituição de pagamento, adquirente ou subadquirente. Caso o pagamento seja processado pelo intermediador da transação, informar o CNPJ deste
         /// </summary>
-        [DFeElement(TipoCampo.StrNumberFill, "CNPJ", Id = "YA05", Min = 14, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.StrAlfaNumFill, "CNPJ", Id = "YA05", Min = 14, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string Cnpj { get; set; }
 
         /// <summary>

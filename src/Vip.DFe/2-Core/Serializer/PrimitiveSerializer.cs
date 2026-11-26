@@ -179,6 +179,17 @@ namespace Vip.DFe.Serializer
                 case TipoCampo.StrNumber:
                     conteudoProcessado = valor.ToString().OnlyNumbers();
                     break;
+                case TipoCampo.StrAlfaNumFill:
+                    conteudoProcessado = valor.ToString().SomenteAlfanumerico();
+                    // Só máscara/espaços: trata como vazio (opcional é omitido) em vez de gerar "000...".
+                    if (conteudoProcessado.Length == 0)
+                    {
+                        estaVazio = true;
+                        break;
+                    }
+
+                    if (conteudoProcessado.Length < min) conteudoProcessado = conteudoProcessado.PadLeft(min, '0');
+                    break;
                 case TipoCampo.Enum:
                     var member = valor.GetType().GetMember(valor.ToString()).FirstOrDefault();
                     var enumAttribute = member?.GetCustomAttributes(false).OfType<DFeEnumAttribute>().FirstOrDefault();

@@ -36,7 +36,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Identificacao
         /// <summary>
         ///     BA13 - CNPJ do emitente
         /// </summary>
-        [DFeElement(TipoCampo.StrNumberFill, "CNPJ", Id = "BA13", Min = 14, Max = 14, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.StrAlfaNumFill, "CNPJ", Id = "BA13", Min = 14, Max = 14, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string CNPJ { get; set; }
 
         /// <summary>

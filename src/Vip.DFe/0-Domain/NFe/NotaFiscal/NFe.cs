@@ -117,7 +117,9 @@ namespace Vip.DFe.NFe.NotaFiscal
         /// <returns></returns>
         public string ObterNomeXml()
         {
-            return $"{InfNFe.Id.OnlyNumbers()}-nfe.xml";
+            // Remove só o prefixo "NFe" do Id (a chave pode conter letras do CNPJ alfanumérico).
+            var id = InfNFe.Id ?? string.Empty;
+            return $"{(id.StartsWith("NFe") ? id.Substring(3) : id)}-nfe.xml";
         }
 
         /// <summary>

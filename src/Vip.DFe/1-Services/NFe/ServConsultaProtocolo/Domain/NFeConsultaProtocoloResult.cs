@@ -33,7 +33,7 @@ namespace Vip.DFe.NFe.ServConsultaProtocolo.Domain
         /// <summary>
         ///     ER07b - Chave de Acesso da NFe consultada
         /// </summary>
-        [DFeElement(TipoCampo.StrNumber, "chNFe", Id = "ER07b", Min = 44, Max = 44, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.StrAlfaNumFill, "chNFe", Id = "ER07b", Min = 44, Max = 44, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string ChaveNFe { get; set; }
 
         /// <summary>

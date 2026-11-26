@@ -52,7 +52,7 @@ namespace Vip.DFe.NFe.Evento
         /// <summary>
         ///     HP10 - CNPJ do autor do Evento
         /// </summary>
-        [DFeElement(TipoCampo.StrNumberFill, "CNPJ", Id = "HP10", Min = 14, Max = 14, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.StrAlfaNumFill, "CNPJ", Id = "HP10", Min = 14, Max = 14, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string CNPJ { get; set; }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Vip.DFe.NFe.Evento
         /// <summary>
         ///     HP12 - Chave de Acesso da NF-e vinculada ao Evento
         /// </summary>
-        [DFeElement(TipoCampo.StrNumber, "chNFe", Id = "HP12", Min = 44, Max = 44, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.StrAlfaNumFill, "chNFe", Id = "HP12", Min = 44, Max = 44, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string Chave { get; set; }
 
         /// <summary>

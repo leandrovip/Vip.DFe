@@ -30,7 +30,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Federal
         ///     O03 - CNPJ do produtor da mercadoria, quando diferente do emitente. Somente para os casos de exportação direta ou
         ///     indireta.
         /// </summary>
-        [DFeElement(TipoCampo.StrNumberFill, "CNPJProd", Id = "O03", Min = 14, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.StrAlfaNumFill, "CNPJProd", Id = "O03", Min = 14, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string CnpjProd { get; set; }
 
         /// <summary>

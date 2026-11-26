@@ -19,7 +19,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Transporte
         /// <summary>
         ///     X04 - CNPJ do Transportador
         /// </summary>
-        [DFeElement(TipoCampo.StrNumberFill, "CNPJ", Id = "X04", Min = 14, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.StrAlfaNumFill, "CNPJ", Id = "X04", Min = 14, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string Cnpj { get; set; }
 
         /// <summary>

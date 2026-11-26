@@ -21,7 +21,7 @@ namespace Vip.DFe.NFe.NotaFiscal
         /// <summary>
         ///     ZD02 - CNPJ da pessoa jurídica responsável pelo sistema utilizado na emissão do documento fiscal eletrônico
         /// </summary>
-        [DFeElement(TipoCampo.StrNumberFill, "CNPJ", Id = "ZD02", Min = 14, Max = 14, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.StrAlfaNumFill, "CNPJ", Id = "ZD02", Min = 14, Max = 14, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string Cnpj { get; set; }
 
         /// <summary>

@@ -134,9 +134,12 @@ namespace Vip.DFe.Danfe.Elementos
         {
             if (string.IsNullOrWhiteSpace(code)) throw new ArgumentException("O código não pode ser vazio.", "code");
 
-            if (!Regex.IsMatch(code, @"^\d+$")) throw new ArgumentException("O código deve apenas conter digítos numéricos.", "code");
+            code = code.ToUpperInvariant();
 
-            if (code.Length % 2 != 0)
+            if (!Regex.IsMatch(code, @"^[0-9A-Z]+$")) throw new ArgumentException("O código deve conter apenas dígitos numéricos e letras maiúsculas (A-Z).", "code");
+
+            // Código só numérico de tamanho ímpar recebe o prefixo "0" (comportamento original em CODE-128C).
+            if (code.Length % 2 != 0 && Regex.IsMatch(code, @"^\d+$"))
                 Code = "0" + code;
             else
                 Code = code;
@@ -164,28 +167,101 @@ namespace Vip.DFe.Danfe.Elementos
 
         #region Methods
 
+        private const byte CodeA = 101;
+        private const byte CodeC = 99;
+        private const byte StartC = 105;
+
+        private static bool EhDigito(char c)
+        {
+            return c >= '0' && c <= '9';
+        }
+
+        private static int ContarDigitos(string code, int inicio)
+        {
+            int n = 0;
+            while (inicio + n < code.Length && EhDigito(code[inicio + n])) n++;
+            return n;
+        }
+
+        /// <summary>
+        ///     Converte o código em valores de símbolos Code 128 (Start C + dados), usando o modo híbrido C/A
+        ///     da NT Conjunta DF-e 2025.001 (CNPJ alfanumérico). Não inclui checksum nem Stop.
+        /// </summary>
+        internal static List<byte> Codificar(string code)
+        {
+            var valores = new List<byte> {StartC};
+            bool modoC = true;
+            int i = 0;
+
+            while (i < code.Length)
+            {
+                int n = ContarDigitos(code, i);
+
+                if (modoC)
+                {
+                    if (n == 0)
+                    {
+                        valores.Add(CodeA);
+                        modoC = false;
+                        continue;
+                    }
+
+                    int pares = n / 2;
+                    for (int k = 0; k < pares; k++, i += 2)
+                        valores.Add((byte) ((code[i] - '0') * 10 + (code[i + 1] - '0')));
+
+                    // Dígito ímpar restante vai em A (CODE A antes do último dígito).
+                    if (n % 2 != 0)
+                    {
+                        valores.Add(CodeA);
+                        valores.Add((byte) (code[i] - 32));
+                        i++;
+                        modoC = false;
+                    }
+                }
+                else
+                {
+                    if (n >= 4)
+                    {
+                        // Grupo par: CODE C antes do primeiro dígito; ímpar: primeiro dígito em A e CODE C logo após.
+                        if (n % 2 != 0)
+                        {
+                            valores.Add((byte) (code[i] - 32));
+                            i++;
+                        }
+
+                        valores.Add(CodeC);
+                        modoC = true;
+                    }
+                    else
+                    {
+                        valores.Add((byte) (code[i] - 32));
+                        i++;
+                    }
+                }
+            }
+
+            return valores;
+        }
+
+        /// <summary>
+        ///     Checksum Code 128: (start + soma(valor * posição)) mod 103. O primeiro item é o Start.
+        /// </summary>
+        internal static byte CalcularChecksum(IList<byte> valores)
+        {
+            int cd = valores[0];
+
+            for (int i = 1; i < valores.Count; i++)
+                cd += i * valores[i];
+
+            return (byte) (cd % 103);
+        }
+
         private void DrawBarcode(RectangleF rect, Gfx gfx)
         {
-            List<byte> codeBytes = new List<byte>();
+            List<byte> codeBytes = Codificar(Code);
 
-            codeBytes.Add(105);
-
-            for (int i = 0; i < Code.Length; i += 2)
-            {
-                byte b = byte.Parse(Code.Substring(i, 2));
-                codeBytes.Add(b);
-            }
-
-            // Calcular dígito verificador
-            int cd = 105;
-
-            for (int i = 1; i < codeBytes.Count; i++)
-            {
-                cd += i * codeBytes[i];
-                cd %= 103;
-            }
-
-            codeBytes.Add((byte) cd);
+            codeBytes.Add(CalcularChecksum(codeBytes));
             codeBytes.Add(106);
 
             float n = codeBytes.Count * 11 + 2;

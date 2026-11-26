@@ -22,7 +22,7 @@ namespace Vip.DFe.NFe.NotaFiscal
         ///     YB02 - CNPJ do Intermediador da Transação (agenciador, plataforma de delivery, marketplace e similar) de serviços e
         ///     de negócios.
         /// </summary>
-        [DFeElement(TipoCampo.StrNumberFill, "CNPJ", Id = "YB02", Min = 14, Max = 14, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.StrAlfaNumFill, "CNPJ", Id = "YB02", Min = 14, Max = 14, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string Cnpj { get; set; }
 
         /// <summary>

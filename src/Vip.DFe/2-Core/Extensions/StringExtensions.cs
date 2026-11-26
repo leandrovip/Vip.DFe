@@ -91,6 +91,18 @@ namespace Vip.DFe.Extensions
         }
 
         /// <summary>
+        ///     Retorna apenas os caracteres alfanuméricos [0-9A-Z] da string, convertendo letras para maiúsculas.
+        /// </summary>
+        /// <param name="value">String para processar.</param>
+        /// <returns>System.String.</returns>
+        internal static string SomenteAlfanumerico(this string value)
+        {
+            return value.TrimVip().IsNullOrEmpty()
+                ? string.Empty
+                : new string(value.Where(c => c < 128 && char.IsLetterOrDigit(c)).ToArray()).ToUpperInvariant();
+        }
+
+        /// <summary>
         ///     Get string Between the specified values
         /// </summary>
         /// <param name="value">The value.</param>

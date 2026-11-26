@@ -21,7 +21,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         /// <summary>
         ///     VC02 - Chave de acesso do documento fiscal referenciado
         /// </summary>
-        [DFeElement(TipoCampo.StrNumberFill, "chaveAcesso", Id = "VC02", Min = 44, Max = 44, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.StrAlfaNumFill, "chaveAcesso", Id = "VC02", Min = 44, Max = 44, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string ChaveAcesso { get; set; }
 
         /// <summary>

@@ -48,7 +48,7 @@ namespace Vip.DFe.NFe.Configuration
         public string CNPJ
         {
             get => _cnpj;
-            set => _cnpj = value.TrimVip().OnlyNumbers();
+            set => _cnpj = value.TrimVip().SomenteAlfanumerico();
         }
 
         public string NFCeIdToken { get; set; }

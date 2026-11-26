@@ -29,7 +29,7 @@ namespace Vip.DFe.NFe.ServInutilizacao
 
         public NFeInutilizacaoResposta Inutilizar(string cnpj, string justificativa, NFeModelo modelo, int serie, int numeroInicial, int numeroFinal)
         {
-            cnpj = cnpj.OnlyNumbers();
+            cnpj = cnpj.SomenteAlfanumerico();
 
             var ano = DateTime.Now.Year.ToString();
             ano = ano.Substring(ano.Length - 2);
@@ -40,7 +40,7 @@ namespace Vip.DFe.NFe.ServInutilizacao
 
             lock (serviceLock)
             {
-                var idInutilizacao = $"ID{Configuracoes.Webservices.UF.GetDFeValue()}{ano:D2}{cnpj.OnlyNumbers()}{modelo.GetDFeValue()}{serie.ZeroFill(3)}{numeroInicial.ZeroFill(9)}{numeroFinal.ZeroFill(9)}";
+                var idInutilizacao = $"ID{Configuracoes.Webservices.UF.GetDFeValue()}{ano:D2}{cnpj.SomenteAlfanumerico()}{modelo.GetDFeValue()}{serie.ZeroFill(3)}{numeroInicial.ZeroFill(9)}{numeroFinal.ZeroFill(9)}";
 
                 var request = new StringBuilder();
                 request.Append($"<inutNFe xmlns=\"http://www.portalfiscal.inf.br/nfe\" versao=\"{Configuracoes.Versao.GetDescription()}\">");
@@ -61,7 +61,7 @@ namespace Vip.DFe.NFe.ServInutilizacao
                 var dadosMsg = request.ToString();
                 dadosMsg = SigningManager.AssinarXml(dadosMsg, "inutNFe", "infInut", ClientCredentials.ClientCertificate.Certificate);
                 ValidateMessage(dadosMsg);
-                GravarXmlAssinado(dadosMsg, $"{idInutilizacao.OnlyNumbers()}-inu-nfe.xml");
+                GravarXmlAssinado(dadosMsg, $"{idInutilizacao.Substring(2)}-inu-nfe.xml");
 
                 var xml = new XmlDocument();
                 xml.LoadXml(dadosMsg);
@@ -71,7 +71,7 @@ namespace Vip.DFe.NFe.ServInutilizacao
                 var resposta = new NFeInutilizacaoResposta(dadosMsg, returnValue.Mensagem.OuterXml, EnvelopeSoap, RetornoWS);
 
                 if (resposta.Resultado.InfInut.CStat == 102)
-                    GravarXmlInutilizacao(resposta.XmlRetorno, $"{idInutilizacao.OnlyNumbers()}-procInutNFe.xml");
+                    GravarXmlInutilizacao(resposta.XmlRetorno, $"{idInutilizacao.Substring(2)}-procInutNFe.xml");
 
                 return resposta;
             }

@@ -81,7 +81,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         /// <summary>
         ///     I23d - CNPJ do adquirente ou do encomendante
         /// </summary>
-        [DFeElement(TipoCampo.StrNumberFill, "CNPJ", Id = "I23d", Min = 14, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.StrAlfaNumFill, "CNPJ", Id = "I23d", Min = 14, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string CNPJ { get; set; }
 
         /// <summary>

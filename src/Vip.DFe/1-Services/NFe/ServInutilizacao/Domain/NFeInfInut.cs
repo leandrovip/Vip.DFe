@@ -68,7 +68,7 @@ namespace Vip.DFe.NFe.ServInutilizacao.Domain
         /// <summary>
         ///     DR11 - CNPJ do emitente
         /// </summary>
-        [DFeElement(TipoCampo.StrNumberFill, "CNPJ", Min = 14, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.StrAlfaNumFill, "CNPJ", Min = 14, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string CNPJ { get; set; }
 
         /// <summary>

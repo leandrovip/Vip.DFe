@@ -24,7 +24,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe
         /// <summary>
         ///     I54 - Chave de Acesso da NF-e recebida para exportação
         /// </summary>
-        [DFeElement(TipoCampo.StrNumberFill, "chNFe", Id = "I54", Min = 44, Max = 44, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.StrAlfaNumFill, "chNFe", Id = "I54", Min = 44, Max = 44, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string ChNFe { get; set; }
 
         /// <summary>

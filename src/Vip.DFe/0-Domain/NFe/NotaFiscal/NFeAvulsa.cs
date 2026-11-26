@@ -22,7 +22,7 @@ namespace Vip.DFe.NFe.NotaFiscal
         /// <summary>
         ///     D02 - CNPJ do órgão emitente
         /// </summary>
-        [DFeElement(TipoCampo.StrNumberFill, "CNPJ", Id = "D02", Min = 14, Max = 14, Ocorrencia = Ocorrencia.Obrigatoria)]
+        [DFeElement(TipoCampo.StrAlfaNumFill, "CNPJ", Id = "D02", Min = 14, Max = 14, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string CNPJ { get; set; }
 
         /// <summary>

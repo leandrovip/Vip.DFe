@@ -152,7 +152,7 @@ namespace Vip.DFe.NFe
         /// </summary>
         public NFeConsultaProtocoloResposta Consultar(string chave)
         {
-            chave = chave.OnlyNumbers();
+            chave = chave.SomenteAlfanumerico();
             Guard.Against<ArgumentException>(chave.IsNullOrEmpty(), "ERRO: Nenhuma chave informada!");
 
             return Executar(NFeStatus.Consulta, certificado =>
@@ -185,7 +185,7 @@ namespace Vip.DFe.NFe
         {
             #region Validação
 
-            cnpj = cnpj.OnlyNumbers();
+            cnpj = cnpj.SomenteAlfanumerico();
             numeroProtocolo = numeroProtocolo.OnlyNumbers();
 
             Guard.Against<ArgumentException>(cnpj.IsNullOrEmpty(), "ERRO: Informe o CNPJ ou CPF");
@@ -229,7 +229,7 @@ namespace Vip.DFe.NFe
         {
             #region Validação
 
-            cnpj = cnpj.OnlyNumbers();
+            cnpj = cnpj.SomenteAlfanumerico();
             numeroProtocolo = numeroProtocolo.OnlyNumbers();
             versaoAplicacao = versaoAplicacao.IsNotNullOrEmpty() ? versaoAplicacao.TrimVip() : "1.0";
 
@@ -280,8 +280,8 @@ namespace Vip.DFe.NFe
         {
             #region Validação
 
-            cnpj = cnpj.OnlyNumbers();
-            chave = chave.OnlyNumbers();
+            cnpj = cnpj.SomenteAlfanumerico();
+            chave = chave.SomenteAlfanumerico();
 
             Guard.Against<ArgumentException>(cnpj.IsNullOrEmpty(), "ERRO: Informe o CNPJ ou CPF");
             Guard.Against<ArgumentNullException>(chave.IsNullOrEmpty(), "ERRO: Informe a Chave");

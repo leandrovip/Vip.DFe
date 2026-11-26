@@ -58,7 +58,7 @@ namespace Vip.DFe.NFe.Evento
         /// <summary>
         ///     HR18 - Chave de Acesso da NF-e vinculada ao evento.
         /// </summary>
-        [DFeElement(TipoCampo.StrNumber, "chNFe", Id = "HR18", Min = 44, Max = 44, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.StrAlfaNumFill, "chNFe", Id = "HR18", Min = 44, Max = 44, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string Chave { get; set; }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Vip.DFe.NFe.Evento
         /// <summary>
         ///     HR22 - CNPJ do destinatário da NFe
         /// </summary>
-        [DFeElement(TipoCampo.StrNumberFill, "CNPJDest", Id = "HR22", Min = 14, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.StrAlfaNumFill, "CNPJDest", Id = "HR22", Min = 14, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string CNPJDest { get; set; }
 
         /// <summary>
