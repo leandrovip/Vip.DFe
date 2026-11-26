@@ -25,7 +25,8 @@ namespace Vip.DFe.NFe.Configuration
             _cnpj = "";
             NFCeIdToken = "";
             NFCeCSC = "";
-            EnviarModoSincrono = false;
+            NFCeVersaoQrCode = NFeVersaoQrCode.V2;
+            EnviarModoSincrono = true;
             ValidarDigest = true;
             RemoverAcentos = true;
             RemoverEspacos = true;
@@ -54,6 +55,24 @@ namespace Vip.DFe.NFe.Configuration
         public string NFCeIdToken { get; set; }
         public string NFCeCSC { get; set; }
 
+        /// <summary>
+        ///     Versão do QR Code da NFC-e (padrão: <see cref="NFeVersaoQrCode.V2" />).
+        ///     <para>
+        ///         A versão 3 não usa CSC/idCSC (<see cref="NFCeIdToken" /> e <see cref="NFCeCSC" /> não são exigidos); na
+        ///         contingência off-line a assinatura é feita com o certificado digital do emitente. É voltada ao emitente
+        ///         produtor rural pessoa física (rejeição 444 - NFC-e com qrCode na versão 2 para Pessoa Física, exceto PR);
+        ///         para pessoa jurídica é opcional (NT 2025.001).
+        ///     </para>
+        /// </summary>
+        public NFeVersaoQrCode NFCeVersaoQrCode { get; set; }
+
+        /// <summary>
+        ///     Envio do lote em modo síncrono (indSinc = 1). Padrão: true.
+        ///     <para>
+        ///         Obrigatório para lote com uma única NF-e/NFC-e (NT 2025.001, rejeição 452). Lote com mais de uma NF-e deve
+        ///         usar o modo assíncrono (false).
+        ///     </para>
+        /// </summary>
         public bool EnviarModoSincrono { get; set; }
         public bool ValidarDigest { get; set; }
         public bool RemoverAcentos { get; set; }

@@ -14,7 +14,8 @@
   5. `Validar()` — validação contra XSD (via `NFeCollection`/`DFeSerializer`).
   6. `NFeServAutorizacao.Autorizacao`/`AutorizacaoLote` (SOAP).
   7. Se `Configuracoes.EnviarModoSincrono` (único critério; o código não testa o modelo NFCe — `NFeService.cs:~145`): em `Autorizacao()`, `GerarNFeProc` monta `NFeProc` + confere `DigVal` e grava `procNFe` no disco. Só ocorre quando `Resultado.CStat == 104` e o `cStat` da nota (`ProtNFe.InfProt.CStat`) está entre os processados (100, 110, 150, 301, 302, 303 — `DFeConstantes.NFeProcessada`). `AutorizacaoLote` não gera `procNFe`; isso ocorre em `ConsultaAutorizacao(recibo)`.
-  - O mesmo `EnviarModoSincrono` define `indSinc` (0/1) no XML `enviNFe` (`NFeServAutorizacao`).
+  - O mesmo `EnviarModoSincrono` define `indSinc` (0/1) no XML `enviNFe` (`NFeServAutorizacao`). **Padrão: `true`** (NT 2025.001: lote com uma única NF-e/NFC-e não pode ser assíncrono, rej. 452). Para `AutorizacaoLote` com mais de uma NF-e, o consumidor deve configurar `false` (a SEFAZ só aceita síncrono para lote de uma nota).
+  - QR Code da NFC-e (`NFe.GerarQrCode`, chamado após a assinatura em `NFeCollection.Assinar`): versão definida por `NFeConfig.NFCeVersaoQrCode` (padrão v2, com CSC; v3 sem CSC e, em contingência offline, com assinatura RSA SHA-1 do certificado).
   8. Status do componente `EmEspera`; `StatusChanged` disparado.
 - **Persistência**: pastas `Assinado`/`Enviado`/`Retorno`/`Autorizado` (padrão `NFe/CNPJ/Modelo/<fase>`; a subpasta `yyyyMM` existe só em `Autorizado`). Ver `docs/modules/persistence.md`.
 

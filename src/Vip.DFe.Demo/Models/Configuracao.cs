@@ -53,6 +53,7 @@ namespace Vip.DFe.Demo.Models
         public string JustificativaContingencia { get; set; }
         public string IdToken { get; set; }
         public string CscToken { get; set; }
+        public NFeVersaoQrCode NFCeVersaoQrCode { get; set; } = NFeVersaoQrCode.V2;
         public bool ConsumidorFinal { get; set; } = true;
 
         #endregion

@@ -25,6 +25,15 @@ namespace Vip.DFe.Tests.NFe.Configuration
             Assert.NotEmpty(serviceNFe.Configuracoes.Webservices.Enderecos);
         }
 
+        [Fact]
+        public void NFeConfigTests_ConfiguracaoPadrao_DeveEnviarSincronoEQrCodeVersao2()
+        {
+            var config = new NFeService().Configuracoes;
+
+            Assert.True(config.EnviarModoSincrono);
+            Assert.Equal(NFeVersaoQrCode.V2, config.NFCeVersaoQrCode);
+        }
+
         public static IEnumerable<object[]> CombinacoesUfModeloAmbiente()
         {
             // AN, EX e SU nao sao UFs autorizadoras de NFe/NFCe no cadastro de enderecos.

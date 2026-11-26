@@ -64,6 +64,7 @@ namespace Vip.DFe.Demo
             cboTipoMovimento.DataSource(NFeTipo.Saida);
             cboDestinoOperacao.DataSource(NFeDestinoOperacao.Interna);
             cboIndicadorPresenca.DataSource(NFePresencaComprador.Presencial);
+            cboVersaoQrCode.DataSource(NFeVersaoQrCode.V2);
             cboEmitenteRegimeTributario.DataSource(RegimeTributario.Normal);
             cboDestinatarioIndicadorInscricaoEstadual.DataSource(NFeIndIeDest.NaoContribuinte);
             cboTransporteModalidadeFrete.DataSource(NFeModalidadeFrete.SemFrete);
@@ -1449,6 +1450,7 @@ namespace Vip.DFe.Demo
             cboTipoMovimento.Text = _configuracao.TipoMovimento.GetDescription();
             cboDestinoOperacao.Text = _configuracao.DestinoOperacao.GetDescription();
             cboIndicadorPresenca.Text = _configuracao.IndicadorPresenca.GetDescription();
+            cboVersaoQrCode.Text = _configuracao.NFCeVersaoQrCode.GetDescription();
             cboEmitenteRegimeTributario.Text = _configuracao.EmitenteRegimeTributario.GetDescription();
             cboDestinatarioIndicadorInscricaoEstadual.Text = _configuracao.DestinatarioIndicadorInscricaoEstadual.GetDescription();
             cboTransporteModalidadeFrete.Text = _configuracao.TransporteModalidadeFrete.GetDescription();
@@ -1493,6 +1495,7 @@ namespace Vip.DFe.Demo
             _configuracao.JustificativaContingencia = txtJustificativaContingencia.Text;
             _configuracao.IdToken = txtIdToken.Text;
             _configuracao.CscToken = txtCscToken.Text;
+            _configuracao.NFCeVersaoQrCode = cboVersaoQrCode.GetEnumValue<NFeVersaoQrCode>();
             _configuracao.ConsumidorFinal = ckbConsumidorFinal.Checked;
 
             _configuracao.EmitenteCnpj = txtEmitenteCnpj.Text;
@@ -1610,6 +1613,7 @@ namespace Vip.DFe.Demo
 
             service.Configuracoes.NFCeIdToken = _configuracao.IdToken;
             service.Configuracoes.NFCeCSC = _configuracao.CscToken;
+            service.Configuracoes.NFCeVersaoQrCode = _configuracao.NFCeVersaoQrCode;
 
             service.Configuracoes.RemoverAcentos = _configuracao.RemoverAcentos;
             service.Configuracoes.RemoverEspacos = _configuracao.RemoverEspacos;

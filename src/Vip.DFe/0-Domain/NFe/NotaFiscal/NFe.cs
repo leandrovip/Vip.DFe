@@ -1,6 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using Vip.DFe.Attributes;
 using Vip.DFe.Cryptography.Models;
 using Vip.DFe.Document;
@@ -123,15 +126,36 @@ namespace Vip.DFe.NFe.NotaFiscal
         }
 
         /// <summary>
-        ///     Gera a URL para o QR-Code versão 2.0 com o tratamento de parâmetro query no final da url
+        ///     Gera a URL para o QR-Code (versão 2.0 ou 3.0, conforme <see cref="NFeConfig.NFCeVersaoQrCode" />) com o
+        ///     tratamento de parâmetro query no final da url.
+        ///     <para>A versão 3.0 em contingência off-line exige certificado: use a sobrecarga com certificado.</para>
         /// </summary>
         /// <returns></returns>
         public void GerarQrCode(NFeConfig configuracao)
         {
+            GerarQrCode(configuracao, null);
+        }
+
+        /// <summary>
+        ///     Gera a URL para o QR-Code (versão 2.0 ou 3.0, conforme <see cref="NFeConfig.NFCeVersaoQrCode" />) com o
+        ///     tratamento de parâmetro query no final da url.
+        /// </summary>
+        /// <param name="configuracao">Configuração.</param>
+        /// <param name="certificado">
+        ///     Certificado que assina a NFC-e; obrigatório apenas para a versão 3.0 em contingência off-line
+        ///     (tpEmis = 9).
+        /// </param>
+        public void GerarQrCode(NFeConfig configuracao, X509Certificate2 certificado)
+        {
             if (InfNFe.Ide.Modelo != NFeModelo.NFCe) return;
 
-            Guard.Against<VipException>(configuracao.NFCeIdToken.IsNullOrEmpty(), "ID do token para montagem do QRCode não encontrado");
-            Guard.Against<VipException>(configuracao.NFCeCSC.IsNullOrEmpty(), "Token para montagem do QRCode não encontrado");
+            var versao3 = configuracao.NFCeVersaoQrCode == NFeVersaoQrCode.V3;
+
+            if (!versao3)
+            {
+                Guard.Against<VipException>(configuracao.NFCeIdToken.IsNullOrEmpty(), "ID do token para montagem do QRCode não encontrado");
+                Guard.Against<VipException>(configuracao.NFCeCSC.IsNullOrEmpty(), "Token para montagem do QRCode não encontrado");
+            }
 
             var enderecoQrCode = configuracao.Webservices.ObterUrlQrCode();
             Guard.Against<VipException>(enderecoQrCode.IsNullOrEmpty(), "URL do QrCode não encontrada");
@@ -156,6 +180,14 @@ namespace Vip.DFe.NFe.NotaFiscal
 
             //Identificação do Ambiente (1 – Produção, 2 – Homologação) 
             var ambiente = (int) InfNFe.Ide.TpAmb;
+
+            if (versao3)
+            {
+                var urlQrCodeV3 = string.Concat(enderecoQrCode, ObterDadosQrCodeV3(chave, ambiente, certificado));
+                InfNFeSupl.QrCode = urlQrCodeV3;
+                InfNFeSupl.UrlChave = urlConsultaChave;
+                return;
+            }
 
             //Identificador do CSC (Código de Segurança do Contribuinte no Banco de Dados da SEFAZ). Informar sem os zeros não significativos
             var idCsc = configuracao.NFCeIdToken.ToInt32(1);
@@ -183,6 +215,72 @@ namespace Vip.DFe.NFe.NotaFiscal
 
             InfNFeSupl.QrCode = urlQrCode;
             InfNFeSupl.UrlChave = urlConsultaChave;
+        }
+
+        /// <summary>
+        ///     Monta os parâmetros do QR Code versão 3 (Manual DANFE NFC-e e QR Code, itens 4.4.1 e 4.4.2).
+        /// </summary>
+        private string ObterDadosQrCodeV3(string chave, int ambiente, X509Certificate2 certificado)
+        {
+            var online = string.Join("|", chave, "3", ambiente.ToString(CultureInfo.InvariantCulture));
+            if (InfNFe.Ide.TipoEmissao != TipoEmissao.OffLine) return online;
+
+            Guard.Against<VipException>(certificado == null, "Certificado digital não informado: obrigatório para gerar o QRCode versão 3 em contingência off-line");
+
+            var diaEmi = InfNFe.Ide.DhEmi.Day.ToString("D2", CultureInfo.InvariantCulture);
+            var valorNfce = InfNFe.Total.IcmsTot.VNf.ToString("0.00", CultureInfo.InvariantCulture);
+
+            // NT 2025.001 (ZX02): a identificação do destinatário no QR Code deve coincidir com o grupo dest da NFC-e
+            // (mesmo critério de serialização de dest e mesma normalização do XML: sem máscara, zeros à esquerda).
+            var tipoDest = string.Empty;
+            var idDest = string.Empty;
+            var dest = InfNFe.Destinatario;
+            if (dest != null)
+            {
+                if (dest.CNPJ.IsNotNullOrEmpty())
+                {
+                    tipoDest = "1";
+                    idDest = dest.CNPJ.SomenteAlfanumerico().PadLeft(14, '0');
+                }
+                else if (dest.CPF.IsNotNullOrEmpty())
+                {
+                    tipoDest = "2";
+                    idDest = dest.CPF.OnlyNumbers().PadLeft(11, '0');
+                }
+                else if (dest.IdEstrangeiro.IsNotNullOrEmpty() && dest.Nome.IsNotNullOrEmpty())
+                {
+                    tipoDest = "3";
+                }
+            }
+
+            var parametros = string.Join("|", online, diaEmi, valorNfce, tipoDest, idDest);
+            var assinatura = AssinarRsaSha1(certificado, Encoding.UTF8.GetBytes(parametros));
+            return string.Concat(parametros, "|", Convert.ToBase64String(assinatura));
+        }
+
+        /// <summary>
+        ///     Assina os dados com RSA SHA-1 (PKCS#1 v1.5). Usa GetRSAPrivateKey (CAPI e CNG) e, se indisponível, a chave legada.
+        /// </summary>
+        private static byte[] AssinarRsaSha1(X509Certificate2 certificado, byte[] dados)
+        {
+            RSA rsaCng = null;
+            try
+            {
+                rsaCng = certificado.GetRSAPrivateKey();
+            }
+            catch (NotSupportedException)
+            {
+            }
+
+            if (rsaCng != null)
+                using (rsaCng)
+                    return rsaCng.SignData(dados, HashAlgorithmName.SHA1, RSASignaturePadding.Pkcs1);
+
+#pragma warning disable CS0618
+            var rsa = certificado.PrivateKey as RSA;
+#pragma warning restore CS0618
+            Guard.Against<VipException>(rsa == null, "Chave privada RSA do certificado não encontrada para assinar o QRCode versão 3");
+            return rsa.SignData(dados, HashAlgorithmName.SHA1, RSASignaturePadding.Pkcs1);
         }
 
         private bool ShouldSerializeInfNFeSupl()

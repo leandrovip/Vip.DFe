@@ -64,6 +64,8 @@
             this.cboIndicadorPresenca = new System.Windows.Forms.ComboBox();
             this.txtUltimoNumeroNFCe = new System.Windows.Forms.TextBox();
             this.lblUltimoNumeroNFCe = new System.Windows.Forms.Label();
+            this.cboVersaoQrCode = new System.Windows.Forms.ComboBox();
+            this.lblVersaoQrCode = new System.Windows.Forms.Label();
             this.txtCscToken = new System.Windows.Forms.TextBox();
             this.lblCscToken = new System.Windows.Forms.Label();
             this.txtIdToken = new System.Windows.Forms.TextBox();
@@ -531,6 +533,8 @@
             this.gpbInformacaoDocumento.Controls.Add(this.cboIndicadorPresenca);
             this.gpbInformacaoDocumento.Controls.Add(this.txtUltimoNumeroNFCe);
             this.gpbInformacaoDocumento.Controls.Add(this.lblUltimoNumeroNFCe);
+            this.gpbInformacaoDocumento.Controls.Add(this.cboVersaoQrCode);
+            this.gpbInformacaoDocumento.Controls.Add(this.lblVersaoQrCode);
             this.gpbInformacaoDocumento.Controls.Add(this.txtCscToken);
             this.gpbInformacaoDocumento.Controls.Add(this.lblCscToken);
             this.gpbInformacaoDocumento.Controls.Add(this.txtIdToken);
@@ -604,8 +608,28 @@
             this.txtCscToken.Location = new System.Drawing.Point(596, 85);
             this.txtCscToken.Margin = new System.Windows.Forms.Padding(3, 4, 3, 3);
             this.txtCscToken.Name = "txtCscToken";
-            this.txtCscToken.Size = new System.Drawing.Size(418, 22);
+            this.txtCscToken.Size = new System.Drawing.Size(292, 22);
             this.txtCscToken.TabIndex = 8;
+            //
+            // lblVersaoQrCode
+            //
+            this.lblVersaoQrCode.AutoSize = true;
+            this.lblVersaoQrCode.Location = new System.Drawing.Point(891, 67);
+            this.lblVersaoQrCode.Margin = new System.Windows.Forms.Padding(3, 4, 3, 0);
+            this.lblVersaoQrCode.Name = "lblVersaoQrCode";
+            this.lblVersaoQrCode.Size = new System.Drawing.Size(89, 14);
+            this.lblVersaoQrCode.TabIndex = 32;
+            this.lblVersaoQrCode.Text = "Versão QR Code";
+            //
+            // cboVersaoQrCode
+            //
+            this.cboVersaoQrCode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboVersaoQrCode.FormattingEnabled = true;
+            this.cboVersaoQrCode.Location = new System.Drawing.Point(894, 85);
+            this.cboVersaoQrCode.Margin = new System.Windows.Forms.Padding(3, 4, 3, 3);
+            this.cboVersaoQrCode.Name = "cboVersaoQrCode";
+            this.cboVersaoQrCode.Size = new System.Drawing.Size(120, 22);
+            this.cboVersaoQrCode.TabIndex = 9;
             // 
             // lblCscToken
             // 
@@ -2338,6 +2362,8 @@
         private System.Windows.Forms.Label lblUltimoNumeroNFe;
         private System.Windows.Forms.TextBox txtJustificativaContingencia;
         private System.Windows.Forms.Label lblJustificativaContingencia;
+        private System.Windows.Forms.ComboBox cboVersaoQrCode;
+        private System.Windows.Forms.Label lblVersaoQrCode;
         private System.Windows.Forms.TextBox txtCscToken;
         private System.Windows.Forms.Label lblCscToken;
         private System.Windows.Forms.TextBox txtIdToken;

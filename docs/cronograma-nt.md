@@ -18,7 +18,8 @@
 
 | Data | Ambiente | NT | Marco | Status na lib |
 |---|---|---|---|---|
-| 01/09/2025 | Produção | 2025.001 | Envio síncrono obrigatório para NF-e única | Parcial (síncrono não é padrão: `NFeConfig.EnviarModoSincrono = false`) |
+| 01/09/2025 | Produção | 2025.001 (v1.01) | QR Code v3 da NFC-e disponível (opcional para PJ; orientado para produtor rural PF, exceto PR) | Implementado como opção (`NFeConfig.NFCeVersaoQrCode`, padrão v2) |
+| 13/10/2025 | Produção | 2025.001 (v1.02) | Rej. 452: resposta assíncrona proibida para lote com uma única NF-e (GAP03a-3) | Implementado (`NFeConfig.EnviarModoSincrono = true` por padrão) |
 | até 15/06/2026 | Homologação | 2026.004 (v1.01) + NT Conjunta DF-e 2025.001 | CNPJ alfanumérico (schemas de CNPJ/chave/Id, DV da chave com ASCII−48, código de barras CODE-128 C/A) | Implementado (NT 2026.004 v1.01, cronograma; a NTCJ 2025.001 v1.00 previa 06/04/2026) |
 | **01/07/2026** | Produção | 2026.004 (v1.01) + NT Conjunta DF-e 2025.001 | CNPJ alfanumérico (idem) | Implementado (NT 2026.004 v1.01, cronograma; a NTCJ 2025.001 v1.00 previa 06/07/2026) |
 | **16/11/2026** | Produção | 2025.002-RTC (v1.53) | Referência em devolução: `NFref` no cabeçalho **ou** `DFeReferenciado` no item (VC02-14/VC02-20; homologação até 09/11/2026) — não adiada pelo Aviso SVRS 3022 | Suportado (modelo aceita as duas formas; validação com o consumidor) |
