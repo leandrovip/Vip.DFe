@@ -159,6 +159,13 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
         [DFeElement(TipoCampo.Enum, "motDesICMS", Id = "N28", Min = 2, Max = 2, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public NFeMotivoDesoneracao MotDesIcms { get; set; }
 
+        /// <summary>
+        ///     N28b - Indicador de dedução do ICMS desonerado do valor do item/total da NF-e (NT 2023.004).
+        ///     Obrigatório 1 quando motDesICMS = 7 (Suframa), rejeição 652.
+        /// </summary>
+        [DFeElement(TipoCampo.Enum, "indDeduzDeson", Id = "N28b", Min = 1, Max = 1, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public NFeIndDeduzDeson? IndDeduzDeson { get; set; }
+
         #endregion
 
         #region Methods
@@ -168,6 +175,8 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual
         private bool ShouldSerializeModBcSt() => ModBcSt.HasValue;
 
         private bool ShouldSerializeMotDesIcms() => VIcmsDeson > 0;
+
+        private bool ShouldSerializeIndDeduzDeson() => IndDeduzDeson.HasValue && VIcmsDeson > 0;
 
         #endregion
     }

@@ -35,10 +35,22 @@ namespace Vip.DFe.NFe.NotaFiscal.Pagamento
         public NFeBandeiraCartao? Bandeira { get; set; }
 
         /// <summary>
-        ///     YA07 - Número de autorização da operação cartão de crédito e/ou débito
+        ///     YA07 - Número de autorização da operação com cartões, PIX, boletos e outros pagamentos eletrônicos
         /// </summary>
-        [DFeElement(TipoCampo.Str, "cAut", Id = "YA07", Min = 1, Max = 20, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.Str, "cAut", Id = "YA07", Min = 1, Max = 128, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public string CAut { get; set; }
+
+        /// <summary>
+        ///     YA07a - CNPJ do beneficiário do pagamento. NT 2023.004
+        /// </summary>
+        [DFeElement(TipoCampo.StrAlfaNumFill, "CNPJReceb", Id = "YA07a", Min = 14, Max = 14, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public string CNPJReceb { get; set; }
+
+        /// <summary>
+        ///     YA07b - Identificador do terminal de pagamento. NT 2023.004
+        /// </summary>
+        [DFeElement(TipoCampo.Str, "idTermPag", Id = "YA07b", Min = 1, Max = 40, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public string IdTermPag { get; set; }
 
         #endregion
 

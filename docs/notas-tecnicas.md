@@ -38,7 +38,7 @@
 | 2023.001 (v1.5x) | ICMS monofásico combustíveis (ICMS02/15/53/61, `vICMSMono*`) | **Parcial** | Grupos `Icms02/15/53/61` e totais `qBCMono*`/`vICMSMono*` presentes (`NFeIcmsTot.cs:90-120`); faltam `pRedAdRem`/`motRedAdRem` (ICMS15) e `vICMSMonoOp` (ICMS53) |
 | 2023.002 (v1.02) | Fim do envio assíncrono / inutilização em AC, BA, SP | **Implementado** | Síncrono por padrão (`NFeConfig.EnviarModoSincrono = true`, ver NT 2025.001) |
 | 2023.003 (v1.4) | Regras NFC-e exclusivas AM | **N/A** | — |
-| 2023.004 (v1.11) | Conciliação financeira (ECONF 110750/110751) e campos de pagamento | **Pendente** | Faltam `dPag`, `CNPJPag`, `UFPag` (detPag) e `CNPJReceb`, `idTermPag` (card) — já existem no XSD local; eventos 110750/110751 não modelados. (`xPag` já implementado, `NFeDetPag.cs:46`) |
+| 2023.004 (v1.20) | Conciliação financeira (ECONF 110750/110751) e campos de pagamento | **Parcial** (campos implementados; ECONF pendente) | `NFeDetPag`: `dPag` (YA03a), par `CNPJPag`/`UFPag` (YA03c/d, os dois ou nenhum); `NFeCardPag`: `CNPJReceb` (YA07a), `idTermPag` (YA07b), `cAut` até 128; `indDeduzDeson` (N28b, enum `NFeIndDeduzDeson`) em ICMS20/30/40/70/90, emitido só com `vICMSDeson`; `MeioPagamento` com os códigos 14, 20, 21, 22, 23, 24 e 91 (Tabela de Meios de Pagamento SVRS de 04/03/2026 e IT 2024.002). `tBand` mantido (MOC 7.0; tabela oficial de operadoras não localizada). **Evento ECONF não modelado** (sem demanda no VipERP); schema `Evento_Econf_v1.00` no acervo |
 | 2023.005 (v1.02) | Insucesso na entrega (110192/110193) | **Pendente** | Eventos não modelados |
 | 2024.001 (v1.10) | CRT 4 – MEI | **Implementado** | `RegimeTributario.MEI = 4` (`Shared/Enum/RegimeTributario.cs:26`), commit `0283fb6` |
 | 2024.002 (v1.10) | IBS/CBS/IS (início RTC) | **Implementado** | Absorvida pela 2025.002-RTC (abaixo) |
@@ -66,7 +66,7 @@
 | 110130/110131 Comprovante de entrega | **Pendente** | NT 2021.001 |
 | 110150 Ator interessado | **Pendente** | Código a confirmar na NT |
 | 110192/110193 Insucesso na entrega | **Pendente** | NT 2023.005 |
-| 110750/110751 Conciliação financeira | **Pendente** | NT 2023.004 |
+| 110750/110751 Conciliação financeira | **Pendente** | NT 2023.004; sem demanda no VipERP (2026-11-26). Schema `Evento_Econf_v1.00` em `referencias/schemas/` |
 | 2102xx Manifestação do destinatário | **Pendente** | NT 2020.001; exige Recepção de Evento do Ambiente Nacional |
 | Distribuição DF-e (`NFeDistribuicaoDFe`) | **Pendente** | Só endpoints (`NFeEnderecoCollection.cs:182, 356`); sem serviço nem schema `distDFeInt` |
 | Consulta Cadastro (`NfeConsultaCadastro`) | **Pendente** | Endpoints e `consCad_v2.00.xsd` existem; sem classe de serviço |
@@ -77,7 +77,8 @@ O `leiauteNFe_v4.00.xsd` local já contém estes elementos, mas o domínio não.
 
 - `emit/ISUFEmit`
 - `prod/gCred` (`cCredPresumido`, `pCredPresumido`, `vCredPresumido`) — crédito presumido
-- `ICMS10/vICMSSTDeson`, `motDesICMSST`
+- `ICMS10/vICMSSTDeson`, `motDesICMSST` (também em ICMS70 e ICMS90)
+- `ICMSPart`: `vICMSDeson`, `motDesICMS`, `indDeduzDeson` (desoneração nunca modelada nesse grupo)
 - `ICMS51` e `ICMS90`: `cBenefRBC`, `pFCPDif`, `vFCPDif`, `vFCPEfet`
 - `PISST/indSomaPISST`, `COFINSST/indSomaCOFINSST`
 - `procRef/tpAto`
@@ -112,7 +113,7 @@ Antes de implementar qualquer uma dessas NTs, baixe o pacote com `referencias/to
 2. ~~**Atualizar o pacote de schemas** e implementar a **NT 2026.005 (Simples Nacional na RTC)**~~: implementado (PR #6, schemas do PL_010h; testes em homologação pendentes). Produção em 14/12/2026 (Aviso SVRS 3022) e afeta emitentes CRT 1/2 e CRT 3 com opção pendente pelo SN (o **MEI, CRT 4, não informa** o grupo IBSCBS); obrigatoriedade para o SN em 01/03/2027 (Ato Conjunto RFB/CGIBS nº 7/2026); junto, os campos opcionais da **NT 2026.008** (`vUnComLiq`, `vProdLiq`, `vProdLiqTot`).
 3. ~~**NT 2025.002-RTC v1.53**~~: domínio alinhado ao XSD (monofasia, IS, crédito presumido, `ISUFEmit`); referências em devolução/complemento já suportadas.
 4. ~~**NT 2025.001**~~: síncrono por padrão e QR Code v3 opcional (branch `feat/nt-2025-001-qrcode-v3`).
-5. **NT 2023.004**: campos `dPag`, `CNPJPag`, `UFPag`, `CNPJReceb`, `idTermPag` (+ evento ECONF, se usado).
+5. ~~**NT 2023.004**~~: campos de pagamento, `indDeduzDeson` e códigos novos de `tPag` (branch `feat/nt-2023-004-pagamento`); evento ECONF só quando houver demanda.
 6. **NT 2026.010 / 2026.002-003**: DANFE com tributos RTC e DANFE simplificado.
 7. Facultativas/futuras: **NT 2026.007** (emitente sem IE, só se houver cliente exclusivo de IBS/CBS), **NT 2026.006** (split payment, 2027).
 8. Restante do ICMS monofásico (NT 2023.001), agropecuário (NT 2024.003), campos sem modelo e eventos pós-autorização conforme demanda do VipERP.
