@@ -33,7 +33,7 @@ namespace Vip.DFe.Tests.Serializer
                 {
                     CbsMonoAdValorem = new CbsMonoAdValorem
                     {
-                        MonoPadrao = new CbsAdValoremPadrao {VBcMono = 100m, PCbsMono = 0.9m, VCbsMono = 0.9m}
+                        MonoPadrao = new CbsAdValoremPadrao {VBcMono = 100m, PAliqMonoCbs = 0.9m, VCbsMono = 0.9m}
                     },
                     VTotIbsMonoItem = 0m,
                     VTotCbsMonoItem = 0.9m

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Linq;
 using Vip.DFe.Attributes;
 using Vip.DFe.Document;
 using Vip.DFe.Enum;
@@ -218,7 +217,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Identificacao
         /// <summary>
         ///     BA01 - Informação de Documentos Fiscais referenciados
         /// </summary>
-        [DFeCollection("NFref", Id = "BA01", MinSize = 0, MaxSize = 500, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeCollection("NFref", Id = "BA01", MinSize = 0, MaxSize = 999, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public DFeCollection<NFeNfRef> NFref { get; set; }
 
         /// <summary>

@@ -27,8 +27,8 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs
         /// <summary>
         ///     UB92b - Alíquota ad valorem do IBS sujeito a retenção
         /// </summary>
-        [DFeElement(TipoCampo.De4, "pIBSMonoReten", Id = "UB92b", Min = 5, Max = 10, Ocorrencia = Ocorrencia.Obrigatoria)]
-        public decimal PIbsMonoReten { get; set; }
+        [DFeElement(TipoCampo.De4, "pAliqMonoReten", Id = "UB92b", Min = 5, Max = 10, Ocorrencia = Ocorrencia.Obrigatoria)]
+        public decimal PAliqMonoReten { get; set; }
 
         /// <summary>
         ///     UB92c - Valor do IBS monofásico sujeito a retenção

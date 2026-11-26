@@ -56,7 +56,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Total
 
         #region Methods
 
-        private bool ShouldSerializeIbs() => Ibs.IsNotNull() && (Ibs.VIbs != 0 || Ibs.IbsUf.VIbsUf != 0 || Ibs.IbsMunicipio.VIbsMun != 0);
+        private bool ShouldSerializeIbs() => Ibs.IsNotNull() && (Ibs.VIbs != 0 || (Ibs.IbsUf?.VIbsUf ?? 0) != 0 || (Ibs.IbsMunicipio?.VIbsMun ?? 0) != 0);
 
         private bool ShouldSerializeCbs() => Cbs.IsNotNull() && (Cbs.VCbs != 0 || Cbs.VDif != 0 || Cbs.VCredPres != 0 || Cbs.VCredPresCondSus != 0 || Cbs.VDevTrib != 0);
 

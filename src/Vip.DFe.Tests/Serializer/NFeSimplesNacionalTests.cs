@@ -259,6 +259,7 @@ namespace Vip.DFe.Tests.Serializer
         [Theory]
         [InlineData("nfe-modelo55.xml")]
         [InlineData("nfce-modelo65.xml")]
+        [InlineData("nfe-modelo55-monofasia.xml")]
         public void XmlGolden_DeveSerValidoContraXsdPl010hSomenteComFaltaDeSignature(string arquivo)
         {
             var xml = File.ReadAllText(Path.Combine(SerializerTestHelper.CaminhoBase, "Fixtures", "golden", arquivo));

@@ -33,13 +33,13 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs
         ///     UB93 - Grupo de informações da Tributação Monofásica retida anteriormente
         /// </summary>
         [DFeElement("gMonoRet", Id = "UB93", Ocorrencia = Ocorrencia.NaoObrigatoria)]
-        public IbsAdValoremRet MonoRet { get; set; }
+        public IbsMonoRet MonoRet { get; set; }
 
         /// <summary>
         ///     UB94 - Grupo de informações do diferimento do biodiesel na Tributação Monofásica
         /// </summary>
         [DFeElement("gpBioDiferenca", Id = "UB94", Ocorrencia = Ocorrencia.NaoObrigatoria)]
-        public AdValoremBioDiferenca BioDiferenca { get; set; }
+        public IbsBioDiferenca BioDiferenca { get; set; }
 
         #endregion
     }

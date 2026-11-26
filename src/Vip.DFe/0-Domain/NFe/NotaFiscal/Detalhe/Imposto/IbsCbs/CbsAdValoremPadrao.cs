@@ -27,8 +27,8 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs
         /// <summary>
         ///     UB101b - Alíquota ad valorem da CBS
         /// </summary>
-        [DFeElement(TipoCampo.De4, "pCBSMono", Id = "UB101b", Min = 5, Max = 10, Ocorrencia = Ocorrencia.Obrigatoria)]
-        public decimal PCbsMono { get; set; }
+        [DFeElement(TipoCampo.De4, "pAliqMonoCBS", Id = "UB101b", Min = 5, Max = 10, Ocorrencia = Ocorrencia.Obrigatoria)]
+        public decimal PAliqMonoCbs { get; set; }
 
         /// <summary>
         ///     UB101c - Valor da CBS monofásica

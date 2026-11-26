@@ -34,13 +34,13 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs
         /// <summary>
         ///     UB05 - Valor da Base de Cálculo do Imposto Seletivo
         /// </summary>
-        [DFeElement(TipoCampo.De2, "vBCIS", Id = "UB05", Min = 3, Max = 15, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.De2, "vBCIS", Id = "UB05", Min = 3, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal VBcIS { get; set; }
 
         /// <summary>
         ///     UB06 - Alíquota do Imposto Seletivo (percentual)
         /// </summary>
-        [DFeElement(TipoCampo.De4, "pIS", Id = "UB06", Min = 5, Max = 10, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.De4, "pIS", Id = "UB06", Min = 5, Max = 10, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal PIs { get; set; }
 
         /// <summary>
@@ -71,29 +71,37 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs
 
         #region Methods
 
+        // TIS: vBCIS, pIS, [adRemIS], [uTrib + qTrib], vIS formam um bloco opcional único; sai completo ou não sai.
+        private bool TemBloco => VBcIS > 0 || PIs > 0 || AdRemIS > 0 || VIS > 0;
+
         private bool ShouldSerializeVBcIS()
         {
-            return VBcIS > 0;
+            return TemBloco;
         }
 
         private bool ShouldSerializePIs()
         {
-            return PIs > 0;
+            return TemBloco;
         }
 
         private bool ShouldSerializeAdRemIS()
         {
-            return AdRemIS > 0;
+            return TemBloco && AdRemIS > 0;
         }
 
         private bool ShouldSerializeUTrib()
         {
-            return UTrib.IsNotNullOrEmpty();
+            return TemBloco && UTrib.IsNotNullOrEmpty() && QTrib > 0;
         }
 
         private bool ShouldSerializeQTrib()
         {
-            return QTrib > 0;
+            return TemBloco && UTrib.IsNotNullOrEmpty() && QTrib > 0;
+        }
+
+        private bool ShouldSerializeVIS()
+        {
+            return TemBloco;
         }
 
         #endregion

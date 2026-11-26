@@ -111,6 +111,12 @@ namespace Vip.DFe.NFe.NotaFiscal.Emitente
         [DFeElement(TipoCampo.Enum, "tpRegimeIBSCBS", Id = "C21a", Min = 1, Max = 1, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public TipoRegimeIbsCbs? TpRegimeIbsCbs { get; set; }
 
+        /// <summary>
+        ///     C22 - Inscrição do emitente na Suframa (NT 2025.002 v1.40)
+        /// </summary>
+        [DFeElement(TipoCampo.StrNumber, "ISUFEmit", Id = "C22", Min = 8, Max = 9, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public string ISUFEmit { get; set; }
+
         #endregion
 
         #region Methods
@@ -154,6 +160,11 @@ namespace Vip.DFe.NFe.NotaFiscal.Emitente
         private bool ShouldSerializeTpRegimeIbsCbs()
         {
             return TpRegimeIbsCbs.HasValue;
+        }
+
+        private bool ShouldSerializeISUFEmit()
+        {
+            return ISUFEmit.IsNotNullOrEmpty();
         }
 
         #endregion

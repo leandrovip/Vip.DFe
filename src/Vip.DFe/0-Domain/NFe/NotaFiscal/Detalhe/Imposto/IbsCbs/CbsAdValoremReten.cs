@@ -27,8 +27,8 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs
         /// <summary>
         ///     UB102b - Alíquota ad valorem da CBS sujeita a retenção
         /// </summary>
-        [DFeElement(TipoCampo.De4, "pCBSMonoReten", Id = "UB102b", Min = 5, Max = 10, Ocorrencia = Ocorrencia.Obrigatoria)]
-        public decimal PCbsMonoReten { get; set; }
+        [DFeElement(TipoCampo.De4, "pAliqMonoReten", Id = "UB102b", Min = 5, Max = 10, Ocorrencia = Ocorrencia.Obrigatoria)]
+        public decimal PAliqMonoReten { get; set; }
 
         /// <summary>
         ///     UB102c - Valor da CBS monofásica sujeita a retenção

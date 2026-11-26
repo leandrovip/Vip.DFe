@@ -30,7 +30,7 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs
         ///     Valor do Crédito Presumido
         ///     <br /> UB125 (IBS), UB129 (CBS)
         /// </summary>
-        [DFeElement(TipoCampo.De2, "vCredPres", Min = 3, Max = 15, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        [DFeElement(TipoCampo.De2, "vCredPres", Min = 3, Max = 15, Ocorrencia = Ocorrencia.Obrigatoria)]
         public decimal VCredPres { get; set; }
 
         /// <summary>
@@ -40,6 +40,21 @@ namespace Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs
         /// </summary>
         [DFeElement(TipoCampo.De2, "vCredPresCondSus", Min = 3, Max = 15, Ocorrencia = Ocorrencia.NaoObrigatoria)]
         public decimal VCredPresCondSus { get; set; }
+
+        #endregion
+
+        #region Methods
+
+        // TCredPres: choice obrigatório (vCredPres | vCredPresCondSus). Com condição suspensiva informada, emite só ela.
+        private bool ShouldSerializeVCredPres()
+        {
+            return VCredPresCondSus == 0;
+        }
+
+        private bool ShouldSerializeVCredPresCondSus()
+        {
+            return VCredPresCondSus != 0;
+        }
 
         #endregion
     }
