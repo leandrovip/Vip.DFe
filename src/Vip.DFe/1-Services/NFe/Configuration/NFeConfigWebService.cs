@@ -39,7 +39,8 @@ namespace Vip.DFe.NFe.Configuration
         public void Configurar()
         {
             var valor = NFeEnderecoCollection.listaAutorizadora.FirstOrDefault(x => x.Item1 == UF.GetDescription() && x.Item4 == Parent.Modelo);
-            var autorizadora = Parent.TipoEmissao != TipoEmissao.Normal ? valor?.Item3 : valor?.Item2;
+            // Contingência off-line (tpEmis = 9) transmite à autorizadora normal; só as demais contingências usam a SVC.
+            var autorizadora = Parent.TipoEmissao != TipoEmissao.Normal && Parent.TipoEmissao != TipoEmissao.OffLine ? valor?.Item3 : valor?.Item2;
 
             Enderecos = NFeEnderecoCollection.listaEnderecos
                 .Where(x => x.Autorizadora == autorizadora &&
@@ -52,6 +53,18 @@ namespace Vip.DFe.NFe.Configuration
         public string ObterUrlQrCode()
         {
             var endereco = NFeEnderecoCollection.listaEnderecos.FirstOrDefault(x => x.Autorizadora == UF.GetDescription() && x.Modelo == Parent.Modelo && x.Versao == Parent.Versao && x.Ambiente == Parent.Ambiente && x.TipoServico == NFeTipoServico.NFCeUrlQrCode);
+            return endereco.IsNull() ? "" : endereco.Url;
+        }
+
+        public string ObterUrlQrCode(NFeModelo modelo)
+        {
+            var endereco = NFeEnderecoCollection.listaEnderecos.FirstOrDefault(x => x.Autorizadora == UF.GetDescription() && x.Modelo == modelo && x.Versao == Parent.Versao && x.Ambiente == Parent.Ambiente && x.TipoServico == NFeTipoServico.NFCeUrlQrCode);
+            return endereco.IsNull() ? "" : endereco.Url;
+        }
+
+        public string ObterUrlChave(NFeModelo modelo)
+        {
+            var endereco = NFeEnderecoCollection.listaEnderecos.FirstOrDefault(x => x.Autorizadora == UF.GetDescription() && x.Modelo == modelo && x.Versao == Parent.Versao && x.Ambiente == Parent.Ambiente && x.TipoServico == NFeTipoServico.NFCeUrlChave);
             return endereco.IsNull() ? "" : endereco.Url;
         }
 

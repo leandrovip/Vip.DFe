@@ -172,5 +172,114 @@ namespace Vip.DFe.Tests.NFe
 
             Assert.DoesNotContain(erros, e => e.Contains("qrCode"));
         }
+
+        private static NFeDoc CriarNFeSimplificadoTipo2(bool offline = false, TipoImpressao tpImp = TipoImpressao.SimplificadoTipo2)
+        {
+            var nfe = SerializerTestHelper.CarregarNFeModelo();
+            nfe.InfNFe.Ide.Modelo = NFeModelo.NFe;
+            nfe.InfNFe.Ide.TipoImpressao = tpImp;
+            if (offline)
+            {
+                nfe.InfNFe.Ide.TipoEmissao = TipoEmissao.OffLine;
+                ChaveOffline(nfe);
+            }
+
+            return nfe;
+        }
+
+        /// <summary>
+        ///     Configuração do emitente em NF-e (modelo 55), sem CSC e com a versão 2 do QR Code da NFC-e (deve ser
+        ///     ignorada).
+        /// </summary>
+        private static NFeConfig ConfigNFe()
+        {
+            var cfg = Config();
+            cfg.Modelo = NFeModelo.NFe;
+            cfg.NFCeIdToken = null;
+            cfg.NFCeCSC = null;
+            return cfg;
+        }
+
+        [Fact]
+        public void NFeSimplificadoTipo2_Online_DeveGerarQrCodeV3ESemCscMesmoComConfigV2()
+        {
+            var nfe = CriarNFeSimplificadoTipo2();
+
+            nfe.GerarQrCode(ConfigNFe());
+
+            Assert.Equal(UrlBase + Chave + "|3|2", nfe.InfNFeSupl.QrCode);
+            Assert.False(string.IsNullOrEmpty(nfe.InfNFeSupl.UrlChave));
+        }
+
+        [Fact]
+        [Obsolete("Obsolete")]
+        public void NFeSimplificadoTipo2_Offline_DeveGerarOitoParametrosComAssinaturaValida()
+        {
+            var nfe = CriarNFeSimplificadoTipo2(true);
+            using var cert = NFeValidacaoXsdTests.CriarCertificadoAutoassinado();
+            nfe.Assinar(cert, SaveOptions.DisableFormatting);
+
+            nfe.GerarQrCode(ConfigNFe(), cert);
+
+            var qr = nfe.InfNFeSupl.QrCode;
+            Assert.StartsWith(UrlBase, qr);
+            var partes = qr.Substring(UrlBase.Length).Split('|');
+            Assert.Equal(8, partes.Length);
+            Assert.Equal(ChaveOff, partes[0]);
+            Assert.Equal("3", partes[1]);
+
+            var dados = Encoding.UTF8.GetBytes(string.Join("|", partes.Take(7)));
+            using var rsa = cert.GetRSAPublicKey();
+            Assert.True(rsa.VerifyData(dados, Convert.FromBase64String(partes[7]), HashAlgorithmName.SHA1, RSASignaturePadding.Pkcs1));
+            Assert.Matches(PatternOfflineV3, qr);
+        }
+
+        [Fact]
+        public void NFeSimplificadoTipo2_OfflineSemCertificado_DeveLancarVipException()
+        {
+            var nfe = CriarNFeSimplificadoTipo2(true);
+
+            Assert.Throws<VipException>(() => nfe.GerarQrCode(ConfigNFe()));
+        }
+
+        [Fact]
+        public void NFeComDanfeNormal_NaoDeveGerarQrCode()
+        {
+            var nfe = CriarNFeSimplificadoTipo2(tpImp: TipoImpressao.NormalRetrato);
+
+            nfe.GerarQrCode(ConfigNFe());
+
+            Assert.True(string.IsNullOrEmpty(nfe.InfNFeSupl.QrCode));
+            Assert.True(string.IsNullOrEmpty(nfe.InfNFeSupl.UrlChave));
+            Assert.False(SerializerTestHelper.ContemTag(nfe.GetXml(), "infNFeSupl"));
+        }
+
+        [Theory]
+        [InlineData(TipoEmissao.SVCAN)]
+        [InlineData(TipoEmissao.SVCRS)]
+        [InlineData(TipoEmissao.Contingencia)]
+        public void NFeSimplificadoTipo2_ComTpEmisNaoAdmitido_DeveLancarVipException(TipoEmissao tpEmis)
+        {
+            var nfe = CriarNFeSimplificadoTipo2();
+            nfe.InfNFe.Ide.TipoEmissao = tpEmis;
+
+            var ex = Assert.Throws<VipException>(() => nfe.GerarQrCode(ConfigNFe()));
+            Assert.Contains("tpImp=6", ex.Message);
+        }
+
+        [Fact]
+        [Obsolete("Obsolete")]
+        public void NFeSimplificadoTipo2_Assinada_DeveSerValidaContraXsdComInfNFeSupl()
+        {
+            var nfe = CriarNFeSimplificadoTipo2();
+            using var cert = NFeValidacaoXsdTests.CriarCertificadoAutoassinado();
+            nfe.Assinar(cert, SaveOptions.DisableFormatting);
+            nfe.GerarQrCode(ConfigNFe(), cert);
+
+            SchemaHelper.ValidarXml(nfe.GetXml(), Path.Combine(SerializerTestHelper.CaminhoBase, "schemas", "nfe_v4.00.xsd"), out var erros, out _);
+
+            Assert.True(SerializerTestHelper.ContemTag(nfe.GetXml(), "infNFeSupl"));
+            Assert.True(erros.Length == 0, string.Join(Environment.NewLine, erros));
+        }
     }
 }

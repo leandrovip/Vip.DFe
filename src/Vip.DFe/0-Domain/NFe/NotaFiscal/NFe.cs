@@ -139,6 +139,10 @@ namespace Vip.DFe.NFe.NotaFiscal
         /// <summary>
         ///     Gera a URL para o QR-Code (versão 2.0 ou 3.0, conforme <see cref="NFeConfig.NFCeVersaoQrCode" />) com o
         ///     tratamento de parâmetro query no final da url.
+        ///     <para>
+        ///         Para NF-e modelo 55 com tpImp = 6 (DANFE Simplificado Tipo 2) gera sempre a versão 3.0, sem CSC; demais NF-e
+        ///         não possuem QR Code.
+        ///     </para>
         /// </summary>
         /// <param name="configuracao">Configuração.</param>
         /// <param name="certificado">
@@ -147,9 +151,17 @@ namespace Vip.DFe.NFe.NotaFiscal
         /// </param>
         public void GerarQrCode(NFeConfig configuracao, X509Certificate2 certificado)
         {
-            if (InfNFe.Ide.Modelo != NFeModelo.NFCe) return;
+            var nfce = InfNFe.Ide.Modelo == NFeModelo.NFCe;
 
-            var versao3 = configuracao.NFCeVersaoQrCode == NFeVersaoQrCode.V3;
+            // NT 2026.003/2026.002 (ZX02): NF-e modelo 55 com tpImp = 6 (DANFE Simplificado Tipo 2) exige infNFeSupl
+            // com QR Code versão 3 e URL de consulta da NFC-e da UF.
+            var nfeSimplificadoTipo2 = InfNFe.Ide.Modelo == NFeModelo.NFe && InfNFe.Ide.TipoImpressao == TipoImpressao.SimplificadoTipo2;
+            if (!nfce && !nfeSimplificadoTipo2) return;
+
+            Guard.Against<VipException>(nfeSimplificadoTipo2 && InfNFe.Ide.TipoEmissao != TipoEmissao.Normal && InfNFe.Ide.TipoEmissao != TipoEmissao.OffLine,
+                "NF-e com DANFE Simplificado Tipo 2 (tpImp=6) só admite emissão normal (tpEmis=1) ou contingência off-line (tpEmis=9)");
+
+            var versao3 = nfeSimplificadoTipo2 || configuracao.NFCeVersaoQrCode == NFeVersaoQrCode.V3;
 
             if (!versao3)
             {
@@ -157,10 +169,11 @@ namespace Vip.DFe.NFe.NotaFiscal
                 Guard.Against<VipException>(configuracao.NFCeCSC.IsNullOrEmpty(), "Token para montagem do QRCode não encontrado");
             }
 
-            var enderecoQrCode = configuracao.Webservices.ObterUrlQrCode();
+            // NFC-e: mantém a busca pelo modelo da configuração; NF-e com tpImp = 6 usa as URLs da NFC-e (modelo 65) da UF.
+            var enderecoQrCode = nfce ? configuracao.Webservices.ObterUrlQrCode() : configuracao.Webservices.ObterUrlQrCode(NFeModelo.NFCe);
             Guard.Against<VipException>(enderecoQrCode.IsNullOrEmpty(), "URL do QrCode não encontrada");
 
-            var urlConsultaChave = configuracao.Webservices.ObterUrlChave();
+            var urlConsultaChave = nfce ? configuracao.Webservices.ObterUrlChave() : configuracao.Webservices.ObterUrlChave(NFeModelo.NFCe);
             Guard.Against<VipException>(urlConsultaChave.IsNullOrEmpty(), "URL de consulta da chave não encontrada");
 
             #region Gerar URL QRCODE
@@ -225,7 +238,7 @@ namespace Vip.DFe.NFe.NotaFiscal
             var online = string.Join("|", chave, "3", ambiente.ToString(CultureInfo.InvariantCulture));
             if (InfNFe.Ide.TipoEmissao != TipoEmissao.OffLine) return online;
 
-            Guard.Against<VipException>(certificado == null, "Certificado digital não informado: obrigatório para gerar o QRCode versão 3 em contingência off-line");
+            Guard.Against<VipException>(certificado == null, "Certificado digital não informado: obrigatório para gerar o QRCode versão 3 em contingência off-line (tpEmis = 9)");
 
             var diaEmi = InfNFe.Ide.DhEmi.Day.ToString("D2", CultureInfo.InvariantCulture);
             var valorNfce = InfNFe.Total.IcmsTot.VNf.ToString("0.00", CultureInfo.InvariantCulture);

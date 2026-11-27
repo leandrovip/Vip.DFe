@@ -26,6 +26,7 @@
 | **01/07/2026** | Produção | 2026.004 (v1.01) + NT Conjunta DF-e 2025.001 | CNPJ alfanumérico (idem) | Implementado (NT 2026.004 v1.01, cronograma; a NTCJ 2025.001 v1.00 previa 06/07/2026) |
 | **16/11/2026** | Produção | 2025.002-RTC (v1.53) | Referência em devolução: `NFref` no cabeçalho **ou** `DFeReferenciado` no item (VC02-14/VC02-20; homologação até 09/11/2026) — não adiada pelo Aviso SVRS 3022 | Suportado (modelo aceita as duas formas; validação com o consumidor) |
 | **16/11/2026** | Produção | 2026.007 (v1.00/v1.10) | Emissão por contribuinte sem IE (facultativa) e validações LCC-RFB/CCC; em homologação, CNPJ alfanumérico não rejeita 181/182–186 | Pendente (`emit/IE` opcional só no XSD do PL_010h; domínio exige IE) — não foi adiada pelo Aviso SVRS 3022 |
+| 01/07/2026 (hom.) / **03/08/2026** (prod.) | Homologação / Produção | 2026.003 (v1.00) | QR Code v3 obrigatório na NF-e com tpImp=6 (infNFeSupl) | Implementado |
 
 ## Pacotes de schema publicados
 
