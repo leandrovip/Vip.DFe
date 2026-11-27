@@ -470,7 +470,7 @@ namespace Vip.DFe.NFe
         private void GerarNFeProc(NFeConsultaProtocoloResposta consulta)
         {
             if (consulta.Resultado.ProtNFe.IsNull()) return;
-            if (consulta.Resultado.CStat != 100 && consulta.Resultado.CStat != 150) return;
+            if (!consulta.Resultado.CStat.IsIn(DFeConstantes.NFeAutorizada)) return;
 
             var protNFe = consulta.Resultado.ProtNFe;
 

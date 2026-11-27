@@ -71,6 +71,32 @@ namespace Vip.DFe.NFe.Protocolo
         [DFeElement(TipoCampo.Str, "xMotivo", Id = "PR12", Min = 1, Max = 255, Ocorrencia = Ocorrencia.Obrigatoria)]
         public string Motivo { get; set; }
 
+        /// <summary>
+        ///     PR13 - Código da mensagem de alerta da SEFAZ (cStat 120).
+        ///     <para>
+        ///         Limitação: a NT permite até 5 pares cMsg/xMsg, mas a lib preserva somente o primeiro, pois o serializer não
+        ///         repete pares intercalados sem elemento wrapper (com 2+ pares as tags sairiam fora da ordem do XSD). Hoje
+        ///         só a regra 5E17-65 gera alerta. O par só é emitido quando <see cref="CMsg" /> e <see cref="XMsg" /> estão
+        ///         preenchidos.
+        ///     </para>
+        /// </summary>
+        [DFeElement(TipoCampo.StrNumber, "cMsg", Id = "PR13", Min = 1, Max = 4, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public string CMsg { get; set; }
+
+        /// <summary>
+        ///     PR14 - Mensagem de alerta da SEFAZ para o emissor (cStat 120). Veja a limitação em <see cref="CMsg" />.
+        /// </summary>
+        [DFeElement(TipoCampo.Str, "xMsg", Id = "PR14", Min = 1, Max = 255, Ocorrencia = Ocorrencia.NaoObrigatoria)]
+        public string XMsg { get; set; }
+
+        #endregion
+
+        #region Serialization
+
+        private bool ShouldSerializeCMsg() => !string.IsNullOrEmpty(CMsg) && !string.IsNullOrEmpty(XMsg);
+
+        private bool ShouldSerializeXMsg() => ShouldSerializeCMsg();
+
         #endregion
     }
 }

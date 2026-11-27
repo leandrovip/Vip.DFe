@@ -1,6 +1,6 @@
-using System;
 using System.IO;
 using Vip.DFe.Danfe;
+using Vip.DFe.Danfe.Enum;
 using Vip.DFe.Danfe.Modelo;
 using Xunit;
 
@@ -58,6 +58,20 @@ namespace Vip.DFe.Tests.Danfe
             var exception = Assert.Throws<System.Exception>(() => DanfeViewModel.CriarDoConteudoXml(@"<foo />"));
 
             Assert.Contains("Documento raiz 'foo' não suportado para geração da DANFE.", exception.Message);
+        }
+
+        [Theory]
+        [InlineData(1, Orientacao.Retrato)]
+        [InlineData(2, Orientacao.Paisagem)]
+        [InlineData(3, Orientacao.Retrato)]
+        [InlineData(6, Orientacao.Retrato)]
+        public void DanfeViewModelCreator_CriarDoConteudoXml_DeveDefinirOrientacaoPeloTpImp(int tpImp, Orientacao esperada)
+        {
+            var xml = ObterNFeXml().Replace("<tpImp>1</tpImp>", $"<tpImp>{tpImp}</tpImp>");
+
+            var model = DanfeViewModel.CriarDoConteudoXml(xml);
+
+            Assert.Equal(esperada, model.Orientacao);
         }
 
         private static string ObterNFeXml(bool incluirDeclaracao = true)

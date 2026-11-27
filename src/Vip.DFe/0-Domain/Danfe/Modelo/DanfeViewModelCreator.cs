@@ -128,7 +128,8 @@ namespace Vip.DFe.Danfe.Modelo
             if (!FormasEmissaoSuportadas.Contains(model.TipoEmissao))
                 throw new NotSupportedException($"O tpEmis {ide.TipoEmissao} não é suportado.");
 
-            model.Orientacao = ide.TipoImpressao == TipoImpressao.NormalRetrato ? Orientacao.Retrato : Orientacao.Paisagem;
+            // Somente tpImp=2 (DANFE Normal Paisagem) usa paisagem; os demais valores (1, 3, 6...) usam o leiaute principal (retrato).
+            model.Orientacao = ide.TipoImpressao == TipoImpressao.NormalPaisagem ? Orientacao.Paisagem : Orientacao.Retrato;
 
             if (infProt != null)
             {
