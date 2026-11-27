@@ -97,7 +97,7 @@ Enums: `ModeloSat` (fabricante/versão da DLL), `IndRegra`, `EstadoOperacao`, `N
 |---|---|---|
 | `DanfeViewModel` / `DanfeEventoViewModel` | `Danfe/Modelo/` | Dados de exibição (desacoplados do modelo NFe); criados a partir de XML/NFeProc/NFeProcEvento via `DanfeViewModelCreator`/`DanfeEventoViewModelCreator` (`CriarDeArquivoXml`, `CriarDoConteudoXml`) |
 | ViewModels auxiliares | `Danfe/Modelo/` | `EmpresaViewModel`, `ProdutoViewModel`, `ImpostoViewModel`, `CalculoImpostoViewModel`, `CalculoIssqnViewModel`, `DuplicataViewModel`, `TransportadoraViewModel`, `LocalEntregaRetiradaViewModel` |
-| Blocos | `Danfe/Blocos/` + `BlocosEvento/` | Seções da página (canhoto, emitente, destinatário, itens, cálculo imposto, transportador, dados adicionais; e blocos de evento) |
+| Blocos | `Danfe/Blocos/` + `BlocosEvento/` | Seções da página (canhoto, emitente, destinatário, itens, transportador, dados adicionais; e blocos de evento). Leiaute NT 2026.010 (padrão): `BlocoTotalNota`, `BlocoTotalIcmsIpi`, `BlocoTotalIbsCbsIs` e tabela de itens de 8 colunas (`TabelaProdutosServicos.MontarTabelaRtc`, células `CelulaPilhaTexto`/`CelulaRotuloValor`). Leiaute anterior (`DanfeViewModel.UsarLeiauteAnterior`): `BlocoCalculoImposto` e tabela de 14 colunas |
 | Elementos | `Danfe/Elementos/` | Primitivas de desenho (`Campo`, `TextBlock`, `Tabela`, `Barcode128C`, `LinhaTracejada`, etc.) |
 | Enums | `Danfe/Enum/` | `Orientacao`, `AlinhamentoHorizontal/Vertical`, `PosicaoBloco` |
 

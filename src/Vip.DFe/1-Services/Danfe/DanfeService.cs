@@ -11,6 +11,7 @@ using Vip.DFe.Danfe.Blocos;
 using Vip.DFe.Danfe.Elementos;
 using Vip.DFe.Danfe.Enum;
 using Vip.DFe.Danfe.Modelo;
+using Vip.DFe.Exception;
 using File = org.pdfclown.files.File;
 
 namespace Vip.DFe.Danfe
@@ -50,24 +51,11 @@ namespace Vip.DFe.Danfe
 
             Paginas = new List<DanfePagina>();
             Canhoto = CriarBloco<BlocoCanhoto>();
-            _identificacaoEmitente = AdicionarBloco<BlocoIdentificacaoEmitente>();
-            AdicionarBloco<BlocoDestinatarioRemetente>();
 
-            if (ViewModel.LocalRetirada != null && ViewModel.ExibirBlocoLocalRetirada)
-                AdicionarBloco<BlocoLocalRetirada>();
-
-            if (ViewModel.LocalEntrega != null && ViewModel.ExibirBlocoLocalEntrega)
-                AdicionarBloco<BlocoLocalEntrega>();
-
-            if (ViewModel.Duplicatas.Count > 0)
-                AdicionarBloco<BlocoDuplicataFatura>();
-
-            AdicionarBloco<BlocoCalculoImposto>(ViewModel.Orientacao == Orientacao.Paisagem ? EstiloPadrao : CriarEstilo(4.75F));
-            AdicionarBloco<BlocoTransportador>();
-            AdicionarBloco<BlocoDadosAdicionais>(CriarEstilo(tFonteCampoConteudo: 8));
-
-            if (ViewModel.CalculoIssqn.Mostrar)
-                AdicionarBloco<BlocoCalculoIssqn>();
+            if (ViewModel.UsarLeiauteAnterior)
+                AdicionarBlocosLeiauteAnterior();
+            else
+                AdicionarBlocos();
 
             AdicionarMetadata();
 
@@ -99,6 +87,7 @@ namespace Vip.DFe.Danfe
 
             while (true)
             {
+                var linhaInicial = tabela.Tabela.LinhaAtual;
                 var page = CriarPagina();
 
                 tabela.SetPosition(page.RetanguloCorpo.Location);
@@ -109,6 +98,11 @@ namespace Vip.DFe.Danfe
                 page.Gfx.Flush();
 
                 if (tabela.CompletamenteDesenhada) break;
+
+                // Evita laço infinito: se nem uma página de continuação (que tem a maior área útil) comportou o
+                // próximo item, ele nunca caberá. A 1ª página pode legitimamente não ter espaço para nenhum item.
+                if (Paginas.Count > 1 && tabela.Tabela.LinhaAtual == linhaInicial)
+                    throw new VipException($"O item {linhaInicial + 1} da NF-e não cabe em uma página do DANFE (descrição ou informações adicionais muito extensas).");
             }
 
             PreencherNumeroFolhas();
@@ -174,6 +168,72 @@ namespace Vip.DFe.Danfe
 
         #region Private Methods
 
+        /// <summary>
+        ///     Leiaute da NT 2026.010 (tributos da Reforma Tributária).
+        /// </summary>
+        private void AdicionarBlocos()
+        {
+            var paisagem = ViewModel.Orientacao == Orientacao.Paisagem;
+
+            _identificacaoEmitente = AdicionarBloco<BlocoIdentificacaoEmitente>();
+            AdicionarBloco<BlocoDestinatarioRemetente>();
+
+            if (ViewModel.ExibirBlocoLocalRetirada && PossuiDados(ViewModel.LocalRetirada))
+                AdicionarBloco<BlocoLocalRetirada>();
+
+            if (ViewModel.ExibirBlocoLocalEntrega && PossuiDados(ViewModel.LocalEntrega))
+                AdicionarBloco<BlocoLocalEntrega>();
+
+            if (ViewModel.Duplicatas.Count > 0)
+                AdicionarBloco<BlocoDuplicataFatura>();
+
+            // No retrato os rótulos dos totais usam fonte menor para caber nos campos de 4 e 5 colunas.
+            var estiloTotais = paisagem ? EstiloPadrao : CriarEstilo(5.5F);
+            AdicionarBloco<BlocoTotalNota>(estiloTotais);
+            AdicionarBloco<BlocoTotalIcmsIpi>(estiloTotais);
+            AdicionarBloco<BlocoTotalIbsCbsIs>(estiloTotais);
+
+            // O domínio sempre instancia ISSQNtot (Mostrar fica sempre verdadeiro): no leiaute novo o quadro,
+            // facultativo pela NT (item 4.4), só é impresso quando há valor de ISSQN no XML.
+            if (ViewModel.CalculoIssqn.Mostrar && PossuiValorIssqn(ViewModel.CalculoIssqn))
+                AdicionarBloco<BlocoCalculoIssqn>();
+
+            AdicionarBloco<BlocoTransportador>();
+            AdicionarBloco<BlocoDadosAdicionais>(CriarEstilo(tFonteCampoConteudo: 8));
+        }
+
+        private static bool PossuiValorIssqn(CalculoIssqnViewModel issqn) => issqn.ValorTotalServicos.GetValueOrDefault() > 0 || issqn.BaseIssqn.GetValueOrDefault() > 0 || issqn.ValorIssqn.GetValueOrDefault() > 0;
+
+        /// <summary>
+        ///     Leiaute anterior à NT 2026.010, mantido para transição (<see cref="DanfeViewModel.UsarLeiauteAnterior" />).
+        /// </summary>
+        private void AdicionarBlocosLeiauteAnterior()
+        {
+            _identificacaoEmitente = AdicionarBloco<BlocoIdentificacaoEmitente>();
+            AdicionarBloco<BlocoDestinatarioRemetente>();
+
+            if (ViewModel.LocalRetirada != null && ViewModel.ExibirBlocoLocalRetirada)
+                AdicionarBloco<BlocoLocalRetirada>();
+
+            if (ViewModel.LocalEntrega != null && ViewModel.ExibirBlocoLocalEntrega)
+                AdicionarBloco<BlocoLocalEntrega>();
+
+            if (ViewModel.Duplicatas.Count > 0)
+                AdicionarBloco<BlocoDuplicataFatura>();
+
+            AdicionarBloco<BlocoCalculoImposto>(ViewModel.Orientacao == Orientacao.Paisagem ? EstiloPadrao : CriarEstilo(4.75F));
+            AdicionarBloco<BlocoTransportador>();
+            AdicionarBloco<BlocoDadosAdicionais>(CriarEstilo(tFonteCampoConteudo: 8));
+
+            if (ViewModel.CalculoIssqn.Mostrar)
+                AdicionarBloco<BlocoCalculoIssqn>();
+        }
+
+        /// <summary>
+        ///     O domínio sempre instancia retirada/entrega; o bloco só é impresso quando há dados.
+        /// </summary>
+        private static bool PossuiDados(LocalEntregaRetiradaViewModel local) => local != null && (!string.IsNullOrWhiteSpace(local.NomeRazaoSocial) || !string.IsNullOrWhiteSpace(local.CnpjCpf) || !string.IsNullOrWhiteSpace(local.Endereco));
+
         private DanfePagina CriarPagina()
         {
             var page = new DanfePagina(this);
@@ -193,9 +253,9 @@ namespace Vip.DFe.Danfe
             if (ViewModel.ModoEspelho)
             {
                 if (ViewModel.TipoAmbiente == 2)
-                    return new[] { "DANFE SEM VALOR FISCAL", "SEM AUTORIZAÇÃO DE USO", "AMBIENTE DE HOMOLOGAÇÃO"};
+                    return new[] {"DANFE SEM VALOR FISCAL", "SEM AUTORIZAÇÃO DE USO", "AMBIENTE DE HOMOLOGAÇÃO"};
 
-                return new[] { "DANFE SEM VALOR FISCAL", "SEM AUTORIZAÇÃO DE USO"};
+                return new[] {"DANFE SEM VALOR FISCAL", "SEM AUTORIZAÇÃO DE USO"};
             }
 
             if (ViewModel.TipoAmbiente == 2)

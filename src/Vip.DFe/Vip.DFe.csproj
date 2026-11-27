@@ -32,4 +32,8 @@
 		<PackageReference Include="Vip.Pdf" Version="1.0.2" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="Vip.DFe.Tests" />
+	</ItemGroup>
+
 </Project>

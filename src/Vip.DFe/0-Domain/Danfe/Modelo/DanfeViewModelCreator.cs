@@ -11,6 +11,8 @@ using Vip.DFe.NFe.Enum;
 using Vip.DFe.NFe.Interfaces;
 using Vip.DFe.NFe.NotaFiscal;
 using Vip.DFe.NFe.NotaFiscal.Destinatario;
+using Vip.DFe.NFe.NotaFiscal.Detalhe;
+using Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.IbsCbs;
 using Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Estadual;
 using Vip.DFe.NFe.NotaFiscal.Detalhe.Imposto.Federal;
 using Vip.DFe.NFe.NotaFiscal.Emitente;
@@ -197,11 +199,14 @@ namespace Vip.DFe.Danfe.Modelo
                         produto.OCst = modelIcms.OrigemMercadoria.GetDFeValue() + modelIcms.Cst + modelIcms.Csosn;
                     }
 
-                    if (imposto.Ipi.Imposto is IpiTrib ipi)
+                    if (imposto.Ipi?.Imposto is IpiTrib ipi)
                     {
                         produto.ValorIpi = (double?) ipi.VIpi;
                         produto.AliquotaIpi = (double?) ipi.PIpi;
+                        produto.BaseIpi = (double?) ipi.VBc;
                     }
+
+                    PreencherTributosRtc(produto, imposto);
                 }
 
                 model.Produtos.Add(produto);
@@ -227,6 +232,7 @@ namespace Vip.DFe.Danfe.Modelo
             #region Total
 
             model.CalculoImposto = ObterTotalImposto(infNfe.Total.IcmsTot);
+            PreencherTotaisRtc(model.CalculoImposto, infNfe.Total);
 
             var issqnTotal = infNfe.Total.IssqnTot;
             if (issqnTotal != null)
@@ -497,6 +503,86 @@ namespace Vip.DFe.Danfe.Modelo
 
             return model;
         }
+
+        /// <summary>
+        ///     Totais facultativos do ICMS e totais do IBS/CBS/IS impressos no DANFE da NT 2026.010.
+        /// </summary>
+        private static void PreencherTotaisRtc(CalculoImpostoViewModel model, NFeTotal total)
+        {
+            if (total == null) return;
+
+            var icmsTot = total.IcmsTot;
+            if (icmsTot != null)
+            {
+                model.ValorFcp = (double) icmsTot.VFcp;
+                model.ValorFcpSt = (double) icmsTot.VFcpSt;
+                model.BaseCalculoIcmsMono = (double) icmsTot.QtdeBCMono;
+                model.ValorIcmsMono = (double) icmsTot.VICMSMono;
+                model.BaseCalculoIcmsMonoRetencao = (double) icmsTot.QtdeBCMonoReten;
+                model.ValorIcmsMonoRetencao = (double) icmsTot.VICMSMonoReten;
+            }
+
+            var ibsCbsTot = total.IbsCbsTot;
+            model.ValorCbs = (double) (ibsCbsTot?.Cbs?.VCbs ?? 0);
+            model.ValorIbsUf = (double) (ibsCbsTot?.Ibs?.IbsUf?.VIbsUf ?? 0);
+            model.ValorIbsMunicipio = (double) (ibsCbsTot?.Ibs?.IbsMunicipio?.VIbsMun ?? 0);
+            model.ValorIs = (double) (total.IsTot?.VIS ?? 0);
+
+            var mono = ibsCbsTot?.Mono;
+            model.ValorIbsMono = (double) (mono?.VIbsMono ?? 0);
+            model.ValorCbsMono = (double) (mono?.VCbsMono ?? 0);
+            model.ValorIbsMonoRetencao = (double) (mono?.VIbsMonoReten ?? 0);
+            model.ValorCbsMonoRetencao = (double) (mono?.VCbsMonoReten ?? 0);
+        }
+
+        /// <summary>
+        ///     Bases, alíquotas e valores do IBS/CBS/IS do item impressos no DANFE da NT 2026.010.
+        ///     Na presença do grupo gRed, a alíquota impressa é a efetiva (pAliqEfet).
+        /// </summary>
+        private static void PreencherTributosRtc(ProdutoViewModel produto, NFeDetImposto imposto)
+        {
+            var ibsCbs = imposto.IbsCbs;
+            produto.ClassificacaoTributaria = string.IsNullOrWhiteSpace(ibsCbs?.CClassTrib) ? null : ibsCbs.CClassTrib.Trim();
+
+            var grupo = ibsCbs?.GrupoIbsCbs;
+            if (grupo != null)
+            {
+                produto.BaseIbsCbs = (double) grupo.VBc;
+
+                if (grupo.IbsUf != null)
+                {
+                    produto.AliquotaIbsUf = (double) AliquotaImpressa(grupo.IbsUf.PIbsUf, grupo.IbsUf.ReducaoAliquota);
+                    produto.ValorIbsUf = (double) grupo.IbsUf.VIbsUf;
+                }
+
+                if (grupo.IbsMunicipio != null)
+                {
+                    produto.AliquotaIbsMunicipio = (double) AliquotaImpressa(grupo.IbsMunicipio.PIbsMun, grupo.IbsMunicipio.ReducaoAliquota);
+                    produto.ValorIbsMunicipio = (double) grupo.IbsMunicipio.VIbsMun;
+                }
+
+                if (grupo.Cbs != null)
+                {
+                    produto.AliquotaCbs = (double) AliquotaImpressa(grupo.Cbs.PCbs, grupo.Cbs.ReducaoAliquota);
+                    produto.ValorCbs = (double) grupo.Cbs.VCbs;
+                }
+            }
+
+            var impostoSeletivo = imposto.IS;
+            if (impostoSeletivo != null)
+            {
+                produto.BaseIs = (double) impostoSeletivo.VBcIS;
+                produto.AliquotaIs = (double) impostoSeletivo.PIs;
+                produto.ValorIs = (double) impostoSeletivo.VIS;
+            }
+        }
+
+        /// <summary>
+        ///     gRed informado => alíquota efetiva (pAliqEfet); senão a alíquota vigente.
+        ///     O desserializador pode instanciar o grupo vazio: considera informado com o mesmo critério da serialização (ShouldSerializeReducaoAliquota).
+        /// </summary>
+        private static decimal AliquotaImpressa(decimal aliquota, ReducaoAliquota reducao) =>
+            reducao != null && (reducao.PAliqEfet != 0 || reducao.PRedAliq != 0) ? reducao.PAliqEfet : aliquota;
 
         private static ImpostoViewModel ObterIcms(INFeImposto icms)
         {

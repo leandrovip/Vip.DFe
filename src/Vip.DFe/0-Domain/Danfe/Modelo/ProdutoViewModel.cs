@@ -110,6 +110,79 @@
         /// </summary>
         public double? ValorAproximadoTributos { get; set; }
 
+        #region Reforma Tributária (NT 2026.010)
+
+        /// <summary>
+        ///     <para>Valor da BC do IPI</para>
+        ///     <para>Tag vBC (O10)</para>
+        /// </summary>
+        public double? BaseIpi { get; set; }
+
+        /// <summary>
+        ///     <para>Código de Classificação Tributária do IBS e da CBS</para>
+        ///     <para>Tag cClassTrib (UB14)</para>
+        /// </summary>
+        public string ClassificacaoTributaria { get; set; }
+
+        /// <summary>
+        ///     <para>Base de cálculo do IBS e da CBS</para>
+        ///     <para>Tag vBC (UB16)</para>
+        /// </summary>
+        public double? BaseIbsCbs { get; set; }
+
+        /// <summary>
+        ///     <para>Alíquota do IBS UF impressa no DANFE: pAliqEfet (UB28) quando gIBSUF/gRed informado; senão pIBSUF (UB18)</para>
+        /// </summary>
+        public double? AliquotaIbsUf { get; set; }
+
+        /// <summary>
+        ///     <para>Valor do IBS UF</para>
+        ///     <para>Tag vIBSUF (UB35)</para>
+        /// </summary>
+        public double? ValorIbsUf { get; set; }
+
+        /// <summary>
+        ///     <para>Alíquota do IBS Município impressa no DANFE: pAliqEfet (UB47) quando gIBSMun/gRed informado; senão pIBSMun (UB37)</para>
+        /// </summary>
+        public double? AliquotaIbsMunicipio { get; set; }
+
+        /// <summary>
+        ///     <para>Valor do IBS Município</para>
+        ///     <para>Tag vIBSMun (UB54)</para>
+        /// </summary>
+        public double? ValorIbsMunicipio { get; set; }
+
+        /// <summary>
+        ///     <para>Alíquota da CBS impressa no DANFE: pAliqEfet (UB66) quando gCBS/gRed informado; senão pCBS (UB56)</para>
+        /// </summary>
+        public double? AliquotaCbs { get; set; }
+
+        /// <summary>
+        ///     <para>Valor da CBS</para>
+        ///     <para>Tag vCBS (UB67)</para>
+        /// </summary>
+        public double? ValorCbs { get; set; }
+
+        /// <summary>
+        ///     <para>Base de cálculo do Imposto Seletivo</para>
+        ///     <para>Tag vBCIS (UB05)</para>
+        /// </summary>
+        public double? BaseIs { get; set; }
+
+        /// <summary>
+        ///     <para>Alíquota do Imposto Seletivo</para>
+        ///     <para>Tag pIS (UB06)</para>
+        /// </summary>
+        public double? AliquotaIs { get; set; }
+
+        /// <summary>
+        ///     <para>Valor do Imposto Seletivo</para>
+        ///     <para>Tag vIS (UB11)</para>
+        /// </summary>
+        public double? ValorIs { get; set; }
+
+        #endregion
+
         public string DescricaoCompleta
         {
             get

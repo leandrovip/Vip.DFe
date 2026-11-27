@@ -18,7 +18,12 @@ namespace Vip.DFe.Danfe.Blocos
             MainVerticalStack = new VerticalStack();
             ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
 
-            if (!string.IsNullOrWhiteSpace(Cabecalho)) MainVerticalStack.Add(new CabecalhoBloco(estilo, Cabecalho));
+            if (!string.IsNullOrWhiteSpace(Cabecalho))
+            {
+                // Leiaute da NT 2026.010: respiro entre o fim do bloco anterior e o título deste.
+                if (!ViewModel.UsarLeiauteAnterior) MainVerticalStack.Add(new ElementoVazio {Height = EspacoAntesCabecalho});
+                MainVerticalStack.Add(new CabecalhoBloco(estilo, Cabecalho));
+            }
         }
 
         #endregion
@@ -33,6 +38,11 @@ namespace Vip.DFe.Danfe.Blocos
         ///     Constante de proporção dos campos para o formato retrato A4, porcentagem dividida pela largura desenhável.
         /// </summary>
         public const float Proporcao = 100F / 200F;
+
+        /// <summary>
+        ///     Espaço, em mm, antes do título de cada bloco no leiaute da NT 2026.010.
+        /// </summary>
+        public const float EspacoAntesCabecalho = 1.5F;
 
         /// <summary>
         ///     Pilha principal.

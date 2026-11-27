@@ -16,6 +16,7 @@ namespace Vip.DFe.Danfe.Elementos
 
         private float _DY;
         private float _DY1;
+        private readonly List<CelulaTabela[]> _LinhasCelulas = new List<CelulaTabela[]>();
 
         #endregion
 
@@ -73,6 +74,22 @@ namespace Vip.DFe.Danfe.Elementos
             Linhas.Add(linha);
         }
 
+        /// <summary>
+        ///     Adiciona uma linha com células de desenho próprio. Uma tabela usa somente linhas de texto ou somente linhas de
+        ///     células.
+        /// </summary>
+        public void AdicionarLinha(params CelulaTabela[] celulas)
+        {
+            if (celulas == null || celulas.Length != Colunas.Count) throw new ArgumentException(nameof(celulas));
+            if (Linhas.Count > 0) throw new InvalidOperationException("A tabela já possui linhas de texto.");
+            _LinhasCelulas.Add(celulas);
+        }
+
+        /// <summary>
+        ///     Quantidade de linhas da tabela (de texto ou de células).
+        /// </summary>
+        public int QuantidadeLinhas => _LinhasCelulas.Count > 0 ? _LinhasCelulas.Count : Linhas.Count;
+
         public void AjustarLarguraColunas()
         {
             var sw = Colunas.Sum(x => x.PorcentagemLargura);
@@ -123,6 +140,36 @@ namespace Vip.DFe.Danfe.Elementos
             return true;
         }
 
+        private bool DesenharLinhaCelulas(Gfx gfx)
+        {
+            _DY1 = _DY;
+
+            var celulas = _LinhasCelulas[LinhaAtual];
+            var larguras = new float[Colunas.Count];
+            var alturaMaxima = 0F;
+
+            for (int i = 0; i < Colunas.Count; i++)
+            {
+                larguras[i] = Width * Colunas[i].PorcentagemLargura / 100F - 2F * Estilo.PaddingHorizontal;
+                if (celulas[i] != null) alturaMaxima = Math.Max(alturaMaxima, celulas[i].MedirAltura(larguras[i]));
+            }
+
+            alturaMaxima = Math.Max(alturaMaxima, FonteCorpo.AlturaLinha);
+            if (alturaMaxima + _DY + PaddingInferior + PaddingSuperior > BoundingBox.Bottom) return false;
+
+            float x = X;
+
+            for (int i = 0; i < Colunas.Count; i++)
+            {
+                celulas[i]?.Desenhar(gfx, x + PaddingHorizontal, _DY + PaddingSuperior, larguras[i], alturaMaxima);
+                x += Width * Colunas[i].PorcentagemLargura / 100F;
+            }
+
+            _DY += alturaMaxima + PaddingSuperior + PaddingInferior;
+
+            return true;
+        }
+
         public void DesenharCabecalho(Gfx gfx)
         {
             var ml = Colunas.Max(c => c.Cabecalho.Length);
@@ -162,9 +209,9 @@ namespace Vip.DFe.Danfe.Elementos
 
             DesenharCabecalho(gfx);
 
-            while (LinhaAtual < Linhas.Count)
+            while (LinhaAtual < QuantidadeLinhas)
             {
-                bool r = DesenharLinha(gfx);
+                bool r = _LinhasCelulas.Count > 0 ? DesenharLinhaCelulas(gfx) : DesenharLinha(gfx);
 
                 if (r)
                 {

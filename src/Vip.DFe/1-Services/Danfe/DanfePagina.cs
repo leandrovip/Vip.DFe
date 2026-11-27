@@ -22,17 +22,20 @@ namespace Vip.DFe.Danfe
             PdfPage = new Page(Danfe.PdfDocument);
             Danfe.PdfDocument.Pages.Add(PdfPage);
 
-            PrimitiveComposer = new PrimitiveComposer(PdfPage);
-            Gfx = new Gfx(PrimitiveComposer);
-
             if (Danfe.ViewModel.Orientacao == Orientacao.Retrato)
                 Retangulo = new RectangleF(0, 0, DanfeConstantes.A4Largura, DanfeConstantes.A4Altura);
             else
                 Retangulo = new RectangleF(0, 0, DanfeConstantes.A4Altura, DanfeConstantes.A4Largura);
 
+            // O tamanho da página precisa ser definido antes de criar o PrimitiveComposer:
+            // ele usa a altura da página para inverter o eixo Y (no paisagem o conteúdo ficava deslocado para fora da página).
+            PdfPage.Size = new SizeF(Retangulo.Width.ToPoint(), Retangulo.Height.ToPoint());
+
+            PrimitiveComposer = new PrimitiveComposer(PdfPage);
+            Gfx = new Gfx(PrimitiveComposer);
+
             RetanguloDesenhavel = Retangulo.InflatedRetangle(Danfe.ViewModel.Margem);
             RetanguloCreditos = new RectangleF(RetanguloDesenhavel.X, RetanguloDesenhavel.Bottom + Danfe.EstiloPadrao.PaddingSuperior, RetanguloDesenhavel.Width, Retangulo.Height - RetanguloDesenhavel.Height - Danfe.EstiloPadrao.PaddingSuperior);
-            PdfPage.Size = new SizeF(Retangulo.Width.ToPoint(), Retangulo.Height.ToPoint());
         }
 
         #endregion
@@ -91,7 +94,7 @@ namespace Vip.DFe.Danfe
         {
             if (isPrimeirapagina && Danfe.ViewModel.QuantidadeCanhotos > 0) DesenharCanhoto();
 
-            var blocos = isPrimeirapagina ? Danfe.Blocos : Danfe.Blocos.Where(x => x.VisivelSomentePrimeiraPagina == false);
+            var blocos = isPrimeirapagina ? Danfe.Blocos : Danfe.Blocos.Where(x => !x.VisivelSomentePrimeiraPagina);
 
             foreach (var bloco in blocos)
             {
@@ -139,6 +142,28 @@ namespace Vip.DFe.Danfe
                 }
 
                 RetanguloDesenhavel = RetanguloDesenhavel.CutTop(canhoto.Height * Danfe.ViewModel.QuantidadeCanhotos);
+            }
+            else if (BlocoCanhoto.CanhotoNaDireita(Danfe.ViewModel))
+            {
+                // Paisagem da NT 2026.010: faixa vertical na borda direita.
+                // Com a rotação de 90° em torno de (ox, oy), o ponto local (x, y) vai para (y + ox, oy - x).
+                var larguraFaixa = canhoto.Height * Danfe.ViewModel.QuantidadeCanhotos;
+                canhoto.Width = RetanguloDesenhavel.Height;
+
+                var ox = RetanguloDesenhavel.Right - larguraFaixa - canhoto.Y;
+                var oy = canhoto.Width + canhoto.X + canhoto.Y;
+
+                Gfx.PrimitiveComposer.BeginLocalState();
+                Gfx.PrimitiveComposer.Rotate(90, new PointF(ox, oy).ToPointMeasure());
+
+                for (int i = 0; i < Danfe.ViewModel.QuantidadeCanhotos; i++)
+                {
+                    canhoto.Draw(Gfx);
+                    canhoto.Y += canhoto.Height;
+                }
+
+                Gfx.PrimitiveComposer.End();
+                RetanguloDesenhavel = RetanguloDesenhavel.CutRight(larguraFaixa);
             }
             else
             {

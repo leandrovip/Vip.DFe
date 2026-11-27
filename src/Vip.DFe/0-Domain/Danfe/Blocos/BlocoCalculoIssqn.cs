@@ -24,7 +24,12 @@ namespace Vip.DFe.Danfe.Blocos
 
         #region Properties
 
-        public override PosicaoBloco Posicao => PosicaoBloco.Base;
+        /// <summary>
+        ///     No leiaute da NT 2026.010 o quadro fica logo após os totais (antes do transportador); no anterior, acima dos dados
+        ///     adicionais.
+        /// </summary>
+        public override PosicaoBloco Posicao => ViewModel.UsarLeiauteAnterior ? PosicaoBloco.Base : PosicaoBloco.Topo;
+
         public override string Cabecalho => "CÁLCULO DO ISSQN";
 
         #endregion

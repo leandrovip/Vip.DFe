@@ -257,7 +257,18 @@ namespace Vip.DFe.Danfe.Modelo
         /// </summary>
         public bool PreferirEmitenteNomeFantasia { get; set; } = true;
 
-        //public bool MostrarCalculoIssqn { get; set; }
+        /// <summary>
+        ///     <para>
+        ///         Gera o DANFE no leiaute anterior à NT 2026.010 (sem os tributos da Reforma Tributária: IBS, CBS e IS),
+        ///         idêntico ao gerado pelas versões anteriores da biblioteca.
+        ///     </para>
+        ///     <para>
+        ///         O padrão (<c>false</c>) é o leiaute da NT 2026.010. Esta opção é uma saída temporária para o período de
+        ///         transição e poderá ser removida em versão futura.
+        ///     </para>
+        ///     <para>Defina antes de criar o <see cref="DanfeService" />.</para>
+        /// </summary>
+        public bool UsarLeiauteAnterior { get; set; }
 
         #endregion
 

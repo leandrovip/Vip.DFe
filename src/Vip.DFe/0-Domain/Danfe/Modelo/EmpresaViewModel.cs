@@ -103,6 +103,25 @@ namespace Vip.DFe.Danfe.Modelo
         public string CRT { get; set; }
 
         /// <summary>
+        ///     <para>Código de Regime Tributário com a descrição, no formato impresso no DANFE (NT 2026.010).</para>
+        ///     <para>Ex.: "3 - REGIME NORMAL".</para>
+        /// </summary>
+        public string CrtDescricao
+        {
+            get
+            {
+                switch (CRT?.Trim())
+                {
+                    case "1": return "1 - SIMPLES NACIONAL";
+                    case "2": return "2 - SIMPLES NACIONAL - EXCESSO DE SUBLIMITE DE RECEITA BRUTA";
+                    case "3": return "3 - REGIME NORMAL";
+                    case "4": return "4 - SIMPLES NACIONAL - MEI";
+                    default: return CRT;
+                }
+            }
+        }
+
+        /// <summary>
         ///     Linha 1 do Endereço
         /// </summary>
         public string EnderecoLinha1

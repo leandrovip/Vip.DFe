@@ -52,11 +52,29 @@ namespace Vip.DFe.Danfe.Blocos
                 .ComCampo("Protocolo de autorização", protocoloAutorizacao, AlinhamentoHorizontal.Centro)
                 .ComLarguras(0, 46.5F);
 
+            if (ViewModel.UsarLeiauteAnterior)
+            {
+                AdicionarLinhaCampos()
+                    .ComCampo("Inscrição Estadual", ViewModel.Emitente.Ie, AlinhamentoHorizontal.Centro)
+                    .ComCampo("Inscrição Estadual do Subst. Tributário", ViewModel.Emitente.IeSt, AlinhamentoHorizontal.Centro)
+                    .ComCampo("Cnpj", DanfeHelper.FormatarCnpj(ViewModel.Emitente.CnpjCpf), AlinhamentoHorizontal.Centro)
+                    .ComLargurasIguais();
+
+                return;
+            }
+
+            // NT 2026.010 - item 4.2: Código do Regime Tributário e área reservada ao Tipo de Regime de Apuração do IBS e da CBS.
             AdicionarLinhaCampos()
                 .ComCampo("Inscrição Estadual", ViewModel.Emitente.Ie, AlinhamentoHorizontal.Centro)
                 .ComCampo("Inscrição Estadual do Subst. Tributário", ViewModel.Emitente.IeSt, AlinhamentoHorizontal.Centro)
-                .ComCampo("Cnpj", DanfeHelper.FormatarCnpj(ViewModel.Emitente.CnpjCpf), AlinhamentoHorizontal.Centro)
+                .ComCampo(DanfeConstantes.CnpjCpf, DanfeHelper.FormatarCpfCnpj(ViewModel.Emitente.CnpjCpf), AlinhamentoHorizontal.Centro)
                 .ComLargurasIguais();
+
+            // O tipo de regime de apuração ainda não tem tag publicada: o campo é reservado e não deve ter conteúdo.
+            AdicionarLinhaCampos()
+                .ComCampo("Código do Regime Tributário", ViewModel.Emitente.CrtDescricao)
+                .ComCampo("Tipo de Regime de Apuração do IBS e da CBS", null)
+                .ComLarguras(0, 46.5F);
         }
 
         #endregion

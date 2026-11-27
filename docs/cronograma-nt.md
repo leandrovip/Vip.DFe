@@ -11,7 +11,7 @@
 | **14/12/2026** | Produção | 2026.008 (v1.01) | Campos `vUnComLiq`, `vProdLiq`, `vProdLiqTot`, grupo `ICMSPrevistoPagtoAntecip` | Não (opcionais) | Em implementação (idem) | NT v1.01: produção 16/11/2026 — adiada para 14/12/2026 (Aviso SVRS 3022) |
 | **14/12/2026** | Produção | 2026.006 (v1.01) | Split payment (`gPgtoVinc`, evento 110300) | Não (facultativo) | Pendente (fora de escopo; tag já no XSD do PL_010h) | Aviso SVRS 3022 |
 | **14/12/2026** | Produção | 2026.002 (v1.11) | RV BA02-35, VC02-40, I08-180: NF-e de saída não pode referenciar NFC-e (mod. 65), CF-e (mod. 59) ou NF-e com `tpImp=6`, salvo NF-e complementar | Sim | Validação da SEFAZ (sem impacto no leiaute) | NT 2026.002 v1.11, histórico |
-| **01/12/2026** | Produção | 2026.010 (v1.00) | DANFE com tributos da RTC (quadro IBS/CBS/IS, CRT no emitente, IBS/CBS/IS por item) | Leiaute de impressão | Pendente | NT 2026.010, cronograma |
+| **01/12/2026** | Produção | 2026.010 (v1.00) | DANFE com tributos da RTC (quadro IBS/CBS/IS, CRT no emitente, IBS/CBS/IS por item) | Leiaute de impressão | Em implementação (`feat/danfe-rtc`; QR Code mod. 55 aguarda NT) | NT 2026.010, cronograma |
 | 01/02/2027 | Homologação | 2026.008 (v1.01) | Regra NB01-30: `ICMSPrevistoPagtoAntecip` obrigatório se `tpNFDebito = 06` ou `tpOperGov = 4` | Condicional | Em implementação (grupo) | NT 2026.008 v1.01, observação 1 |
 | 01/03/2027 | Produção | 2026.008 (v1.01) | Regra NB01-30 (idem) | Condicional | Em implementação (grupo) | NT 2026.008 v1.01, observação 2 |
 | **01/03/2027** | Produção | 2026.005 | Simples Nacional passa a emitir NF-e com IBS/CBS (venda de mercadorias) | Sim (optantes do SN) | — | Ato Conjunto RFB/CGIBS nº 7/2026 (DOU 13/11/2026; antes 01/01/2027) |
