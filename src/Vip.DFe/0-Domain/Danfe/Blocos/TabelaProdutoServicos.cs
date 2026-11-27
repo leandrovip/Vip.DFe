@@ -17,7 +17,7 @@ namespace Vip.DFe.Danfe.Blocos
         public TabelaProdutosServicos(DanfeViewModel viewModel, Estilo estilo) : base(estilo)
         {
             ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
-            CabecalhoBloco = new CabecalhoBloco(estilo, "DADOS DOS PRODUTOS / SERVIÇOS");
+            CabecalhoBloco = new CabecalhoBloco(estilo, "DADOS DOS PRODUTOS / SERVIÇOS", !ViewModel.UsarLeiauteAnterior);
 
             const AlinhamentoHorizontal ad = AlinhamentoHorizontal.Direita;
             const AlinhamentoHorizontal ac = AlinhamentoHorizontal.Centro;

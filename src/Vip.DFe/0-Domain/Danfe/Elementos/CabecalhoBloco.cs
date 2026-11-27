@@ -11,9 +11,10 @@ namespace Vip.DFe.Danfe.Elementos
     {
         #region Constructors
 
-        public CabecalhoBloco(Estilo estilo, string cabecalho) : base(estilo)
+        public CabecalhoBloco(Estilo estilo, string cabecalho, bool negrito = false) : base(estilo)
         {
             Cabecalho = cabecalho ?? throw new ArgumentNullException(cabecalho);
+            Negrito = negrito;
         }
 
         #endregion
@@ -22,6 +23,11 @@ namespace Vip.DFe.Danfe.Elementos
 
         public const float MargemSuperior = 0.8F;
         public string Cabecalho { get; set; }
+
+        /// <summary>
+        ///     Título em negrito (leiaute da NT 2026.010), mesmo tamanho de fonte.
+        /// </summary>
+        public bool Negrito { get; set; }
 
         public override float Height
         {
@@ -38,7 +44,8 @@ namespace Vip.DFe.Danfe.Elementos
         public override void Draw(Gfx gfx)
         {
             base.Draw(gfx);
-            gfx.DrawString(Cabecalho.ToUpper(), BoundingBox, Estilo.FonteBlocoCabecalho,
+            var fonte = Negrito ? Estilo.CriarFonteNegrito(Estilo.FonteBlocoCabecalho.Tamanho) : Estilo.FonteBlocoCabecalho;
+            gfx.DrawString(Cabecalho.ToUpper(), BoundingBox, fonte,
                 AlinhamentoHorizontal.Esquerda, AlinhamentoVertical.Base);
         }
 

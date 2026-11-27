@@ -22,7 +22,7 @@ namespace Vip.DFe.Danfe.Blocos
             {
                 // Leiaute da NT 2026.010: respiro entre o fim do bloco anterior e o título deste.
                 if (!ViewModel.UsarLeiauteAnterior) MainVerticalStack.Add(new ElementoVazio {Height = EspacoAntesCabecalho});
-                MainVerticalStack.Add(new CabecalhoBloco(estilo, Cabecalho));
+                MainVerticalStack.Add(new CabecalhoBloco(estilo, Cabecalho, !ViewModel.UsarLeiauteAnterior));
             }
         }
 
